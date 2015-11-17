@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //TODO: Define Subsys class
 //TODO: Define an interface?
-//TODO: Implement Reset Encoders
 //TODO: Implement left side/right side travel distance
 
 public class Drive
@@ -16,6 +15,11 @@ public class Drive
 	private DcMotor rightBackMotor;
 	private DcMotor leftFrontMotor;
 	private DcMotor leftBackMotor;
+
+	private double RFencoderZero;
+	private double RBencoderZero;
+	private double LFencoderZero;
+	private double LBencoderZero;
 
 	public Drive(HardwareMap driveMap)
 	{
@@ -37,26 +41,29 @@ public class Drive
 
 	public double getRightFrontEncoder()
 	{
-		return rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
+		return rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT - RFencoderZero;
 	}
 
 	public double getRightBackEncoder()
 	{
-		 return rightBackMotor.getCurrentPosition()*TICKS_TO_ROT;
+		 return rightBackMotor.getCurrentPosition()*TICKS_TO_ROT - RBencoderZero;
 	}
 
 	public double getLeftFrontEncoder()
 	{
-		return leftFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
+		return leftFrontMotor.getCurrentPosition()*TICKS_TO_ROT - LFencoderZero;
 	}
 
 	public double getLeftBackEncoder()
 	{
-		return leftBackMotor.getCurrentPosition()*TICKS_TO_ROT;
+		return leftBackMotor.getCurrentPosition()*TICKS_TO_ROT - LBencoderZero;
 	}
 
-	public void resetEncoders()
+	public void zeroEncoders()
 	{
-
+		RFencoderZero = rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
+		RBencoderZero = rightBackMotor.getCurrentPosition()*TICKS_TO_ROT;
+		LFencoderZero = leftFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
+		LBencoderZero = leftBackMotor.getCurrentPosition()*TICKS_TO_ROT;
 	}
 }

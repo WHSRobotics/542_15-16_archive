@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //TODO: Figure out if we should set the speed shift and torque shift positions when instantiating or elsewhere.
+//Should we set the shifter positions as a constructor parameter, the testing loop is easier
+//Should we set the shifter position here permanently as a field, it's better information hiding
 
 public class LinearSlides
 {
@@ -22,18 +24,23 @@ public class LinearSlides
         shiftServo = slideMap.servo.get("ls_ss");
     }
 
-    void setTransmissionPower(double power)
+    public void setTransmissionPower(double power)
     {
     	leftTransmissionMotor.setPower(power);
     	rightTransmissionMotor.setPower(power);
     }
 
-    void shiftToTorque()
+    public void setShiftServoPosition(double input)
+    {
+        shiftServo.setPosition(Math.abs(input));
+    }
+
+    public void shiftToTorque()
     {
     	shiftServo.setPosition(torqueShiftPosition);
     }
 
-    void shiftToSpeed()
+    public void shiftToSpeed()
     {
     	shiftServo.setPosition(speedShiftPosition);
     }
