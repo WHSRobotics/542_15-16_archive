@@ -14,8 +14,8 @@ public class LinearSlides
 	private DcMotor rightTransmissionMotor;
 	private Servo shiftServo;
 
-    private double speedShiftPosition;
-	private double torqueShiftPosition;
+    private double speedShiftPosition = 0.5;
+	private double torqueShiftPosition = 1.0;
 
 	public LinearSlides(HardwareMap slideMap)
 	{

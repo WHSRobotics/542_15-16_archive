@@ -31,6 +31,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller;
 
+import android.hardware.Camera;
+import com.whs542.ftc2016.CameraOp;
+import com.whs542.ftc2016.CameraPreview;
+import android.widget.FrameLayout;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -174,6 +179,7 @@ public class FtcRobotControllerActivity extends Activity {
     hittingMenuButtonBrightensScreen();
 
     if (USE_DEVICE_EMULATION) { HardwareFactory.enableDeviceEmulation(); }
+    camera=openFrontFacingCamera();
   }
 
   @Override
@@ -378,6 +384,40 @@ public class FtcRobotControllerActivity extends Activity {
       @Override
       public void run() {
         toast.show();
+      }
+    });
+  }
+
+  public Camera camera;
+  private Camera openFrontFacingCamera()
+  {
+    int cameraId = -1;
+    Camera cam = null;
+    int numberOfCameras = Camera.getNumberOfCameras();
+    for (int i = 0; i < numberOfCameras; i++) {
+      Camera.CameraInfo info = new Camera.CameraInfo();
+      Camera.getCameraInfo(i, info);
+      if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        cameraId = i;
+        break;
+      }
+    }
+    try {
+      cam = Camera.open(cameraId);
+    } catch (Exception e) {
+
+    }
+    return cam;
+  }
+
+  public void initPreview(final Camera camera, final CameraOp context, final Camera.PreviewCallback previewCallback)
+  {
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
+        FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+        previewLayout.addView(context.preview);
       }
     });
   }
