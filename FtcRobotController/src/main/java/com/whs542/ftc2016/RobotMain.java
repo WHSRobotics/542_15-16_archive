@@ -1,10 +1,11 @@
 package com.whs542.ftc2016;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.lib.sensors.*;
 import com.whs542.ftc2016.subsys.*;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class RobotMain extends OpMode
 {

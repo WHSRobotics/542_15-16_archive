@@ -1,6 +1,7 @@
 package com.whs542.ftc2016.subsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //TODO: Define Subsys class
@@ -16,6 +17,13 @@ public class Drive
 	private DcMotor leftFrontMotor;
 	private DcMotor leftBackMotor;
 
+	private Servo leftChurroHook;
+	private Servo rightChurroHook;
+
+	//TODO: Find and set these
+	private double hookedPosition;
+	private double unhookedPosition;
+
 	private double RFencoderZero;
 	private double RBencoderZero;
 	private double LFencoderZero;
@@ -29,6 +37,9 @@ public class Drive
         leftBackMotor = driveMap.dcMotor.get("drive_lb");
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        leftChurroHook = driveMap.servo.get("drive_lh");
+        rightChurroHook = driveMap.servo.get("drive_rh");
 	}
 
 	public void setLeftRightPower(double leftPower, double rightPower)
@@ -37,6 +48,24 @@ public class Drive
 	    rightBackMotor.setPower(rightPower);
 	    leftFrontMotor.setPower(leftPower);
 	    leftBackMotor.setPower(leftPower);
+  	}
+
+  	public void hookChurro()
+  	{
+  		leftChurroHook.setPosition(hookedPosition);
+  		rightChurroHook.setPosition(hookedPosition);
+  	}
+
+  	public void unhookChurro()
+  	{
+  		leftChurroHook.setPosition(unhookedPosition);
+  		rightChurroHook.setPosition(unhookedPosition);
+  	}
+
+  	public void setChurroHookPosition(double input)
+  	{
+  		leftChurroHook.setPosition(Math.abs(input));
+  		rightChurroHook.setPosition(Math.abs(input));
   	}
 
 	public double getRightFrontEncoder()
