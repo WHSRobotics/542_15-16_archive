@@ -7,6 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+//
+// Main Robot Control Class
+//
+
 public class RobotMain extends OpMode
 {
 	Drive drive;
@@ -21,10 +25,11 @@ public class RobotMain extends OpMode
 
 	public void init()
 	{
-		/* WARNING
-		Don't have stuff commented here but not uncommented in the loop
-		Null pointer exception will be thrown at runtime due to no hardware object reference
-		 */
+		//
+		// !WARNING!
+		//
+		// Don't have stuff commented here but not uncommented in the loop
+		// Null pointer exception will be thrown at runtime due to no hardware object reference
 
 		//drive = new Drive(hardwareMap);
 		//intake = new Intake(hardwareMap);

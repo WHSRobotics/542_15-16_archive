@@ -4,12 +4,27 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+//
+// Drive Subsystem Class
+//
+
 //TODO: Define Subsys class
 //TODO: Define an interface?
 //TODO: Implement left side/right side travel distance
 
 public class Drive
 {
+	// ----------------------------------
+	// Drive Variables
+	// ----------------------------------
+	// -Hardware object reference variables for motors and servos
+	// -Double variables for servo positions and encoder positions
+
+	public enum DriveState
+	{
+		
+	}
+
 	private static final double TICKS_TO_ROT = 1.0/1120.0;
 
 	private DcMotor rightFrontMotor;
@@ -29,6 +44,11 @@ public class Drive
 	private double LFencoderZero;
 	private double LBencoderZero;
 
+	// ----------------------------------
+	// Drive Constructor
+	// ----------------------------------
+	// -Initializes the hardware references
+
 	public Drive(HardwareMap driveMap)
 	{
 		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
@@ -41,6 +61,10 @@ public class Drive
         leftChurroHook = driveMap.servo.get("drive_lh");
         rightChurroHook = driveMap.servo.get("drive_rh");
 	}
+
+	// ----------------------------------
+	// Drive Methods
+	// ----------------------------------
 
 	public void setLeftRightPower(double leftPower, double rightPower)
 	{
