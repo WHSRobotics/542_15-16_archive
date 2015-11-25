@@ -1,7 +1,12 @@
 package com.whs542.ftc2016.subsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+//
+// Drive Subsystem Class
+//
 
 //TODO: Define Subsys class
 //TODO: Define an interface?
@@ -9,6 +14,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive
 {
+	// ----------------------------------
+	// Drive Variables
+	// ----------------------------------
+	// -Hardware object reference variables for motors and servos
+	// -Double variables for servo positions and encoder positions
+
+	public enum DriveState
+	{
+		
+	}
+
 	private static final double TICKS_TO_ROT = 1.0/1120.0;
 
 	private DcMotor rightFrontMotor;
@@ -16,10 +32,22 @@ public class Drive
 	private DcMotor leftFrontMotor;
 	private DcMotor leftBackMotor;
 
+	private Servo leftChurroHook;
+	private Servo rightChurroHook;
+
+	//TODO: Find and set these
+	private double hookedPosition;
+	private double unhookedPosition;
+
 	private double RFencoderZero;
 	private double RBencoderZero;
 	private double LFencoderZero;
 	private double LBencoderZero;
+
+	// ----------------------------------
+	// Drive Constructor
+	// ----------------------------------
+	// -Initializes the hardware references
 
 	public Drive(HardwareMap driveMap)
 	{
@@ -29,7 +57,14 @@ public class Drive
         leftBackMotor = driveMap.dcMotor.get("drive_lb");
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        leftChurroHook = driveMap.servo.get("drive_lh");
+        rightChurroHook = driveMap.servo.get("drive_rh");
 	}
+
+	// ----------------------------------
+	// Drive Methods
+	// ----------------------------------
 
 	public void setLeftRightPower(double leftPower, double rightPower)
 	{
@@ -37,6 +72,24 @@ public class Drive
 	    rightBackMotor.setPower(rightPower);
 	    leftFrontMotor.setPower(leftPower);
 	    leftBackMotor.setPower(leftPower);
+  	}
+
+  	public void hookChurro()
+  	{
+  		leftChurroHook.setPosition(hookedPosition);
+  		rightChurroHook.setPosition(hookedPosition);
+  	}
+
+  	public void unhookChurro()
+  	{
+  		leftChurroHook.setPosition(unhookedPosition);
+  		rightChurroHook.setPosition(unhookedPosition);
+  	}
+
+  	public void setChurroHookPosition(double input)
+  	{
+  		leftChurroHook.setPosition(Math.abs(input));
+  		rightChurroHook.setPosition(Math.abs(input));
   	}
 
 	public double getRightFrontEncoder()

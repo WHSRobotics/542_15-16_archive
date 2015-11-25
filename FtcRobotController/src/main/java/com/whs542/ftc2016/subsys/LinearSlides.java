@@ -4,30 +4,80 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-//TODO: Figure out if we should set the speed shift and torque shift positions when instantiating or elsewhere.
-//Should we set the shifter positions as a constructor parameter, the testing loop is easier
-//Should we set the shifter position here permanently as a field, it's better information hiding
+//
+// Linear Slides Subsystem Class
+//
+
+//TODO: Implement Angling and Extension methods
 
 public class LinearSlides
 {
-	private DcMotor leftTransmissionMotor;
-	private DcMotor rightTransmissionMotor;
+    // ----------------------------------
+    // Linear Slide Variables
+    // ----------------------------------
+    // -Hardware object reference variables for motors and servos
+    // -Double variables for servo positions
+
+    public enum LinearSlidesState
+    {
+
+    }
+
+    private DcMotor leftAnglingMotor;
+    private DcMotor rightAnglingMotor;
+
+	private DcMotor leftExtensionMotor;
+	private DcMotor rightExtensionMotor;
 	private Servo shiftServo;
 
     private double speedShiftPosition = 0.5;
 	private double torqueShiftPosition = 1.0;
 
+    // ----------------------------------
+    // Intake Constructor
+    // ----------------------------------
+    // -Initializes the hardware references
+
 	public LinearSlides(HardwareMap slideMap)
 	{
-        leftTransmissionMotor = slideMap.dcMotor.get("ls_l");
-        rightTransmissionMotor = slideMap.dcMotor.get("ls_r");
+        leftAnglingMotor = slideMap.dcMotor.get("ls_la");
+        rightAnglingMotor = slideMap.dcMotor.get("ls_ra");
+
+        leftExtensionMotor = slideMap.dcMotor.get("ls_le");
+        rightExtensionMotor = slideMap.dcMotor.get("ls_re");
         shiftServo = slideMap.servo.get("ls_ss");
     }
 
-    public void setTransmissionPower(double power)
+    // ----------------------------------
+    // Linear Slide Methods
+    // ----------------------------------
+
+    public void setAngle()
     {
-    	leftTransmissionMotor.setPower(power);
-    	rightTransmissionMotor.setPower(power);
+
+    }
+
+    public double getAngle()
+    {
+        //Based on encoder data
+        return 0.0;
+    }
+
+    public void setExtensionLength()
+    {
+
+    }
+
+    public double getExtensionLength()
+    {
+        //Based on encoder data
+        return 0.0;
+    }
+
+    public void setExtensionPower(double power)
+    {
+    	leftExtensionMotor.setPower(power);
+    	rightExtensionMotor.setPower(power);
     }
 
     public void setShiftServoPosition(double input)
