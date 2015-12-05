@@ -33,7 +33,7 @@ public class RobotMain extends OpMode
 
 		//drive = new Drive(hardwareMap);
 		//intake = new Intake(hardwareMap);
-		//linearSlides = new LinearSlides(hardwareMap);
+		linearSlides = new LinearSlides(hardwareMap);
 		//scoringBox = new ScoringBox(hardwareMap);
 		//proximitySensor = new ProximityGP2Y0D810Z0F(hardwareMap, 0);
 		//currentSensorDirect = new CurrentACS711EX(hardwareMap, 0);
@@ -41,10 +41,34 @@ public class RobotMain extends OpMode
 		//testMot = hardwareMap.dcMotor.get("testMot");
 	}
 
+	boolean trigger = false;
+	boolean fast = true;
+
 	public void loop()
 	{
-		//linearSlides.setTransmissionPower(gamepad1.left_stick_y);
-		//linearSlides.setShiftServoPosition(gamepad1.right_stick_y);
+		linearSlides.setTransmissionPower(gamepad1.left_stick_y);
+		if(gamepad1.a)
+		{
+			if(!trigger)
+			{
+				fast = !fast;
+			}
+			trigger = true;
+		}
+		else
+		{
+			trigger = false;
+		}
+
+		if(fast)
+		{
+			linearSlides.shiftToSpeed();
+		}
+		else
+		{
+			linearSlides.shiftToTorque();
+		}
+
 		//drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
 		//telemetry.addData("LENC", drive.getLeftBackEncoder() + " " + drive.getLeftFrontEncoder());
 		//telemetry.addData("RENC", drive.getRightBackEncoder() + " " + drive.getRightFrontEncoder());

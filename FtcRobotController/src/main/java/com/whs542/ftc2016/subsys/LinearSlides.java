@@ -30,8 +30,8 @@ public class LinearSlides
 	private DcMotor rightExtensionMotor;
 	private Servo shiftServo;
 
-    private double speedShiftPosition;
-	private double torqueShiftPosition;
+    private double speedShiftPosition = 0.5;
+	private double torqueShiftPosition = 1.0;
 
     // ----------------------------------
     // Intake Constructor
