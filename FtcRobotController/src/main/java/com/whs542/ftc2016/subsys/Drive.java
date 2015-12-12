@@ -3,6 +3,8 @@ package com.whs542.ftc2016.subsys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.robot.Robot;
+import com.whs542.ftc2016.RobotMain;
 
 //TODO: Define Subsys class
 //TODO: Define an interface?
@@ -12,10 +14,10 @@ public class Drive
 {
 	private static final double TICKS_TO_ROT = 1.0/1120.0;
 
-	private DcMotor rightFrontMotor;
-	private DcMotor rightBackMotor;
-	private DcMotor leftFrontMotor;
-	private DcMotor leftBackMotor;
+	public static DcMotor rightFrontMotor;
+	public static DcMotor rightBackMotor;
+	public static DcMotor leftFrontMotor;
+	public static DcMotor leftBackMotor;
 
 	private Servo leftChurroHook;
 	private Servo rightChurroHook;
@@ -28,6 +30,10 @@ public class Drive
 	private double RBencoderZero;
 	private double LFencoderZero;
 	private double LBencoderZero;
+    public boolean encoderState;
+    public boolean rightEncoderState;
+    public boolean leftEncoderState;
+
 
 	public Drive(HardwareMap driveMap)
 	{
@@ -38,11 +44,11 @@ public class Drive
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        leftChurroHook = driveMap.servo.get("drive_lh");
-        rightChurroHook = driveMap.servo.get("drive_rh");
-	}
+        //leftChurroHook = driveMap.servo.get("drive_lh");
+        //rightChurroHook = driveMap.servo.get("drive_rh");
+    }
 
-	public void setLeftRightPower(double leftPower, double rightPower)
+    public static void setLeftRightPower(double leftPower, double rightPower)
 	{
 	    rightFrontMotor.setPower(rightPower);
 	    rightBackMotor.setPower(rightPower);
@@ -50,6 +56,7 @@ public class Drive
 	    leftBackMotor.setPower(leftPower);
   	}
 
+    //Churro Hook Control//
   	public void hookChurro()
   	{
   		leftChurroHook.setPosition(hookedPosition);
@@ -68,7 +75,52 @@ public class Drive
   		rightChurroHook.setPosition(Math.abs(input));
   	}
 
-	public double getRightFrontEncoder()
+    //Encoders//
+    boolean encodersReachTarget(double encoderCount)
+    {
+        encoderState = false;
+        if(rightEncodersReachTarget(encoderCount) && leftEncodersReachTarget(encoderCount))
+        {
+            setLeftRightPower(0.0, 0.0);
+            encoderState = true;
+        }
+        else
+        {
+            setLeftRightPower(1.0, 1.0);
+            encoderState = false;
+        }
+        return encoderState;
+    }
+
+    boolean rightEncodersReachTarget(double rightEncoderCount)
+    {
+        rightEncoderState = false;
+        if(Math.abs(rightFrontMotor.getCurrentPosition()) > rightEncoderCount && Math.abs(rightBackMotor.getCurrentPosition()) > rightEncoderCount)
+        {
+            zeroEncoders();
+            rightEncoderState = true;
+        }
+        else
+        {
+            rightEncoderState = false;
+        }
+        return rightEncoderState;
+    }
+    boolean leftEncodersReachTarget(double leftEncoderCount)
+    {
+        leftEncoderState = false;
+        if(Math.abs(leftFrontMotor.getCurrentPosition()) > leftEncoderCount && Math.abs(leftBackMotor.getCurrentPosition()) > leftEncoderCount)
+        {
+            zeroEncoders();
+            leftEncoderState = true;
+        }
+        else
+        {
+            leftEncoderState = false;
+        }
+        return leftEncoderState;
+    }
+    public double getRightFrontEncoder()
 	{
 		return rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT - RFencoderZero;
 	}

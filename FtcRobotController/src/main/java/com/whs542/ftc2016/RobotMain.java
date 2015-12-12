@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class RobotMain extends OpMode
 {
 	Drive drive;
-	Intake intake;
+    AutoOp autonomous;
+    Intake intake;
 	LinearSlides linearSlides;
 	ScoringBox scoringBox;
 	ProximityGP2Y0D810Z0F proximitySensor;
@@ -18,7 +19,7 @@ public class RobotMain extends OpMode
 	CurrentACS711EX currentSensorProximal;
 
 	DcMotor testMot;
-
+    String asdf1234;
 	public void init()
 	{
 		/* WARNING
@@ -26,7 +27,8 @@ public class RobotMain extends OpMode
 		Null pointer exception will be thrown at runtime due to no hardware object reference
 		 */
 
-		//drive = new Drive(hardwareMap);
+		drive = new Drive(hardwareMap);
+        autonomous = new AutoOp(drive);
 		//intake = new Intake(hardwareMap);
 		//linearSlides = new LinearSlides(hardwareMap);
 		//scoringBox = new ScoringBox(hardwareMap);
@@ -48,4 +50,5 @@ public class RobotMain extends OpMode
 		//telemetry.addData("dir", currentSensorDirect.getValue());
 		//telemetry.addData("prox", currentSensorProximal.getValue());
 	}
+
 }
