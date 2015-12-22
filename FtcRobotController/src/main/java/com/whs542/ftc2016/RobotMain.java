@@ -8,9 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-public class RobotMain extends OpMode{
+public abstract class RobotMain extends OpMode{
 	Drive drive;
-<<<<<<< HEAD
     SpeedControl control;
     //Intake intake;
 	//LinearSlides linearSlides;
@@ -18,7 +17,6 @@ public class RobotMain extends OpMode{
 	ProximityGP2Y0D810Z0F proximitySensor;
 	CurrentACS711EX currentSensorDirect;
 	CurrentACS711EX currentSensorProximal;
-=======
 	AutoOp autonomous;
 	//Intake intake;
 	//LinearSlides linearSlides;
@@ -26,11 +24,7 @@ public class RobotMain extends OpMode{
 	//ProximityGP2Y0D810Z0F proximitySensor;
 	//CurrentACS711EX currentSensorDirect;
 	//CurrentACS711EX currentSensorProximal;
->>>>>>> origin/encoder
 
-    //Testing//
-    //Servo servo1;
-    //Testing//
 	DcMotor testMot;
 	String asdf1234;
 
@@ -42,10 +36,6 @@ public class RobotMain extends OpMode{
 		 */
 
 		drive = new Drive(hardwareMap);
-<<<<<<< HEAD
-=======
-		autonomous = new AutoOp(drive);
->>>>>>> origin/encoder
 		//intake = new Intake(hardwareMap);
 		//linearSlides = new LinearSlides(hardwareMap);
 		scoringBox = new ScoringBox(hardwareMap);
