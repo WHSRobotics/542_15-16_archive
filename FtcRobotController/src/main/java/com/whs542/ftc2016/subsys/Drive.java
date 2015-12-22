@@ -26,14 +26,13 @@ public class Drive
 	private double hookedPosition;
 	private double unhookedPosition;
 
-	private double RFencoderZero;
-	private double RBencoderZero;
-	private double LFencoderZero;
-	private double LBencoderZero;
-    public boolean encoderState;
-    public boolean rightEncoderState;
-    public boolean leftEncoderState;
-
+	private static double RFencoderZero;
+	private static double RBencoderZero;
+	private static double LFencoderZero;
+	private static double LBencoderZero;
+    public static boolean encoderState;
+    public static boolean rightEncoderState;
+    public static boolean leftEncoderState;
 
 	public Drive(HardwareMap driveMap)
 	{
@@ -55,6 +54,10 @@ public class Drive
 	    leftFrontMotor.setPower(leftPower);
 	    leftBackMotor.setPower(leftPower);
   	}
+    //public static void moveServo(double position)
+    //{
+    //    servo1.setPosition(position);
+    //}
 
     //Churro Hook Control//
   	public void hookChurro()
@@ -76,26 +79,24 @@ public class Drive
   	}
 
     //Encoders//
-    boolean encodersReachTarget(double encoderCount)
+    public static boolean encodersReachTarget(double encoderCount)
     {
         encoderState = false;
         if(rightEncodersReachTarget(encoderCount) && leftEncodersReachTarget(encoderCount))
         {
-            setLeftRightPower(0.0, 0.0);
             encoderState = true;
         }
         else
         {
-            setLeftRightPower(1.0, 1.0);
             encoderState = false;
         }
         return encoderState;
     }
 
-    boolean rightEncodersReachTarget(double rightEncoderCount)
+    public static boolean rightEncodersReachTarget(double rightEncoderCount)
     {
         rightEncoderState = false;
-        if(Math.abs(rightFrontMotor.getCurrentPosition()) > rightEncoderCount && Math.abs(rightBackMotor.getCurrentPosition()) > rightEncoderCount)
+        if(Math.abs(rightFrontMotor.getCurrentPosition() * TICKS_TO_ROT) > rightEncoderCount && Math.abs(rightBackMotor.getCurrentPosition() * TICKS_TO_ROT) > rightEncoderCount)
         {
             zeroEncoders();
             rightEncoderState = true;
@@ -106,10 +107,10 @@ public class Drive
         }
         return rightEncoderState;
     }
-    boolean leftEncodersReachTarget(double leftEncoderCount)
+    public static boolean leftEncodersReachTarget(double leftEncoderCount)
     {
         leftEncoderState = false;
-        if(Math.abs(leftFrontMotor.getCurrentPosition()) > leftEncoderCount && Math.abs(leftBackMotor.getCurrentPosition()) > leftEncoderCount)
+        if(Math.abs(leftFrontMotor.getCurrentPosition() * TICKS_TO_ROT) > leftEncoderCount && Math.abs(leftBackMotor.getCurrentPosition() * TICKS_TO_ROT) > leftEncoderCount)
         {
             zeroEncoders();
             leftEncoderState = true;
@@ -140,7 +141,7 @@ public class Drive
 		return leftBackMotor.getCurrentPosition()*TICKS_TO_ROT - LBencoderZero;
 	}
 
-	public void zeroEncoders()
+	public static void zeroEncoders()
 	{
 		RFencoderZero = rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
 		RBencoderZero = rightBackMotor.getCurrentPosition()*TICKS_TO_ROT;

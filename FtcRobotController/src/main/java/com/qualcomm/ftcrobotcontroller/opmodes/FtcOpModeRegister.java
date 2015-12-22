@@ -100,5 +100,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotSquare", PushBotSquare.java);
 
     manager.register("TeleOp", com.whs542.ftc2016.TeleOp.class);
+    manager.register("AutoOp", com.whs542.ftc2016.AutoOp.class);
   }
 }
