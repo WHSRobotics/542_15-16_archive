@@ -1,6 +1,5 @@
 package com.whs542.ftc2016;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.ftc2016.subsys.Drive;
 
 /**
@@ -8,43 +7,44 @@ import com.whs542.ftc2016.subsys.Drive;
  */
 public class AutoOp extends RobotMain
 {
+    Drive driveAuto;
+    public AutoOp(Drive drive1)
+    {
+        driveAuto = drive1;
+    }
     public void start()
     {
         time = 0.0;
     }
     public void loop()
     {
-<<<<<<< HEAD
-
-        if(time < 2.0 || drive.encoderState == true)
-        {
-            drive.encodersReachTarget(2.0);
-            drive.setLeftRightPower(1.0, 1.0);
-        }
-        else if(time < 4.0 || drive.encoderState == true)
-        {
-            drive.encodersReachTarget(1.0);
-            drive.setLeftRightPower(-1.0, 1.0);
-        }
-        else if(time < 6.3 || drive.encoderState == true)
-=======
-        telemetry.addData("Time: ", time);
         if(time < 2.0)
->>>>>>> origin/encoder
-        {
-            drive.encodersReachTarget(3.0);
-            drive.setLeftRightPower(1.0, 1.0);
-        }
-<<<<<<< HEAD
-        else if(time < 8.0 || drive.encoderState == true)
-        {
-            drive.encodersReachTarget(2.6);
-            drive.setLeftRightPower(0.5, 0.5);
-        }
-        else
-        {
-            drive.setLeftRightPower(0.0, 0.0);
-        }
+
+            if(time < 2.0 || drive.encoderState == true)
+            {
+                drive.encodersReachTarget(2.0);
+                drive.setLeftRightPower(1.0, 1.0);
+            }
+            else if(time < 4.0 || drive.encoderState == true)
+            {
+                drive.encodersReachTarget(1.0);
+                drive.setLeftRightPower(-1.0, 1.0);
+            }
+            else if(time < 6.3 || drive.encoderState == true)
+            {
+                driveAuto.setLeftRightPower(1.0, 1.0);
+                drive.encodersReachTarget(3.0);
+                drive.setLeftRightPower(1.0, 1.0);
+            }
+            else if(time < 8.0 || drive.encoderState == true)
+            {
+                drive.encodersReachTarget(2.6);
+                drive.setLeftRightPower(0.5, 0.5);
+            }
+            else
+            {
+                drive.setLeftRightPower(0.0, 0.0);
+            }
 
         //Lucy's Code//
         /*
@@ -55,24 +55,6 @@ public class AutoOp extends RobotMain
 
         telemetry.addData("Motor power: ", power1);
         */
-=======
-        else if(time < 4.0)
-        {
-            driveAuto.setLeftRightPower(-1.0, -1.0);
-        }
-        /*else if(time < 6.0)
-        {
-
-        }
-        else if(time < 8.0)
-        {
-
-        }*/
-        else
-        {
-            driveAuto.setLeftRightPower(0.0, 0.0);
-        }
->>>>>>> origin/encoder
     }
 
 }

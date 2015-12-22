@@ -54,10 +54,6 @@ public class Drive
 	    leftFrontMotor.setPower(leftPower);
 	    leftBackMotor.setPower(leftPower);
   	}
-    //public static void moveServo(double position)
-    //{
-    //    servo1.setPosition(position);
-    //}
 
     //Churro Hook Control//
   	public void hookChurro()
