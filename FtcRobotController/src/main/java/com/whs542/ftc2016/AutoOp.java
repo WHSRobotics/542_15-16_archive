@@ -1,5 +1,6 @@
 package com.whs542.ftc2016;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.ftc2016.subsys.Drive;
 
 /**
@@ -13,6 +14,7 @@ public class AutoOp extends RobotMain
     }
     public void loop()
     {
+<<<<<<< HEAD
 
         if(time < 2.0 || drive.encoderState == true)
         {
@@ -25,10 +27,15 @@ public class AutoOp extends RobotMain
             drive.setLeftRightPower(-1.0, 1.0);
         }
         else if(time < 6.3 || drive.encoderState == true)
+=======
+        telemetry.addData("Time: ", time);
+        if(time < 2.0)
+>>>>>>> origin/encoder
         {
             drive.encodersReachTarget(3.0);
             drive.setLeftRightPower(1.0, 1.0);
         }
+<<<<<<< HEAD
         else if(time < 8.0 || drive.encoderState == true)
         {
             drive.encodersReachTarget(2.6);
@@ -48,6 +55,24 @@ public class AutoOp extends RobotMain
 
         telemetry.addData("Motor power: ", power1);
         */
+=======
+        else if(time < 4.0)
+        {
+            driveAuto.setLeftRightPower(-1.0, -1.0);
+        }
+        /*else if(time < 6.0)
+        {
+
+        }
+        else if(time < 8.0)
+        {
+
+        }*/
+        else
+        {
+            driveAuto.setLeftRightPower(0.0, 0.0);
+        }
+>>>>>>> origin/encoder
     }
 
 }

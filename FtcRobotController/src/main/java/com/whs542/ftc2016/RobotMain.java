@@ -7,9 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class RobotMain extends OpMode
-{
+
+public class RobotMain extends OpMode{
 	Drive drive;
+<<<<<<< HEAD
     SpeedControl control;
     //Intake intake;
 	//LinearSlides linearSlides;
@@ -17,12 +18,22 @@ public class RobotMain extends OpMode
 	ProximityGP2Y0D810Z0F proximitySensor;
 	CurrentACS711EX currentSensorDirect;
 	CurrentACS711EX currentSensorProximal;
+=======
+	AutoOp autonomous;
+	//Intake intake;
+	//LinearSlides linearSlides;
+	//ScoringBox scoringBox;
+	//ProximityGP2Y0D810Z0F proximitySensor;
+	//CurrentACS711EX currentSensorDirect;
+	//CurrentACS711EX currentSensorProximal;
+>>>>>>> origin/encoder
 
     //Testing//
     //Servo servo1;
     //Testing//
 	DcMotor testMot;
-    String asdf1234;
+	String asdf1234;
+
 	public void init()
 	{
 		/* WARNING
@@ -31,6 +42,10 @@ public class RobotMain extends OpMode
 		 */
 
 		drive = new Drive(hardwareMap);
+<<<<<<< HEAD
+=======
+		autonomous = new AutoOp(drive);
+>>>>>>> origin/encoder
 		//intake = new Intake(hardwareMap);
 		//linearSlides = new LinearSlides(hardwareMap);
 		scoringBox = new ScoringBox(hardwareMap);
@@ -39,7 +54,7 @@ public class RobotMain extends OpMode
 		//currentSensorProximal = new CurrentACS711EX(hardwareMap, 4);
 		//testMot = hardwareMap.dcMotor.get("testMot");
 	}
-
+	/*
 	public void loop()
 	{
 		//linearSlides.setTransmissionPower(gamepad1.left_stick_y);
@@ -51,6 +66,11 @@ public class RobotMain extends OpMode
 		//testMot.setPower(gamepad1.left_stick_y);
 		//telemetry.addData("dir", currentSensorDirect.getValue());
 		//telemetry.addData("prox", currentSensorProximal.getValue());
+	}
+	*/
+	public void stop()
+	{
+
 	}
 
 }
