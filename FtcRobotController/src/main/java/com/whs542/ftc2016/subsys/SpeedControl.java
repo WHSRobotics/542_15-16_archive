@@ -7,7 +7,7 @@ import com.whs542.ftc2016.RobotMain;
 /**
  * Created by LucyWang on 12/18/15.
  */
-public class SpeedControl extends RobotMain
+public class SpeedControl
 {
     public SpeedControl()
     {

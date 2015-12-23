@@ -1,10 +1,8 @@
 package com.whs542.ftc2016.subsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.robot.Robot;
-import com.whs542.ftc2016.RobotMain;
 
 //TODO: Define Subsys class
 //TODO: Define an interface?
@@ -12,27 +10,24 @@ import com.whs542.ftc2016.RobotMain;
 
 public class Drive
 {
-	private static final double TICKS_TO_ROT = 1.0/1120.0;
 
-	public static DcMotor rightFrontMotor;
-	public static DcMotor rightBackMotor;
-	public static DcMotor leftFrontMotor;
-	public static DcMotor leftBackMotor;
+    private static final double WHEEL_DIAMETER = 15.24;
+    private static final double TICKS_TO_ROT = 1.0/1120.0;
+    private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
+    private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
 
-	private Servo leftChurroHook;
-	private Servo rightChurroHook;
+	private static DcMotor rightFrontMotor;
+	private static DcMotor rightBackMotor;
+	private static DcMotor leftFrontMotor;
+	private static DcMotor leftBackMotor;
 
-	//TODO: Find and set these
-	private double hookedPosition;
-	private double unhookedPosition;
+    public double [] encoderZeroes;
+    public double [] encoderValues;
 
-	private static double RFencoderZero;
-	private static double RBencoderZero;
-	private static double LFencoderZero;
-	private static double LBencoderZero;
-    public static boolean encoderState;
-    public static boolean rightEncoderState;
-    public static boolean leftEncoderState;
+    public static int RF = 0;
+    public static int RB = 1;
+    public static int LF = 2;
+    public static int LB = 3;
 
 	public Drive(HardwareMap driveMap)
 	{
@@ -43,105 +38,68 @@ public class Drive
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        //leftChurroHook = driveMap.servo.get("drive_lh");
-        //rightChurroHook = driveMap.servo.get("drive_rh");
+        rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        encoderZeroes = new double[4];
+        encoderValues = new double[4];
     }
 
     public static void setLeftRightPower(double leftPower, double rightPower)
-	{
-	    rightFrontMotor.setPower(rightPower);
-	    rightBackMotor.setPower(rightPower);
-	    leftFrontMotor.setPower(leftPower);
-	    leftBackMotor.setPower(leftPower);
-  	}
-
-    //Churro Hook Control//
-  	public void hookChurro()
-  	{
-  		leftChurroHook.setPosition(hookedPosition);
-  		rightChurroHook.setPosition(hookedPosition);
-  	}
-
-  	public void unhookChurro()
-  	{
-  		leftChurroHook.setPosition(unhookedPosition);
-  		rightChurroHook.setPosition(unhookedPosition);
-  	}
-
-  	public void setChurroHookPosition(double input)
-  	{
-  		leftChurroHook.setPosition(Math.abs(input));
-  		rightChurroHook.setPosition(Math.abs(input));
-  	}
-
-    //Encoders//
-    public static boolean encodersReachTarget(double encoderCount)
     {
-        encoderState = false;
-        if(rightEncodersReachTarget(encoderCount) && leftEncodersReachTarget(encoderCount))
+        rightFrontMotor.setPower(rightPower);
+        rightBackMotor.setPower(rightPower);
+        leftFrontMotor.setPower(leftPower);
+        leftBackMotor.setPower(leftPower);
+    }
+
+    public boolean hasTargetHit(double target)
+    {
+        updateEncoderValues();
+        boolean rightTargetHit = false;
+        boolean leftTargetHit = false;
+
+        if(Math.abs(encoderValues[RF])*TICKS_TO_ROT > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT > target)
         {
-            encoderState = true;
+            rightTargetHit = true;
+        }
+
+        if(Math.abs(encoderValues[LF])*TICKS_TO_ROT> target || Math.abs(encoderValues[LB])*TICKS_TO_ROT > target)
+        {
+            leftTargetHit = true;
+        }
+
+        if(leftTargetHit && rightTargetHit)
+        {
+            zeroLeftEncoders();
+            zeroRightEncoders();
+            return true;
         }
         else
         {
-            encoderState = false;
+            return false;
         }
-        return encoderState;
     }
 
-    public static boolean rightEncodersReachTarget(double rightEncoderCount)
+    public void updateEncoderValues()
     {
-        rightEncoderState = false;
-        if(Math.abs(rightFrontMotor.getCurrentPosition() * TICKS_TO_ROT) > rightEncoderCount && Math.abs(rightBackMotor.getCurrentPosition() * TICKS_TO_ROT) > rightEncoderCount)
-        {
-            zeroEncoders();
-            rightEncoderState = true;
-        }
-        else
-        {
-            rightEncoderState = false;
-        }
-        return rightEncoderState;
+        encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
+        encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
+        encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
+        encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
     }
-    public static boolean leftEncodersReachTarget(double leftEncoderCount)
+
+    public void zeroLeftEncoders()
     {
-        leftEncoderState = false;
-        if(Math.abs(leftFrontMotor.getCurrentPosition() * TICKS_TO_ROT) > leftEncoderCount && Math.abs(leftBackMotor.getCurrentPosition() * TICKS_TO_ROT) > leftEncoderCount)
-        {
-            zeroEncoders();
-            leftEncoderState = true;
-        }
-        else
-        {
-            leftEncoderState = false;
-        }
-        return leftEncoderState;
+        encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
+        encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
     }
-    public double getRightFrontEncoder()
-	{
-		return rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT - RFencoderZero;
-	}
 
-	public double getRightBackEncoder()
-	{
-		 return rightBackMotor.getCurrentPosition()*TICKS_TO_ROT - RBencoderZero;
-	}
-
-	public double getLeftFrontEncoder()
-	{
-		return leftFrontMotor.getCurrentPosition()*TICKS_TO_ROT - LFencoderZero;
-	}
-
-	public double getLeftBackEncoder()
-	{
-		return leftBackMotor.getCurrentPosition()*TICKS_TO_ROT - LBencoderZero;
-	}
-
-	public static void zeroEncoders()
-	{
-		RFencoderZero = rightFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
-		RBencoderZero = rightBackMotor.getCurrentPosition()*TICKS_TO_ROT;
-		LFencoderZero = leftFrontMotor.getCurrentPosition()*TICKS_TO_ROT;
-		LBencoderZero = leftBackMotor.getCurrentPosition()*TICKS_TO_ROT;
-	}
+    public void zeroRightEncoders()
+    {
+        encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
+        encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
+    }
 }
