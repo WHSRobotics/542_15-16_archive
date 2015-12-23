@@ -8,8 +8,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 // Intake Subsystem Class
 //
 
-//TODO: Add current sensor support to the intake motor
-
 public class Intake
 {
 	// ----------------------------------
@@ -33,6 +31,9 @@ public class Intake
 	{
 		dropDownServo = intakeMap.servo.get("intake_dds");
 		intakeMotor = intakeMap.dcMotor.get("intake_motor");
+
+		//Should output be too coarse, uncomment this, and add an encoder
+		//intakeMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 	}
 
 	// ----------------------------------

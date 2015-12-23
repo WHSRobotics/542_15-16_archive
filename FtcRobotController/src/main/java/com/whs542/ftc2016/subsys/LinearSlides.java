@@ -3,6 +3,7 @@ package com.whs542.ftc2016.subsys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.whs542.ftc2016.RobotMain;
 
 //
 // Linear Slides Subsystem Class
@@ -32,6 +33,9 @@ public class LinearSlides
     // Intake Constructor
     // ----------------------------------
     // -Initializes the hardware references
+
+    private double hookedAngle;
+    private double unhookedAngle;
 
 	public LinearSlides(HardwareMap slideMap)
 	{
@@ -73,6 +77,16 @@ public class LinearSlides
     {
     	leftExtensionMotor.setPower(power);
     	rightExtensionMotor.setPower(power);
+    }
+
+    public void setAnglePosition(double angle)
+    {
+
+    }
+
+    public void setExtensionPosition(double length)
+    {
+
     }
 
     public void setShiftServoPosition(double input)
