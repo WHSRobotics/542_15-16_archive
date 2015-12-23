@@ -16,10 +16,8 @@ public class ScoringBox
 	// Scoring Box Variables
 	// ----------------------------------
 
-	public enum ScoringBoxState
-	{
-
-	}
+	private Servo intakeMotor;
+	private Servo dropDownServo;
 
 	// ----------------------------------
 	// Scoring Box Constructor

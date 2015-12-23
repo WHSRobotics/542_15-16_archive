@@ -2,33 +2,53 @@ package com.whs542.lib.hwTest;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.whs542.lib.Toggler;
 
 import java.lang.Override;
 
 public class motorTest extends OpMode
 {
     DcMotor testMot;
+    Toggler changePower;
+    Toggler activateMot;
+    VoltageSensor voltSense;
+    double power = 0.0;
 
     @Override
     public void init()
     {
+        activateMot = new Toggler(2);
+        changePower = new Toggler(21, 10);
+        voltSense = hardwareMap.voltageSensor.get("motorc");
         testMot = hardwareMap.dcMotor.get("motor");
-        //RobotLog.i("StartLog - MR Controller")
-        //RobotLog.i("StartLog - Power Supply");
+        testMot.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        RobotLog.i("StartLog");
     }
 
     @Override
     public void loop()
     {
-        RobotLog.i("t: " + time + " enc: " + testMot.getCurrentPosition());
-        //testMot.setPower(1.0);
+        activateMot.stateInc(gamepad1.a);
+        changePower.stateDec(gamepad1.dpad_down);
+        changePower.stateInc(gamepad1.dpad_up);
+
+        power = activateMot.currentState() == 1
+                ? (double)(changePower.currentState()-10) *0.1
+                : 0.0;
+
+        RobotLog.i(getRuntime() + " " + testMot.getCurrentPosition() + " " + (voltSense.getVoltage()*power) );
+        testMot.setPower(power);
+
+        telemetry.addData("","power: " + (changePower.currentState()-10) + "On: " + activateMot.currentState());
     }
 
     @Override
     public void stop()
     {
-        //RobotLog.i("EndLog - MR Controller")
-        //RobotLog.i("EndLog - Power Supply");
+        RobotLog.i("EndLog");
     }
 }
