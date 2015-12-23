@@ -18,11 +18,6 @@ public class LinearSlides
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
 
-    public enum LinearSlidesState
-    {
-
-    }
-
     private DcMotor leftAnglingMotor;
     private DcMotor rightAnglingMotor;
 

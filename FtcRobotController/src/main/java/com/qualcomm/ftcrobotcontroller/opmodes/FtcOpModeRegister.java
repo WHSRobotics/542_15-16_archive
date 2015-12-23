@@ -34,6 +34,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.whs542.ftc2016.*;
+import com.whs542.lib.hwTest.motorTest;
 
 /**
  * Register Op Modes
@@ -59,5 +60,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("RobotMain", RobotMain.class);
     manager.register("NullOp", NullOp.class);
     manager.register("CameraOp", CameraOp.class);
+    manager.register("motorTest", motorTest.class);
   }
 }

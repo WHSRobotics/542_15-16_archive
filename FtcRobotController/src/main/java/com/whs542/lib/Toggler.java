@@ -4,13 +4,22 @@ package com.whs542.lib;
 
 public class Toggler
 {
-	private boolean pressed = false;
+	private boolean pressedDec = false;
+	private boolean pressedInc = false;
+	private boolean limited = false;
 	private int state = 0;
 	private int numberOfStates = 0;
-	
-	public Toggler(int inputNumber)
+
+	public Toggler(int stateNum, int initState)
 	{
-		numberOfStates = inputNumber;
+		numberOfStates = stateNum;
+		limited = true;
+		state = (initState < stateNum) && (initState > -1) ? initState: 0;
+	}
+
+	public Toggler(int stateNum)
+	{
+		numberOfStates = stateNum;
 	}
 
 	public int currentState()
@@ -23,20 +32,52 @@ public class Toggler
 		return numberOfStates;
 	}
 	
-	//This boolean trigger can have an expression with && or ||
-	public void toggleCycle(boolean trigger)
+	//This boolean trigger can have an expression with && or || for further functionality
+	public void stateInc(boolean inc)
 	{
-		if(trigger)
+		if(inc)
 		{
-			if(!pressed)
+			if(!pressedInc)
 			{
-				state = (state + 1) % numberOfStates;
-			}	
-			pressed = true;
+				if(limited)
+				{
+					state = ((state + 1) != numberOfStates)
+							? (state + 1) % numberOfStates
+							:state;
+				}
+				else {
+					state = (state + 1) % numberOfStates;
+				}
+			}
+			pressedInc = true;
 		}
 		else
 		{
-			pressed = false;
+			pressedInc = false;
+		}
+	}
+
+	public void stateDec(boolean dec)
+	{
+		if(dec)
+		{
+			if(!pressedDec)
+			{
+				if(limited)
+				{
+					state = ((state - 1) != -1)
+							? ((state - 1) % numberOfStates+numberOfStates)%numberOfStates
+							:state;
+				}
+				else {
+					state = ((state - 1) % numberOfStates+numberOfStates)%numberOfStates;
+				}
+			}
+			pressedDec = true;
+		}
+		else
+		{
+			pressedDec = false;
 		}
 	}
 }

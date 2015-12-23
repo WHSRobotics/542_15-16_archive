@@ -46,7 +46,7 @@ public class RobotMain extends OpMode
 
 	public void loop()
 	{
-		linearSlides.setTransmissionPower(gamepad1.left_stick_y);
+		linearSlides.setExtensionPower(gamepad1.left_stick_y);
 		if(gamepad1.a)
 		{
 			if(!trigger)

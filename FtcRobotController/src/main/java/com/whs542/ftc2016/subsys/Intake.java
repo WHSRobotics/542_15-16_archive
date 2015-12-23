@@ -18,16 +18,11 @@ public class Intake
 	// -Hardware object reference variables for motors and servos
 	// -Double variables for servo positions
 
-	public enum IntakeState
-	{
-
-	}
-
 	private DcMotor intakeMotor;
 	private Servo dropDownServo;
 
-	private double intakeClosePosition;
-	private double intakeOpenPosition;
+	private double intakeRetractedPosition;
+	private double intakeExtendedPosition;
 
 	// ----------------------------------
 	// Intake Constructor
@@ -44,17 +39,17 @@ public class Intake
 	// Intake Methods
 	// ----------------------------------
 
-	public void closeIntake()
+	public void retractIntake()
 	{
-		dropDownServo.setPosition(intakeClosePosition);
+		dropDownServo.setPosition(intakeRetractedPosition);
 	}
 	
-	public void openIntake()
+	public void extendIntake()
 	{
-		dropDownServo.setPosition(intakeOpenPosition);
+		dropDownServo.setPosition(intakeExtendedPosition);
 	}
 
-	public void setIntakePower(double power)
+	public void intakePowerSet(double power)
 	{
 		intakeMotor.setPower(power);
 	}
