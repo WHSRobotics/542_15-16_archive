@@ -1,8 +1,2 @@
 // FTC Apps
 include (':FtcRobotController')
-
-// OpenCV
-include ':opencv-java'
-
-// Lavarobotics Vision Library
-include ':ftc-visionlib'
