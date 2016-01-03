@@ -7,6 +7,7 @@ import com.whs542.lib.Toggler;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public abstract class RobotMain extends OpMode{
+
 	Drive drive;
     Intake intake;
 	LinearSlides linearSlides;

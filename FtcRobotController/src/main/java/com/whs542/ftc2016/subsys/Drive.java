@@ -32,16 +32,16 @@ public class Drive
 	public Drive(HardwareMap driveMap)
 	{
 		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
-        rightBackMotor = driveMap.dcMotor.get("drive_rb");
-        leftFrontMotor = driveMap.dcMotor.get("drive_lf");
-        leftBackMotor = driveMap.dcMotor.get("drive_lb");
-        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+        //rightBackMotor = driveMap.dcMotor.get("drive_rb");
+        //leftFrontMotor = driveMap.dcMotor.get("drive_lf");
+        //leftBackMotor = driveMap.dcMotor.get("drive_lb");
+        //leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        //leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
         rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
@@ -50,9 +50,9 @@ public class Drive
     public static void setLeftRightPower(double leftPower, double rightPower)
     {
         rightFrontMotor.setPower(rightPower);
-        rightBackMotor.setPower(rightPower);
-        leftFrontMotor.setPower(leftPower);
-        leftBackMotor.setPower(leftPower);
+        //rightBackMotor.setPower(rightPower);
+        //leftFrontMotor.setPower(leftPower);
+        //leftBackMotor.setPower(leftPower);
     }
 
     public boolean hasTargetHit(double target)

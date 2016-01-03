@@ -5,11 +5,13 @@ import com.whs542.lib.sensors.ProximityGP2Y0D810Z0F;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
 //TODO: Figure out subsystem actuators
 
 public class ScoringBox
 {
+    public static Servo boxExtendServo;
+    public static Servo boxFlapServo;
+
     private Servo doorServo;
     private Servo extendServo;
 
@@ -18,26 +20,95 @@ public class ScoringBox
 
     private ProximityGP2Y0D810Z0F proximitySensor;
 
+    boolean boxFlap = false; //Box flap, true = open, false = closed
+    boolean boxExtended;//Inner box extension, true = open, false = retracted
+
+    LinearSlides linearSlide;
 	public ScoringBox(HardwareMap boxMap)
 	{
-        doorServo = boxMap.servo.get("box_door");
-        extendServo = boxMap.servo.get("box_extend");
-
-        //proximitySensor = new ProximityGP2Y0D810Z0F(boxMap, 0);
-	}
-
-    public void openDoor()
-    {
-        doorServo.setPosition(doorOpen);
+        boxExtendServo = boxMap.servo.get("box_extend");    //Inner Box Extension
+        boxFlapServo = boxMap.servo.get("box_flap");    //Box Flap Servo
     }
 
-    public void closeDoor()
+
+    public void boxFlapState(com.qualcomm.robotcore.hardware.Gamepad gamepad)
     {
-        doorServo.setPosition(doorClosed);
+        if(linearSlide.linearSlideExtended == true)
+        {
+            if(gamepad.a)
+            {
+                boxFlapServo.setPosition(1.0);      //Change the servo value for actual box position
+                boxFlap = true;
+            }
+            else if(gamepad.b)
+            {
+                boxFlapServo.setPosition(0.0);      //Change the servo value for actual box position
+                boxFlap = false;
+            }
+        }
+        else
+        {
+
+        }
+    }
+    public void innerBoxExtension(com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    {
+        if(boxExtended = false && linearSlide.linearSlideExtended == true)
+        {
+            if(gamepad.x)
+            {
+                boxExtendServo.setPosition(1.0);
+                boxExtended = true;
+            }
+            else
+            {
+                boxExtendServo.setPosition(0.5);
+                boxExtended = false;
+            }
+        }
+        else if(boxExtended = true && linearSlide.linearSlideExtended == true)
+        {
+            if(gamepad.y)
+            {
+                boxExtendServo.setPosition(0.0);
+                boxExtended = false;
+            }
+            else
+            {
+                boxExtendServo.setPosition(0.5);
+                boxExtended = true;
+            }
+        }
+        else
+        {
+            boxExtended = false;
+        }
     }
 
-    public void setExtensionSpeed(double input)
+
+    //Use in Testing//
+    public void simpleBox(com.qualcomm.robotcore.hardware.Gamepad gamepad)
     {
-        extendServo.setPosition(input);
+        if(gamepad.a)
+        {
+            boxFlapServo.setPosition(0.5);
+        }
+        else if(gamepad.b)
+        {
+            boxFlapServo.setPosition(0.0);
+        }
+        else if(gamepad.x)
+        {
+            boxExtendServo.setPosition(1.0);
+        }
+        else if(gamepad.y)
+        {
+            boxExtendServo.setPosition(0.0);
+        }
+        else
+        {
+            boxExtendServo.setPosition(0.5);
+        }
     }
+    //Use in Testing//
 }

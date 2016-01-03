@@ -17,6 +17,7 @@ public class AutoOp extends RobotMain
 
     public void loop()
     {
+        if(time < 2.0)
         telemetry.addData("LF: %D", drive.encoderValues[drive.LF]);
         telemetry.addData("RF: %D", drive.encoderValues[drive.RF]);
         telemetry.addData("state", state);
@@ -69,6 +70,7 @@ public class AutoOp extends RobotMain
                         drive.setLeftRightPower(0.0, 0.0);
                     break;
             }
+            
 
         //Lucy's Code//
         /*
