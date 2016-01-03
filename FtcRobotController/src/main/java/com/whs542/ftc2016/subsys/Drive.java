@@ -25,8 +25,8 @@ public class Drive
 	private static DcMotor leftFrontMotor;
 	private static DcMotor leftBackMotor;
 
-    public double [] encoderZeroes;
-    public double [] encoderValues;
+    public static double [] encoderZeroes;
+    public static double [] encoderValues;
 
     public static int RF = 0;
     public static int RB = 1;
@@ -115,5 +115,4 @@ public class Drive
         encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
         encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
     }
->>>>>>> encoder
 }

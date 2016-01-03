@@ -9,11 +9,20 @@ public class CurrentACS711EX implements HardwareDevice
 	private double COUNTS_TO_AMPS = 1.0D;
 	private DeviceInterfaceModule module = null;
 	private int physicalPort = -1;
+	private double offset = 0.0;
 
 	public CurrentACS711EX(HardwareMap sensorMap, int physicalPort)
 	{
 		this.module = sensorMap.deviceInterfaceModule.get("cdim");
 		this.physicalPort = physicalPort;
+	}
+
+	public void setOffset()
+	{
+		for(int i=0; i<5; i++)
+		{
+			offset += (double)this.module.getAnalogInputValue(this.physicalPort)/5.0;
+		}
 	}
 
 	public String getDeviceName()
@@ -36,13 +45,13 @@ public class CurrentACS711EX implements HardwareDevice
 
 	}
 
-	public double getValue()
+	public double getCurrentValue()
 	{
 		return COUNTS_TO_AMPS * this.getRawValue();
 	}
 
 	public double getRawValue()
 	{
-		return this.module.getAnalogInputValue(this.physicalPort);
+		return this.module.getAnalogInputValue(this.physicalPort) - (int)offset;
 	}
 }

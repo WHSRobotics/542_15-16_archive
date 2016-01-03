@@ -10,6 +10,20 @@ public class Toggler
 	private int state = 0;
 	private int numberOfStates = 0;
 
+	/*
+	//What does it control?
+	public Toggler(int state)
+	{
+
+	}
+
+	//What does it control/flip?
+	public Toggler(boolean state)
+	{
+
+	}
+	*/
+
 	public Toggler(int stateNum, int initState)
 	{
 		numberOfStates = stateNum;

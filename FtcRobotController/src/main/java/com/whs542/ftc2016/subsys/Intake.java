@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Intake
 {
+	public int INTAKE_EXTENSION_STATE = 0;
+	public int INTAKE_RUNNING_STATE = 0;
 	// ----------------------------------
 	// Intake Variables
 	// ----------------------------------
@@ -18,9 +20,6 @@ public class Intake
 
 	private DcMotor intakeMotor;
 	private Servo dropDownServo;
-
-	private double intakeRetractedPosition;
-	private double intakeExtendedPosition;
 
 	// ----------------------------------
 	// Intake Constructor
@@ -40,18 +39,28 @@ public class Intake
 	// Intake Methods
 	// ----------------------------------
 
-	public void retractIntake()
+	public void update()
 	{
-		dropDownServo.setPosition(intakeRetractedPosition);
-	}
-	
-	public void extendIntake()
-	{
-		dropDownServo.setPosition(intakeExtendedPosition);
-	}
+		switch(INTAKE_EXTENSION_STATE)
+		{
+			case 1:
+				dropDownServo.setPosition(1.0);
+			break;
 
-	public void intakePowerSet(double power)
-	{
-		intakeMotor.setPower(power);
+			case 0:
+				dropDownServo.setPosition(0.0);
+			break;
+		}
+
+		switch(INTAKE_RUNNING_STATE)
+		{
+			case 1:
+				intakeMotor.setPower(1.0);
+			break;
+
+			case 0:
+				intakeMotor.setPower(0.0);
+			break;
+		}
 	}
 }

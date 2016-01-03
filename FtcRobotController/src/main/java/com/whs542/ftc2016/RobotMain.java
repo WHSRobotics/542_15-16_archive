@@ -2,7 +2,8 @@ package com.whs542.ftc2016;
 
 import com.whs542.lib.sensors.*;
 import com.whs542.ftc2016.subsys.*;
-import com.whs542.lib.Toggler;
+import com.whs542.lib.*;
+import com.whs542.ftc2016.threads.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -15,6 +16,8 @@ public abstract class RobotMain extends OpMode
 
 	SpeedControl control;
 
+    Thread driveControl;
+
 	public void init()
 	{
 		//
@@ -25,13 +28,7 @@ public abstract class RobotMain extends OpMode
 
 		drive = new Drive(hardwareMap);
 		//intake = new Intake(hardwareMap);
-		linearSlides = new LinearSlides(hardwareMap);
+		//linearSlides = new LinearSlides(hardwareMap);
 		//scoringBox = new ScoringBox(hardwareMap);
-	}
-	
-	public void stop()
-	{
-
-	}
-
+    }
 }
