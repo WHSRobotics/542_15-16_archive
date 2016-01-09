@@ -14,8 +14,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class TeleOp extends OpMode
 {
     WHSRobot bot;
-    Toggler lock = new Toggler(2);
-    Toggler shift = new Toggler(2);
 
     public void init()
     {
@@ -30,42 +28,15 @@ public class TeleOp extends OpMode
 
     public void loop()
     {
-        shift.stateInc(gamepad1.b);
-        switch(shift.currentState())
-        {
-            case 0:
-                bot.slides.shiftToSpeed();
-                break;
-
-            case 1:
-                bot.slides.shiftToTorque();
-                break;
-        }
-
-        lock.stateInc(gamepad1.a);
-        switch(lock.currentState())
-        {
-            case 0:
-                bot.slides.lock();
-                break;
-
-            case 1:
-                bot.slides.unlock();
-                break;
-        }
-
-        bot.slides.slideState = (gamepad1.dpad_up)
-            ? 1
-            : (gamepad1.dpad_down)
-                ? 2
-                : 0;
+        bot.slides.setLock(gamepad1.a);
+        bot.slides.setShifter(gamepad1.b);
         //bot.intake.update();
-        bot.slides.setTransmissionPower(1.0);
+        bot.slides.setTransmissionPower(1.0, gamepad1.dpad_up, gamepad1.dpad_down);
         bot.drive.setLeftRightPower(gamepad1.left_stick_y * 7.0/9.0, gamepad1.right_stick_y * 7.0/9.0);
 
-        telemetry.addData("slideState" , bot.slides.slideState);
+        //telemetry.addData("slideState");
         telemetry.addData("left" , gamepad1.left_stick_y);
-        telemetry.addData("lock shift", lock.currentState() + " " + shift.currentState());
+        telemetry.addData("lock shift", bot.slides.lockSwitch.currentState() + " " + bot.slides.shiftSwitch.currentState());
     }
 
     public void stop()

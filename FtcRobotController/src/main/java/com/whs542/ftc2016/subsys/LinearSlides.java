@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.whs542.ftc2016.RobotMain;
 
+import com.whs542.lib.Toggler;
 //
 // Linear Slides Subsystem Class
 //
@@ -19,8 +19,8 @@ public class LinearSlides
     // ----------------------------------
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
-
-    public static int slideState;
+    public static Toggler lockSwitch = new Toggler(2);
+    public static Toggler shiftSwitch = new Toggler(2);
 
     private static DcMotor anglingMotor;
 
@@ -71,24 +71,52 @@ public class LinearSlides
         return 0.0;
     }
 
-    public void setTransmissionPower(double input)
+    public void setLock(boolean trigger)
     {
-        switch(slideState)
+        lockSwitch.stateInc(trigger);
+        switch(lockSwitch.currentState())
         {
             case 0:
-                leftExtensionMotor.setPower(0.0);
-                rightExtensionMotor.setPower(0.0);
-            break;
+                lock();
+                break;
 
             case 1:
-                leftExtensionMotor.setPower(input);
-                rightExtensionMotor.setPower(input);
-            break;
+                unlock();
+                break;
+        }
+    }
 
-            case 2:
-                leftExtensionMotor.setPower(-input);
-                rightExtensionMotor.setPower(-input);
-            break;
+    public void setShifter(boolean trigger)
+    {
+        shiftSwitch.stateInc(trigger);
+        switch(shiftSwitch.currentState())
+        {
+            case 0:
+                shiftToSpeed();
+                break;
+
+            case 1:
+                shiftToTorque();
+                break;
+        }
+    }
+
+    public void setTransmissionPower(double input, boolean up, boolean down)
+    {
+        if(up)
+        {
+            leftExtensionMotor.setPower(input);
+            rightExtensionMotor.setPower(input);
+        }
+        else if(down)
+        {
+            leftExtensionMotor.setPower(-input);
+            rightExtensionMotor.setPower(-input);
+        }
+        else
+        {
+            leftExtensionMotor.setPower(0.0);
+            rightExtensionMotor.setPower(0.0);
         }
     }
 
@@ -115,7 +143,6 @@ public class LinearSlides
 
     public void shiftToTorque()
     {
-        fullLength = getExtensionLength();
     	shiftServo.setPosition(1.0);
     }
 
@@ -124,6 +151,7 @@ public class LinearSlides
     	shiftServo.setPosition(0.4);
     }
 
+    //I suspect lock is too much, test 0.9 as a value
     public void lock()
     {
         lockServo.setPosition(1.0);

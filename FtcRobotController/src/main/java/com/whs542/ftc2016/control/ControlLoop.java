@@ -30,4 +30,10 @@ public class ControlLoop
 		x_hat = ((a.times(x_hat)).plus(b.times(u))).plus(l.times(y.minus(c.times(x_hat))));
 		return r.minus(k.times(x_hat));
 	}
+
+	// Calculate x_hat
+		// x_hat = A * x_hat + B * u + L * (y-C*x_hat)
+	// Generate u from x_hat
+		// r - K * x_hat
 }
+

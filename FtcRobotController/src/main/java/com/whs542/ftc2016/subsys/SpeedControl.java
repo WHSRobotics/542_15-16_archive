@@ -9,21 +9,34 @@ import com.whs542.ftc2016.RobotMain;
  */
 public class SpeedControl
 {
+    public double power;
+
     public SpeedControl()
     {
 
     }
 
-    public static void slowDownMotor(DcMotor motorToSlowDown)
+    public void slowMotorLinearly(DcMotor motorToSlowDown)
     {
         //Slow down which motor you want to slow down
-        double power = motorToSlowDown.getPower();
+        power = motorToSlowDown.getPower();
+
         while(Math.abs(power) > 0.0000001)
         {
             motorToSlowDown.setPower(power/2);
         }
 
         motorToSlowDown.setPower(0);
+    }
+
+    public void trapezoidalVelocity()
+    {
+
+    }
+
+    public void trapezoidalAcceleration()
+    {
+
     }
 
     public static void speedUpMotor(DcMotor motorToSpeedUp, double powerYouWant)
