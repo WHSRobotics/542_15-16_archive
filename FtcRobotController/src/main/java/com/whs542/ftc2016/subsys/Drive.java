@@ -3,6 +3,8 @@ package com.whs542.ftc2016.subsys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.whs542.lib.*;
 
 //
 // Drive Subsystem Class
@@ -14,11 +16,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive
 {
-
+    private Alliance color;
     private static final double WHEEL_DIAMETER = 15.24;
     private static final double TICKS_TO_ROT = 1.0/1120.0;
     private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
     private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
+
+    private static Servo leftChurroHook;
+    private static Servo rightChurroHook;
+    private static Servo blueSwitcher;
+    private static Servo redSwitcher;
+
+    private Toggler switcherSwitch = new Toggler(2);
+    private Toggler hookSwitch = new Toggler(2);
 
 	private static DcMotor rightFrontMotor;
 	private static DcMotor rightBackMotor;
@@ -38,8 +48,13 @@ public class Drive
 	// ----------------------------------
 	// -Initializes the hardware references
 
-	public Drive(HardwareMap driveMap)
+	public Drive(HardwareMap driveMap, Alliance side)
 	{
+        rightChurroHook = driveMap.servo.get("drive_rch");
+        leftChurroHook = driveMap.servo.get("drive_lch");
+        blueSwitcher = driveMap.servo.get("drive_bs");
+        redSwitcher = driveMap.servo.get("drive_rs");
+
 		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
         rightBackMotor = driveMap.dcMotor.get("drive_rb");
         leftFrontMotor = driveMap.dcMotor.get("drive_lf");
@@ -54,6 +69,69 @@ public class Drive
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
+        color = side;
+    }
+
+    //Distribute Alliance color to necessary classes
+    public void setSwitcher(boolean trigger)
+    {
+        switcherSwitch.changeState(trigger);
+        switch(color)
+        {
+            case RED:
+                //closed blue
+                blueSwitcher.setPosition(0.0);
+                switch(switcherSwitch.currentState())
+                {
+                    case 0:
+                        //closed
+                        redSwitcher.setPosition(0.9);
+                        break;
+
+                    case 1:
+                        //open
+                        redSwitcher.setPosition(0.15);
+                        break;
+                }
+                break;
+
+            case BLUE:
+                //closed red
+                redSwitcher.setPosition(0.9);
+                switch(switcherSwitch.currentState())
+                {
+                    case 0:
+                        //closed
+                        blueSwitcher.setPosition(0.0);
+                        break;
+
+                    case 1:
+                        //open
+                        blueSwitcher.setPosition(0.7);
+                        break;
+                }
+                break;
+        }
+    }
+
+    public void setHook(boolean trigger)
+    {
+        hookSwitch.changeState(trigger);
+        switch(hookSwitch.currentState())
+        {
+            case 0:
+                //unhooked
+                leftChurroHook.setPosition(0.0);
+                rightChurroHook.setPosition(1.0);
+                break;
+
+            case 1:
+                //hooked
+                //90 degrees left - 0.45
+                //90 degrees right 0.4
+                leftChurroHook.setPosition(1.0);
+                rightChurroHook.setPosition(0.0);
+        }
     }
 
     // ----------------------------------

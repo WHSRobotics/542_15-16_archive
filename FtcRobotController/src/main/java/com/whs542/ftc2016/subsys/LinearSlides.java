@@ -1,5 +1,6 @@
 package com.whs542.ftc2016.subsys;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -22,6 +23,9 @@ public class LinearSlides
     public static Toggler lockSwitch = new Toggler(2);
     public static Toggler shiftSwitch = new Toggler(2);
 
+    public static Toggler coarseAngler = new Toggler(7,0);
+    public static Toggler fineAngler = new Toggler(5,0);
+
     private static DcMotor anglingMotor;
 
 	private static DcMotor leftExtensionMotor;
@@ -31,14 +35,14 @@ public class LinearSlides
 
     public static double fullLength;
 
+    public static double highestMinimum;
+
     //Pulley Circumference = 3pi in/2 rot
     //Speed Gear In to Out = 15rot/7rot
     //Torque Gear In to Out = 15rot/28rot
 
     private static final double TORQUE_TICK_TO_IN = 9.0*Math.PI/12544.0;
     private static final double SPEED_TICK_TO_IN = 9.0*Math.PI/3136.0;
-
-    private static boolean speedMode;
 
     // ----------------------------------
     // Intake Constructor
@@ -60,6 +64,8 @@ public class LinearSlides
         anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        highestMinimum = anglingMotor.getCurrentPosition();
     }
 
     // ----------------------------------
@@ -68,50 +74,124 @@ public class LinearSlides
 
     public double getAngle()
     {
-        return 0.0;
+        //Angle is a function of String length
+        //For one rotation of the pulley, there is 4 rotation of the motor, which is a AM-NV20 with 560 pulses per rotation
+        return Math.asin((Math.pow((Math.PI * anglingMotor.getCurrentPosition()/1120.0 - 0.01615593741),2.0) - 33.6177)/-31.8308393386)+0.577018458248;
+    }
+
+    //calibratory functions needed
+    public void calibrateSlides()
+    {
+
+    }
+
+    public void calibrateAngler()
+    {
+
+    }
+
+    public void setAngler(boolean up, boolean down, boolean fine)
+    {
+        if(fine)
+        {
+            fineAngler.changeState(up,down);
+        }
+        else
+        {
+            coarseAngler.changeState(up,down);
+        }
+        //Add more conditions so that we can zero out automatically to allow easier control
+        setAngle(29.0*coarseAngler.currentState()/3.0 + 5.0 - 29.0*fineAngler.currentState()/15.0);
+
+    }
+
+    //Takes in a degree value
+    //need some kind of controller or target matched function
+    public void setAngle(double angle)
+    {
+        if(angle != getAngle())
+        {
+            //FIX THIS
+            //anglingMotor.setPower((angle - getAngle());
+        }
+        else
+        {
+            anglingMotor.setPower(0.0);
+        }
+    }
+
+    public void setAngle(double input, boolean up, boolean down)
+    {
+        if(up)
+        {
+            anglingMotor.setPower(input);
+        }
+        else if(down)
+        {
+            anglingMotor.setPower(-input);
+        }
+        else
+        {
+            anglingMotor.setPower(0.0);
+        }
     }
 
     public void setLock(boolean trigger)
     {
-        lockSwitch.stateInc(trigger);
+        lockSwitch.changeState(trigger);
         switch(lockSwitch.currentState())
         {
             case 0:
-                lock();
+                //Locked
+                //I suspect lock is too much, test 0.9 as a value
+                lockServo.setPosition(1.0);
                 break;
 
             case 1:
-                unlock();
+                //Unlocked
+                lockServo.setPosition(0.5);
                 break;
         }
     }
 
     public void setShifter(boolean trigger)
     {
-        shiftSwitch.stateInc(trigger);
+        shiftSwitch.changeState(trigger);
         switch(shiftSwitch.currentState())
         {
             case 0:
-                shiftToSpeed();
+                //Speed
+                shiftServo.setPosition(0.4);
+
+                //Unlocked
+                //lockServo.setPosition(0.5);
                 break;
 
             case 1:
-                shiftToTorque();
+                //Torque
+                shiftServo.setPosition(1.0);
+
+                //Locked
+                //I suspect lock is too much, test 0.9 as a value
+                //lockServo.setPosition(1.0);
                 break;
         }
     }
 
+    //Set extension speed
     public void setTransmissionPower(double input, boolean up, boolean down)
     {
+        //Test this software preventing movement back when locked
+        //&& shiftSwitch.currentState() == 0
         if(up)
         {
-            leftExtensionMotor.setPower(input);
-            rightExtensionMotor.setPower(input);
+            leftExtensionMotor.setPower(-input * 7.0/9.0);
+            rightExtensionMotor.setPower(-input * 7.0/9.0);
         }
         else if(down)
         {
-            leftExtensionMotor.setPower(-input);
-            rightExtensionMotor.setPower(-input);
+            leftExtensionMotor.setPower(input * 7.0/9.0);
+            rightExtensionMotor.setPower(input * 7.0/9.0);
         }
         else
         {
@@ -139,26 +219,5 @@ public class LinearSlides
     public void setShiftServoPosition(double input)
     {
         shiftServo.setPosition(Math.abs(input));
-    }
-
-    public void shiftToTorque()
-    {
-    	shiftServo.setPosition(1.0);
-    }
-
-    public void shiftToSpeed()
-    {
-    	shiftServo.setPosition(0.4);
-    }
-
-    //I suspect lock is too much, test 0.9 as a value
-    public void lock()
-    {
-        lockServo.setPosition(1.0);
-    }
-
-    public void unlock()
-    {
-        lockServo.setPosition(0.5);
     }
 }

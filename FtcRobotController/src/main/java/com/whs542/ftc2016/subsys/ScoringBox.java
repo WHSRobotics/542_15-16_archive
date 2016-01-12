@@ -1,7 +1,7 @@
 package com.whs542.ftc2016.subsys;
 
 import com.whs542.lib.sensors.*;
-import com.whs542.lib.Toggler;
+import com.whs542.lib.*;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,10 +17,13 @@ public class ScoringBox
 	// Scoring Box Variables
 	// ----------------------------------
 
+    private Alliance color;
     private Servo doorServo;
     private Servo extendServo;
 
-    private ProximityGP2Y0D810Z0F proximitySensor;
+    private ProximityGP2Y0D810Z0F debris1;
+    private ProximityGP2Y0D810Z0F debris2;
+    private ProximityGP2Y0D810Z0F debris3;
 
     private CurrentACS711EX boxExtensionDetector;
 
@@ -31,13 +34,18 @@ public class ScoringBox
     // Scoring Box Constructor
     // ----------------------------------
 
-	public ScoringBox(HardwareMap boxMap)
+	public ScoringBox(HardwareMap boxMap, Alliance side)
 	{
         doorServo = boxMap.servo.get("box_door");
         extendServo = boxMap.servo.get("box_extend");
 
-        proximitySensor = new ProximityGP2Y0D810Z0F(boxMap, 0);
+        /*debris1 = new ProximityGP2Y0D810Z0F(boxMap, -1);
+        debris2 = new ProximityGP2Y0D810Z0F(boxMap, -1);
+        debris3 = new ProximityGP2Y0D810Z0F(boxMap, -1);*/
+
         boxExtensionDetector = new CurrentACS711EX(boxMap, 0);
+
+        color = side;
 	}
 
 	// ----------------------------------
@@ -46,24 +54,39 @@ public class ScoringBox
 
     public void setDoor(boolean trigger)
     {
-        doorSwitch.stateInc(trigger);
+        doorSwitch.changeState(trigger);
         switch(doorSwitch.currentState())
         {
             case 0:
                 //Close Door
-                doorServo.setPosition(0.85);
+                if(color == Alliance.RED)
+                {
+                    doorServo.setPosition(0.8);
+
+                }
+                else if(color == Alliance.BLUE)
+                {
+                    doorServo.setPosition(0.0);
+                }
                 break;
 
             case 1:
                 //Open Door
-                doorServo.setPosition(0.6);
+                if(color == Alliance.RED) {
+                    doorServo.setPosition(0.6);
+                }
+                else if (color == Alliance.BLUE)
+                {
+                    doorServo.setPosition(0.3);
+                }
                 break;
         }
     }
 
+    //Alter to accommodate both boxes
     public void setExtension(boolean trigger)
     {
-        extensionSwitch.stateInc(trigger);
+        extensionSwitch.changeState(trigger);
         switch(extensionSwitch.currentState())
         {
             case 1:
@@ -104,13 +127,37 @@ public class ScoringBox
         extendServo.setPosition(input);
     }
 
-    public boolean boxFullyRetracted()
+    public void setDoorPosition(double input)
     {
-        return (boxExtensionDetector.getRawValue() < 260);
+        doorServo.setPosition(Math.abs(input));
     }
 
-    public boolean boxFullyExtended()
+    public boolean boxFullyExtended() {
+        if (color == Alliance.RED)
+        {
+            return (boxExtensionDetector.getRawValue() < 260);
+        }
+        else if (color == Alliance.BLUE)
+        {
+            return (boxExtensionDetector.getRawValue() < -1);
+        }
+        else
+        {
+            throw new NullPointerException("No Alliance Specified");
+        }
+    }
+
+    public boolean boxFullyRetracted()
     {
-        return (boxExtensionDetector.getRawValue() > 610);
+        if(color == Alliance.RED) {
+            return (boxExtensionDetector.getRawValue() > 610);
+        } else if (color == Alliance.BLUE)
+        {
+            return (boxExtensionDetector.getRawValue() > -1);
+        }
+        else
+        {
+            throw new NullPointerException("No Alliance Specified");
+        }
     }
 }

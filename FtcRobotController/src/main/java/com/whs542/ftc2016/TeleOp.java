@@ -17,8 +17,7 @@ public class TeleOp extends OpMode
 
     public void init()
     {
-        bot = new WHSRobot(hardwareMap);
-
+        bot = new WHSRobot(hardwareMap, Alliance.BLUE);
     }
 
     public void start()
@@ -28,15 +27,28 @@ public class TeleOp extends OpMode
 
     public void loop()
     {
-        bot.slides.setLock(gamepad1.a);
-        bot.slides.setShifter(gamepad1.b);
-        //bot.intake.update();
-        bot.slides.setTransmissionPower(1.0, gamepad1.dpad_up, gamepad1.dpad_down);
-        bot.drive.setLeftRightPower(gamepad1.left_stick_y * 7.0/9.0, gamepad1.right_stick_y * 7.0/9.0);
+    //drive
+        //driving
+            bot.drive.setLeftRightPower(gamepad1.left_stick_y * 7.0/9.0, gamepad1.right_stick_y * 7.0/9.0);
+        //Switcher
+            bot.drive.setSwitcher(gamepad1.x);
+        //Hook
+            bot.drive.setHook(gamepad1.y);
 
-        //telemetry.addData("slideState");
-        telemetry.addData("left" , gamepad1.left_stick_y);
-        telemetry.addData("lock shift", bot.slides.lockSwitch.currentState() + " " + bot.slides.shiftSwitch.currentState());
+    //Slides
+            bot.slides.setShifter(gamepad2.b);
+            bot.slides.setAngle(1.0, gamepad2.dpad_up, gamepad2.dpad_down);
+            bot.slides.setTransmissionPower(1.0, gamepad2.left_bumper, gamepad2.left_trigger == 1.0);
+
+        //Box
+        //Door
+            //bot.box.setDoor(gamepad1.b);
+        //Extension
+            //bot.box.setExtension(gamepad1.a);
+
+        //Intake
+            bot.intake.setRun(gamepad1.left_bumper,gamepad1.left_trigger == 1.0);
+            //bot.intake.setDrop(gamepad1.x);
     }
 
     public void stop()

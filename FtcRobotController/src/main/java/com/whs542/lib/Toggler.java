@@ -41,57 +41,78 @@ public class Toggler
 		return state;
 	}
 
-	public int TotalStates()
+	public int howManyStates()
 	{
 		return numberOfStates;
 	}
-	
-	//This boolean trigger can have an expression with && or || for further functionality
-	public void stateInc(boolean inc)
-	{
-		if(inc)
-		{
-			if(!pressedInc)
-			{
-				if(limited)
-				{
-					state = ((state + 1) != numberOfStates)
-							? (state + 1) % numberOfStates
-							:state;
-				}
-				else {
-					state = (state + 1) % numberOfStates;
-				}
-			}
-			pressedInc = true;
-		}
-		else
-		{
-			pressedInc = false;
-		}
-	}
 
-	public void stateDec(boolean dec)
-	{
-		if(dec)
-		{
-			if(!pressedDec)
-			{
-				if(limited)
-				{
-					state = ((state - 1) != -1)
-							? ((state - 1) % numberOfStates+numberOfStates)%numberOfStates
-							:state;
-				}
-				else {
-					state = ((state - 1) % numberOfStates+numberOfStates)%numberOfStates;
-				}
-			}
-			pressedDec = true;
-		}
-		else
-		{
-			pressedDec = false;
-		}
-	}
+    //This boolean trigger can have an expression with && or || for further functionality
+    public void changeState(boolean inc, boolean dec)
+    {
+        if(inc)
+        {
+            if(!pressedInc)
+            {
+                if(limited)
+                {
+                    state = ((state + 1) != numberOfStates)
+                            ? (state + 1) % numberOfStates
+                            :state;
+                }
+                else {
+                    state = (state + 1) % numberOfStates;
+                }
+            }
+            pressedInc = true;
+        }
+        else {
+            pressedInc = false;
+        }
+
+        if(dec)
+        {
+            if(!pressedDec)
+            {
+                if(limited)
+                {
+                    state = ((state - 1) != -1)
+                            ? ((state - 1) % numberOfStates+numberOfStates)%numberOfStates
+                            :state;
+                }
+                else {
+                    state = ((state - 1) % numberOfStates+numberOfStates)%numberOfStates;
+                }
+            }
+            pressedDec = true;
+        }
+        else
+        {
+            pressedDec = false;
+        }
+    }
+
+    //This boolean trigger can have an expression with && or || for further functionality
+    public void changeState(boolean inc)
+    {
+        if(inc)
+        {
+            if(!pressedInc)
+            {
+                if(limited)
+                {
+                    state = ((state + 1) != numberOfStates)
+                            ? (state + 1) % numberOfStates
+                            :state;
+                }
+                else {
+                    state = (state + 1) % numberOfStates;
+                }
+            }
+            pressedInc = true;
+        }
+        else
+        {
+            pressedInc = false;
+        }
+    }
 }

@@ -26,9 +26,9 @@ public abstract class RobotMain extends OpMode
 		// Don't have stuff commented here but not uncommented in the loop
 		// Null pointer exception will be thrown at runtime due to no hardware object reference
 
-		drive = new Drive(hardwareMap);
+		drive = new Drive(hardwareMap, Alliance.RED);
 		//intake = new Intake(hardwareMap);
 		//linearSlides = new LinearSlides(hardwareMap);
-		//scoringBox = new ScoringBox(hardwareMap);
+		scoringBox = new ScoringBox(hardwareMap, Alliance.RED);
     }
 }
