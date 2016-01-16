@@ -16,17 +16,17 @@ public class SpeedControl
 
     }
 
-    public void slowMotorLinearly(DcMotor motor) {
+    public void slowMotorLinearly(DcMotor motorToSlowDown)
+    {
         //Slow down which motor you want to slow down
-        power = motor.getPower();
+        power = motorToSlowDown.getPower();
 
-        while (Math.abs(power) > 0.0000001)
+        while(Math.abs(power) > 0.0000001)
         {
-            power *= .8;
-            motor.setPower(power);
+            motorToSlowDown.setPower(power/2);
         }
 
-        motor.setPower(0);
+        motorToSlowDown.setPower(0);
     }
 
     public void trapezoidalVelocity()
@@ -39,17 +39,15 @@ public class SpeedControl
 
     }
 
-    public static void speedUpMotor(DcMotor motor, double desiredPower)
+    public static void speedUpMotor(DcMotor motorToSpeedUp, double powerYouWant)
     {
         //Speed up the motor you want to speed up
-        double power = motor.getPower();
-        while(Math.abs(power) < Math.abs(desiredPower))
+        double currentPower = motorToSpeedUp.getPower();
+        while(currentPower < powerYouWant)
         {
-            power *= 1.3;
-            motor.setPower(power);
+            motorToSpeedUp.setPower(currentPower * 1.3);
         }
 
-        motor.setPower(desiredPower);
-
+        motorToSpeedUp.setPower(powerYouWant);
     }
 }
