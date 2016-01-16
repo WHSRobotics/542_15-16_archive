@@ -23,7 +23,7 @@ public class Intake
 	private DcMotor intakeMotor;
 	private Servo dropDownServo;
 
-    private Toggler runSwitch = new Toggler(3, 1);
+    private Toggler runSwitch = new Toggler(2);
     private Toggler dropSwitch = new Toggler(2);
 
 	// ----------------------------------
@@ -65,32 +65,19 @@ public class Intake
         }
     }
 
-    public void setRun(boolean up, boolean down)
+    public void setRun(boolean trigger, boolean reverse)
     {
-        runSwitch.changeState(up, down);
+        runSwitch.changeState(trigger);
         switch(runSwitch.currentState())
         {
             case 0:
-                if(dropSwitch.currentState() == 1) {
-                    intakeMotor.setPower(-1.0);
-                } else
-                {
-                    intakeMotor.setPower(0.0);
-                }
+                //Intake Off
+                intakeMotor.setPower(reverse ? -1.0 :0.0);
             break;
 
             case 1:
-                intakeMotor.setPower(0.0);
-            break;
-
-            case 2:
-                if(dropSwitch.currentState() == 1) {
-                    intakeMotor.setPower(-1.0);
-                }
-                else
-                {
-                    intakeMotor.setPower(0.0);
-                }
+                //Intake Running
+                intakeMotor.setPower(reverse ? -1.0: 1.0);
             break;
         }
     }

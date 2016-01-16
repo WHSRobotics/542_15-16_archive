@@ -58,28 +58,40 @@ public class ScoringBox
         switch(doorSwitch.currentState())
         {
             case 0:
-                //Close Door
-                if(color == Alliance.RED)
-                {
-                    doorServo.setPosition(0.8);
-
-                }
-                else if(color == Alliance.BLUE)
-                {
-                    doorServo.setPosition(0.0);
-                }
-                break;
+                closeDoor();
+            break;
 
             case 1:
-                //Open Door
-                if(color == Alliance.RED) {
-                    doorServo.setPosition(0.6);
-                }
-                else if (color == Alliance.BLUE)
-                {
-                    doorServo.setPosition(0.3);
-                }
-                break;
+                openDoor();
+            break;
+        }
+    }
+
+    public void closeDoor()
+    {
+        switch(color)
+        {
+            case RED:
+                doorServo.setPosition(0.8);
+            break;
+
+            case BLUE:
+                doorServo.setPosition(0.0);
+            break;
+        }
+    }
+
+    public void openDoor()
+    {
+        switch(color)
+        {
+            case RED:
+                doorServo.setPosition(0.6);
+            break;
+
+            case BLUE:
+                doorServo.setPosition(0.3);
+            break;
         }
     }
 
@@ -117,6 +129,22 @@ public class ScoringBox
         }
     }
 
+    public String getDoorState()
+    {
+        String state = null;
+        switch(doorSwitch.currentState())
+        {
+            case 0:
+                state = "Closed";
+            break;
+
+            case 1:
+                state = "Open";
+            break;
+        }
+        return state;
+    }
+
     public double getExtensionValue()
     {
         return boxExtensionDetector.getRawValue();
@@ -133,31 +161,33 @@ public class ScoringBox
     }
 
     public boolean boxFullyExtended() {
-        if (color == Alliance.RED)
+        boolean output = false;
+        switch(color)
         {
-            return (boxExtensionDetector.getRawValue() < 260);
+            case RED:
+                output = (boxExtensionDetector.getRawValue() < 260);
+            break;
+
+            case BLUE:
+                output = (boxExtensionDetector.getRawValue() < -1);
+            break;
         }
-        else if (color == Alliance.BLUE)
-        {
-            return (boxExtensionDetector.getRawValue() < -1);
-        }
-        else
-        {
-            throw new NullPointerException("No Alliance Specified");
-        }
+        return output;
     }
 
     public boolean boxFullyRetracted()
     {
-        if(color == Alliance.RED) {
-            return (boxExtensionDetector.getRawValue() > 610);
-        } else if (color == Alliance.BLUE)
+        boolean output = false;
+        switch(color)
         {
-            return (boxExtensionDetector.getRawValue() > -1);
+            case RED:
+                output = (boxExtensionDetector.getRawValue() > 610);
+            break;
+
+            case BLUE:
+                output = (boxExtensionDetector.getRawValue() > -1);
+            break;
         }
-        else
-        {
-            throw new NullPointerException("No Alliance Specified");
-        }
+        return output;
     }
 }

@@ -21,7 +21,7 @@ public class LinearSlides
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
     public static Toggler lockSwitch = new Toggler(2);
-    public static Toggler shiftSwitch = new Toggler(2);
+    public static Toggler shiftSwitch = new Toggler(3);
 
     public static Toggler coarseAngler = new Toggler(7,0);
     public static Toggler fineAngler = new Toggler(5,0);
@@ -120,15 +120,15 @@ public class LinearSlides
         }
     }
 
-    public void setAngle(double input, boolean up, boolean down)
+    public void setAngle(boolean up, boolean down)
     {
         if(up)
         {
-            anglingMotor.setPower(input);
+            anglingMotor.setPower(7.0/9.0);
         }
         else if(down)
         {
-            anglingMotor.setPower(-input);
+            anglingMotor.setPower(-3.5/9.0);
         }
         else
         {
@@ -142,16 +142,60 @@ public class LinearSlides
         switch(lockSwitch.currentState())
         {
             case 0:
-                //Locked
-                //I suspect lock is too much, test 0.9 as a value
-                lockServo.setPosition(1.0);
-                break;
+                unlock();
+            break;
 
             case 1:
-                //Unlocked
-                lockServo.setPosition(0.5);
-                break;
+                lock();
+            break;
         }
+    }
+
+    public void lock()
+    {
+        lockServo.setPosition(0.5);
+    }
+
+    public void unlock()
+    {
+        //I suspect lock is too much, test 0.9 as a value
+        lockServo.setPosition(1.0);
+    }
+
+    public String getShiftState()
+    {
+        String state = "null";
+        switch(shiftSwitch.currentState())
+        {
+            case 0:
+                state = "Speed";
+            break;
+
+            case 1:
+                state = "Torque";
+            break;
+
+            case 2:
+                state = "Neutral";
+            break;
+        }
+        return state;
+    }
+
+    public String getLockState()
+    {
+        String state = "null";
+        switch(lockSwitch.currentState())
+        {
+            case 0:
+                state = "Unlocked";
+            break;
+
+            case 1:
+                state = "Locked";
+            break;
+        }
+        return state;
     }
 
     public void setShifter(boolean trigger)
@@ -160,49 +204,53 @@ public class LinearSlides
         switch(shiftSwitch.currentState())
         {
             case 0:
-                //Speed
-                shiftServo.setPosition(0.4);
-
-                //Unlocked
-                //lockServo.setPosition(0.5);
-                break;
+                speed();
+            break;
 
             case 1:
-                //Torque
-                shiftServo.setPosition(1.0);
+                torque();
+            break;
 
-                //Locked
-                //I suspect lock is too much, test 0.9 as a value
-                //lockServo.setPosition(1.0);
-                break;
+            case 2:
+                neutral();
+            break;
         }
     }
 
-    //Set extension speed
-    public void setTransmissionPower(double input, boolean up, boolean down)
+    public void speed()
     {
-        //Test this software preventing movement back when locked
-        //&& shiftSwitch.currentState() == 0
+        shiftServo.setPosition(0.2);
+    }
+
+    public void torque()
+    {
+        shiftServo.setPosition(0.9);
+    }
+
+    public void neutral()
+    {
+        shiftServo.setPosition(0.5);
+    }
+
+    //Set extension speed
+    public void setTransmissionPower(boolean up, boolean down)
+    {
+        //&& lockSwitch.currentState() == 0
         if(up)
         {
-            leftExtensionMotor.setPower(-input * 7.0/9.0);
-            rightExtensionMotor.setPower(-input * 7.0/9.0);
+            leftExtensionMotor.setPower(-1.0 * 7.0/9.0);
+            rightExtensionMotor.setPower(-1.0 * 7.0/9.0);
         }
         else if(down)
         {
-            leftExtensionMotor.setPower(input * 7.0/9.0);
-            rightExtensionMotor.setPower(input * 7.0/9.0);
+            leftExtensionMotor.setPower(1.0 * 7.0/9.0);
+            rightExtensionMotor.setPower(1.0 * 7.0/9.0);
         }
         else
         {
             leftExtensionMotor.setPower(0.0);
             rightExtensionMotor.setPower(0.0);
         }
-    }
-
-    public void setLockServo(double input)
-    {
-        lockServo.setPosition(Math.abs(input));
     }
 
     public double getExtensionLength()
@@ -215,6 +263,12 @@ public class LinearSlides
         //get last speed extension length
         return TORQUE_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
     }
+
+    public void setLockServo(double input)
+    {
+        lockServo.setPosition(Math.abs(input));
+    }
+
 
     public void setShiftServoPosition(double input)
     {

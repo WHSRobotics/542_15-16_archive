@@ -29,6 +29,7 @@ public class Drive
 
     private Toggler switcherSwitch = new Toggler(2);
     private Toggler hookSwitch = new Toggler(2);
+    private Toggler orientationSwitch = new Toggler(2);
 
 	private static DcMotor rightFrontMotor;
 	private static DcMotor rightBackMotor;
@@ -76,41 +77,39 @@ public class Drive
     public void setSwitcher(boolean trigger)
     {
         switcherSwitch.changeState(trigger);
+        switch(switcherSwitch.currentState())
+        {
+            case 0:
+                //closed
+                switcherUp();
+            break;
+
+            case 1:
+                //open
+                switcherDown();
+            break;
+        }
+    }
+
+    public void switcherUp()
+    {
+        redSwitcher.setPosition(0.9);
+        blueSwitcher.setPosition(0.0);
+    }
+
+    public void switcherDown()
+    {
         switch(color)
         {
             case RED:
-                //closed blue
+                redSwitcher.setPosition(0.15);
                 blueSwitcher.setPosition(0.0);
-                switch(switcherSwitch.currentState())
-                {
-                    case 0:
-                        //closed
-                        redSwitcher.setPosition(0.9);
-                        break;
-
-                    case 1:
-                        //open
-                        redSwitcher.setPosition(0.15);
-                        break;
-                }
-                break;
+            break;
 
             case BLUE:
-                //closed red
+                blueSwitcher.setPosition(0.7);
                 redSwitcher.setPosition(0.9);
-                switch(switcherSwitch.currentState())
-                {
-                    case 0:
-                        //closed
-                        blueSwitcher.setPosition(0.0);
-                        break;
-
-                    case 1:
-                        //open
-                        blueSwitcher.setPosition(0.7);
-                        break;
-                }
-                break;
+            break;
         }
     }
 
@@ -120,30 +119,75 @@ public class Drive
         switch(hookSwitch.currentState())
         {
             case 0:
-                //unhooked
-                leftChurroHook.setPosition(0.0);
-                rightChurroHook.setPosition(1.0);
+                unhook();
                 break;
 
             case 1:
-                //hooked
-                //90 degrees left - 0.45
-                //90 degrees right 0.4
-                leftChurroHook.setPosition(1.0);
-                rightChurroHook.setPosition(0.0);
+                hook();
         }
+    }
+
+    public String getHookState()
+    {
+        String state = "null";
+        switch(hookSwitch.currentState())
+        {
+            case 0:
+                state = "Unhooked";
+            break;
+
+            case 1:
+                state = "Hooked";
+            break;
+        }
+        return state;
+    }
+
+    public void unhook()
+    {
+        leftChurroHook.setPosition(0.0);
+        rightChurroHook.setPosition(1.0);
+    }
+
+    public void hook()
+    {
+        leftChurroHook.setPosition(1.0);
+        rightChurroHook.setPosition(0.0);
+    }
+
+    public void hook90()
+    {
+        leftChurroHook.setPosition(0.45);
+        rightChurroHook.setPosition(0.4);
     }
 
     // ----------------------------------
     // Drive Methods
     // ----------------------------------
 
-    public static void setLeftRightPower(double leftPower, double rightPower)
+    public void setLeftRightPower(double leftPower, double rightPower)
     {
-        rightFrontMotor.setPower(rightPower);
-        rightBackMotor.setPower(rightPower);
-        leftFrontMotor.setPower(leftPower);
-        leftBackMotor.setPower(leftPower);
+        switch(orientationSwitch.currentState())
+        {
+            case 0:
+                rightFrontMotor.setPower(7.0/9.0 * rightPower);
+                rightBackMotor.setPower(7.0/9.0 * rightPower);
+                leftFrontMotor.setPower(7.0/9.0 * leftPower);
+                leftBackMotor.setPower(7.0/9.0 * leftPower);
+            break;
+
+            case 1:
+                rightFrontMotor.setPower(-7.0/9.0 * leftPower);
+                rightBackMotor.setPower(-7.0/9.0 * leftPower);
+                leftFrontMotor.setPower(-7.0/9.0 * rightPower);
+                leftBackMotor.setPower(-7.0/9.0 * rightPower);
+            break;
+        }
+    }
+
+    public void setOrientation(boolean trigger)
+    {
+        orientationSwitch.changeState(trigger);
     }
 
     public boolean hasTargetHit(double target)
