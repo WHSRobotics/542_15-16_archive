@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  * Created by DanielWang on 12/5/15.
  */
 
-public class TeleOp extends OpMode
+public class BlueTeleOp extends OpMode
 {
     WHSRobot bot;
 

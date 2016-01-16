@@ -6,7 +6,7 @@ import com.whs542.lib.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-public class AutoOp extends OpMode
+public class RedAutoOp extends OpMode
 {
     WHSRobot bot;
 
@@ -14,7 +14,7 @@ public class AutoOp extends OpMode
 
     public void init()
     {
-        bot = new WHSRobot(hardwareMap, Alliance.BLUE);
+        bot = new WHSRobot(hardwareMap, Alliance.RED);
     }
 
     public void start()
