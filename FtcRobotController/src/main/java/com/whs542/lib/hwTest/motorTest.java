@@ -32,8 +32,9 @@ public class motorTest extends OpMode
     @Override
     public void loop()
     {
-        activateMot.changeState(gamepad1.a);
-        changePower.changeState(gamepad1.dpad_up,gamepad1.dpad_down);
+        activateMot.stateInc(gamepad1.a);
+        changePower.stateDec(gamepad1.dpad_down);
+        changePower.stateInc(gamepad1.dpad_up);
 
         power = activateMot.currentState() == 1
                 ? (double)(changePower.currentState()-10) *0.1
@@ -43,8 +44,6 @@ public class motorTest extends OpMode
         testMot.setPower(power);
 
         telemetry.addData("","power: " + (changePower.currentState()-10) + "On: " + activateMot.currentState());
-
-
     }
 
     @Override

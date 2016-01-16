@@ -2,7 +2,7 @@ package com.whs542.ftc2016.threads;
 
 import com.whs542.ftc2016.subsys.WHSRobot;
 
-public class LinearSlidesThread implements Runnable
+class LinearSlidesThread implements Runnable
 {
 	//Milliseconds
 	private long dt = 100;	

@@ -1,7 +1,6 @@
 package com.whs542.ftc2016.subsys;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.whs542.lib.Alliance;
 
 public class WHSRobot
 {
@@ -10,11 +9,11 @@ public class WHSRobot
     public LinearSlides slides;
     public ScoringBox box;
 
-    public WHSRobot(HardwareMap map, Alliance side)
+    public WHSRobot(HardwareMap map)
     {
-        drive = new Drive(map, side);
+        drive = new Drive(map);
         intake = new Intake(map);
         slides = new LinearSlides(map);
-        box = new ScoringBox(map, side);
+        box = new ScoringBox(map);
     }
 }

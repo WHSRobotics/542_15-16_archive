@@ -3,8 +3,6 @@ package com.whs542.ftc2016.subsys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.whs542.lib.*;
 
 //
 // Drive Subsystem Class
@@ -16,20 +14,11 @@ import com.whs542.lib.*;
 
 public class Drive
 {
-    private Alliance color;
+
     private static final double WHEEL_DIAMETER = 15.24;
     private static final double TICKS_TO_ROT = 1.0/1120.0;
     private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
     private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
-
-    private static Servo leftChurroHook;
-    private static Servo rightChurroHook;
-    private static Servo blueSwitcher;
-    private static Servo redSwitcher;
-
-    private Toggler switcherSwitch = new Toggler(2);
-    private Toggler hookSwitch = new Toggler(2);
-    private Toggler orientationSwitch = new Toggler(2);
 
 	private static DcMotor rightFrontMotor;
 	private static DcMotor rightBackMotor;
@@ -49,13 +38,8 @@ public class Drive
 	// ----------------------------------
 	// -Initializes the hardware references
 
-	public Drive(HardwareMap driveMap, Alliance side)
+	public Drive(HardwareMap driveMap)
 	{
-        rightChurroHook = driveMap.servo.get("drive_rch");
-        leftChurroHook = driveMap.servo.get("drive_lch");
-        blueSwitcher = driveMap.servo.get("drive_bs");
-        redSwitcher = driveMap.servo.get("drive_rs");
-
 		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
         rightBackMotor = driveMap.dcMotor.get("drive_rb");
         leftFrontMotor = driveMap.dcMotor.get("drive_lf");
@@ -70,124 +54,18 @@ public class Drive
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
-        color = side;
-    }
-
-    //Distribute Alliance color to necessary classes
-    public void setSwitcher(boolean trigger)
-    {
-        switcherSwitch.changeState(trigger);
-        switch(switcherSwitch.currentState())
-        {
-            case 0:
-                //closed
-                switcherUp();
-            break;
-
-            case 1:
-                //open
-                switcherDown();
-            break;
-        }
-    }
-
-    public void switcherUp()
-    {
-        redSwitcher.setPosition(0.9);
-        blueSwitcher.setPosition(0.0);
-    }
-
-    public void switcherDown()
-    {
-        switch(color)
-        {
-            case RED:
-                redSwitcher.setPosition(0.15);
-                blueSwitcher.setPosition(0.0);
-            break;
-
-            case BLUE:
-                blueSwitcher.setPosition(0.7);
-                redSwitcher.setPosition(0.9);
-            break;
-        }
-    }
-
-    public void setHook(boolean trigger)
-    {
-        hookSwitch.changeState(trigger);
-        switch(hookSwitch.currentState())
-        {
-            case 0:
-                unhook();
-                break;
-
-            case 1:
-                hook();
-        }
-    }
-
-    public String getHookState()
-    {
-        String state = "null";
-        switch(hookSwitch.currentState())
-        {
-            case 0:
-                state = "Unhooked";
-            break;
-
-            case 1:
-                state = "Hooked";
-            break;
-        }
-        return state;
-    }
-
-    public void unhook()
-    {
-        leftChurroHook.setPosition(0.0);
-        rightChurroHook.setPosition(1.0);
-    }
-
-    public void hook()
-    {
-        leftChurroHook.setPosition(1.0);
-        rightChurroHook.setPosition(0.0);
-    }
-
-    public void hook90()
-    {
-        leftChurroHook.setPosition(0.45);
-        rightChurroHook.setPosition(0.4);
     }
 
     // ----------------------------------
     // Drive Methods
     // ----------------------------------
 
-    public void setLeftRightPower(double leftPower, double rightPower)
+    public static void setLeftRightPower(double leftPower, double rightPower)
     {
-        switch(orientationSwitch.currentState())
-        {
-            case 0:
-                rightFrontMotor.setPower(7.0/9.0 * rightPower);
-                rightBackMotor.setPower(7.0/9.0 * rightPower);
-                leftFrontMotor.setPower(7.0/9.0 * leftPower);
-                leftBackMotor.setPower(7.0/9.0 * leftPower);
-            break;
-
-            case 1:
-                rightFrontMotor.setPower(-7.0/9.0 * leftPower);
-                rightBackMotor.setPower(-7.0/9.0 * leftPower);
-                leftFrontMotor.setPower(-7.0/9.0 * rightPower);
-                leftBackMotor.setPower(-7.0/9.0 * rightPower);
-            break;
-        }
-    }
-
-    public void setOrientation(boolean trigger)
-    {
-        orientationSwitch.changeState(trigger);
+        rightFrontMotor.setPower(rightPower);
+        rightBackMotor.setPower(rightPower);
+        leftFrontMotor.setPower(leftPower);
+        leftBackMotor.setPower(leftPower);
     }
 
     public boolean hasTargetHit(double target)
