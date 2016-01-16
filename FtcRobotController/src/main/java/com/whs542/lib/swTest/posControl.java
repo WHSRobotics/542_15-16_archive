@@ -77,8 +77,7 @@ public class posControl extends OpMode
 
 	public void loop()
 	{
-		input.stateInc(gamepad1.dpad_up);
-		input.stateDec(gamepad1.dpad_down);
+		input.changeState(gamepad1.dpad_up,gamepad1.dpad_down);
 
 		y.data[0][0] = (office.getCurrentPosition() * TICKS_TO_RAD);
 		r.data[0][0] = input.currentState() * TWO_PI/8.0 * Nbar;
