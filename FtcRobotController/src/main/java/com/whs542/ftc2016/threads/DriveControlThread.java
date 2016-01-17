@@ -1,5 +1,7 @@
 package com.whs542.ftc2016.threads;
 
+import com.whs542.ftc2016.subsys.WHSRobot;
+
 public class DriveControlThread implements Runnable
 {
     //Milliseconds
@@ -8,11 +10,14 @@ public class DriveControlThread implements Runnable
 
     private SpeedMode speedMode;
     private MotionType motionType;
+    private WHSRobot rob;
 
     private double goal;
     private double maxVelocity;
     private double ramptime;
     private double[] output;
+    private double power;
+    private double position;
 
     public enum SpeedMode
     {
@@ -72,35 +77,58 @@ public class DriveControlThread implements Runnable
         {
             case SPIN:
                 output[2] = -output[2];
-            break;
+                break;
         }
         return output;
     }
 
     public void angularVelocityUpdate()
     {
-
+        
     }
 
     public void rampVelocity(double input)
     {
         //Speed up the motor you want to speed up
+        power = input;
+
         //double currentPower = motorToSpeedUp.getPower();
-        while(1==1)//currentPower < powerYouWant)
+        while(power < maxVelocity)//1==1)//currentPower < powerYouWant)
         {
+            power += maxVelocity/(ramptime / dt);
+            //rob.drive.setLeftRightPower(power, power);
             //motorToSpeedUp.setPower(currentPower * 1.3);
         }
 
+        //rob.drive.setLeftRightPower(maxVelocity, maxVelocity);
         //motorToSpeedUp.setPower(powerYouWant);
     }
 
     public void slowVelocity(double input)
     {
+        power = input;
         //power = input;
-           // motorToSlowDown.setPower(power/2);
-
-        //motorToSlowDown.setPower(0);
+        while(power > 0)
+        {
+            power -= maxVelocity/(ramptime / dt);
+            //rob.drive.setLeftRightPower(power, power);
+            // motorToSlowDown.setPower(power/2);
+        }
+        //rob.drive.setLeftRightPower(0,0);
     }
+
+    public double getPower()
+    {
+        return power;
+    }
+
+    public void setPosition(double desiredPosition)
+    {
+        position = desiredPosition;
+    }
+
+// position = max velocity * (ramptime + constant time)
+    //motor velocity = function of power we set
 
     public void run()
     {
@@ -109,16 +137,24 @@ public class DriveControlThread implements Runnable
             switch(speedMode)
             {
                 case RAMP:
+                    rampVelocity(0.0);
+                    if(Math.abs(maxVelocity - power) < .5) {
+                        speedMode = SpeedMode.CONSTANT;
+                    }
                     //output[] = output[];
-                break;
+                    break;
 
                 case CONSTANT:
+                    if(System.currentTimeMillis() == (position/maxVelocity)) //(System.currentTimeMillis() - startTime))* maxVelocity))
+                    {
+                        speedMode = SpeedMode.SLOW;
+                    }
                     //output[]
-                break;
+                    break;
 
                 case SLOW:
-
-                break;
+                    slowVelocity(1.0);
+                    break;
             }
             startTime = System.currentTimeMillis();
             try
