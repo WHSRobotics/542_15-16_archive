@@ -40,7 +40,7 @@ public class RedTeleOp extends OpMode
         //bot.slides.setShiftServoPosition(gamepad2.left_stick_y);
         bot.slides.setLock(gamepad2.y);
         bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
-        bot.slides.setTransmissionPower(gamepad2.left_bumper, gamepad2.left_trigger == 1.0);
+        bot.slides.setTransmissionPower(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
         //Slide Telemetry
         telemetry.addData("Shift", bot.slides.getShiftState());
         telemetry.addData("Lock", bot.slides.getLockState());

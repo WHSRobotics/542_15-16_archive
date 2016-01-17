@@ -170,17 +170,17 @@ public class Drive
         switch(orientationSwitch.currentState())
         {
             case 0:
-                rightFrontMotor.setPower(7.0/9.0 * rightPower);
-                rightBackMotor.setPower(7.0/9.0 * rightPower);
-                leftFrontMotor.setPower(7.0/9.0 * leftPower);
-                leftBackMotor.setPower(7.0/9.0 * leftPower);
+                rightFrontMotor.setPower(rightPower);
+                rightBackMotor.setPower(rightPower);
+                leftFrontMotor.setPower(leftPower);
+                leftBackMotor.setPower(leftPower);
             break;
 
             case 1:
-                rightFrontMotor.setPower(-7.0/9.0 * leftPower);
-                rightBackMotor.setPower(-7.0/9.0 * leftPower);
-                leftFrontMotor.setPower(-7.0/9.0 * rightPower);
-                leftBackMotor.setPower(-7.0/9.0 * rightPower);
+                rightFrontMotor.setPower(-leftPower);
+                rightBackMotor.setPower(-leftPower);
+                leftFrontMotor.setPower(-rightPower);
+                leftBackMotor.setPower(-rightPower);
             break;
         }
     }
