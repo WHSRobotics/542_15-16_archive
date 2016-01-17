@@ -63,10 +63,10 @@ public class Drive
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        /*rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);*/
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
