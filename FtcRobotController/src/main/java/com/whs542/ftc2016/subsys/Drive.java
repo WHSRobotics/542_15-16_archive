@@ -22,27 +22,27 @@ public class Drive
     private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
     private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
 
-    private static Servo leftChurroHook;
-    private static Servo rightChurroHook;
-    private static Servo blueSwitcher;
-    private static Servo redSwitcher;
+    private Servo leftChurroHook;
+    private Servo rightChurroHook;
+    private Servo blueSwitcher;
+    private Servo redSwitcher;
 
     private Toggler switcherSwitch = new Toggler(2);
     private Toggler hookSwitch = new Toggler(2);
     private Toggler orientationSwitch = new Toggler(2);
 
-	private static DcMotor rightFrontMotor;
-	private static DcMotor rightBackMotor;
-	private static DcMotor leftFrontMotor;
-	private static DcMotor leftBackMotor;
+	private DcMotor rightFrontMotor;
+	private DcMotor rightBackMotor;
+	private DcMotor leftFrontMotor;
+	private DcMotor leftBackMotor;
 
-    public static double [] encoderZeroes;
-    public static double [] encoderValues;
+    public double [] encoderZeroes;
+    public double [] encoderValues;
 
-    public static int RF = 0;
-    public static int RB = 1;
-    public static int LF = 2;
-    public static int LB = 3;
+    public int RF = 0;
+    public int RB = 1;
+    public int LF = 2;
+    public int LB = 3;
 
 	// ----------------------------------
 	// Drive Constructor
