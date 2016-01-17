@@ -84,7 +84,7 @@ public class DriveControlThread implements Runnable
 
     public void angularVelocityUpdate()
     {
-        
+
     }
 
     public void rampVelocity(double input)

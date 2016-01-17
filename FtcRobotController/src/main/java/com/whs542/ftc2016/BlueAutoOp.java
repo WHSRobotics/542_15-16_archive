@@ -37,7 +37,7 @@ public class BlueAutoOp extends OpMode
         {
             case 0:
                 bot.drive.setLeftRightPower(0.1, 0.1);
-                if(bot.drive.hasTargetHit()) //value to be determined
+                if(bot.drive.hasTargetHit(1.0)) //value to be determined
                 {
                     state = 1;
                 }
