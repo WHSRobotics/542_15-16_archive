@@ -5,6 +5,7 @@ import com.whs542.ftc2016.subsys.WHSRobot;
 /**
  * Created by Lucy on 1/16/2016.
  */
+
 public class Dependencies
 {
     private boolean linearSlidesExtended;

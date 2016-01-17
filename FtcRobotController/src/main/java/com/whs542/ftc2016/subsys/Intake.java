@@ -98,4 +98,9 @@ public class Intake
             break;
         }
     }
+
+    public void dropIntake()
+    {
+        dropDownServo.setPosition(0.0);
+    }
 }

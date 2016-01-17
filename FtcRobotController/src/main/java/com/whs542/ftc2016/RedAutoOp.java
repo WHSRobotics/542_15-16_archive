@@ -36,6 +36,7 @@ public class RedAutoOp extends OpMode
         switch(state)
         {
             case 0:
+                bot.intake.dropIntake();
                 bot.drive.setLeftRightPower(0.1, 0.1);
                 if(bot.drive.hasTargetHit(1.0)) //value to be determined
                 {
