@@ -23,7 +23,7 @@ public class Dependencies
         if(!linearSlidesExtended) //If linear slides are not extended
         {
             //boxOpen = false; //box should not open
-            rob.box.closeDoor();
+            //rob.box.closeDoor();
 
             //boxExtended = false; //box should not be extended either
             rob.box.setExtensionSpeed(0.0);

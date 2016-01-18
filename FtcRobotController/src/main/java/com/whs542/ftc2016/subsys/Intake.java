@@ -65,20 +65,17 @@ public class Intake
         }
     }
 
-    public void setRun(boolean trigger, boolean reverse)
-    {
-        runSwitch.changeState(trigger);
-        switch(runSwitch.currentState())
+    public void setRun(boolean trigger, boolean reverse) {
+        //runSwitch.changeState(trigger);
+        if (trigger)
         {
-            case 0:
-                //Intake Off
-                intakeMotor.setPower(reverse ? -1.0 :0.0);
-            break;
-
-            case 1:
-                //Intake Running
-                intakeMotor.setPower(reverse ? -1.0: 1.0);
-            break;
+            intakeMotor.setPower(1.0);
+        }
+        else if(reverse) {
+            intakeMotor.setPower(-1.0);
+        }
+        else {
+            intakeMotor.setPower(0.0);
         }
     }
 
@@ -89,13 +86,28 @@ public class Intake
         {
             //Undropped
             case 0:
-                dropDownServo.setPosition(1.0);
+                raiseIntake();
                 break;
 
             //Dropped
             case 1:
-                dropDownServo.setPosition(0.0);
+                dropIntake();
             break;
         }
+    }
+
+    public void dropIntake()
+    {
+        dropDownServo.setPosition(1.0);
+    }
+
+    public void raiseIntake()
+    {
+        dropDownServo.setPosition(0.0);
+    }
+
+    public void dropJoystick(double input)
+    {
+        dropDownServo.setPosition(Math.abs(input));
     }
 }

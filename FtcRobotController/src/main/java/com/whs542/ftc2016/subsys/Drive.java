@@ -123,7 +123,7 @@ public class Drive
                 break;
 
             case 1:
-                hook();
+                hook90();
         }
     }
 
@@ -188,6 +188,22 @@ public class Drive
     public void setOrientation(boolean trigger)
     {
         orientationSwitch.changeState(trigger);
+    }
+
+    public String getOrientation()
+    {
+        String o = "null";
+        switch(orientationSwitch.currentState())
+        {
+            case 0:
+                o = "Normal";
+                        break;
+
+            case 1:
+                o = "Reverse";
+                break;
+        }
+        return o;
     }
 
     public boolean hasTargetHit(double target)
