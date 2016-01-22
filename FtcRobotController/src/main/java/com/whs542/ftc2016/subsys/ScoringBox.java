@@ -39,9 +39,9 @@ public class ScoringBox
         doorServo = boxMap.servo.get("box_door");
         extendServo = boxMap.servo.get("box_extend");
 
-        /*debris1 = new ProximityGP2Y0D810Z0F(boxMap, -1);
+        debris1 = new ProximityGP2Y0D810Z0F(boxMap, -1);
         debris2 = new ProximityGP2Y0D810Z0F(boxMap, -1);
-        debris3 = new ProximityGP2Y0D810Z0F(boxMap, -1);*/
+        debris3 = new ProximityGP2Y0D810Z0F(boxMap, -1);
 
         boxExtensionDetector = new CurrentACS711EX(boxMap, 0);
 
