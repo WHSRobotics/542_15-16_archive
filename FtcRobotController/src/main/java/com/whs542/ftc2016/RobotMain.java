@@ -12,21 +12,22 @@ public abstract class RobotMain extends OpMode{
     Intake intake;
 	LinearSlides linearSlides;
 	ScoringBox scoringBox;
+    Angler angling;
 
 	SpeedControl control;
 
-	public void init()
-	{
+	public void init() {
 		/* WARNING
 		Don't have stuff commented here but not uncommented in the loop
 		Null pointer exception will be thrown at runtime due to no hardware object reference
 		 */
 
-		drive = new Drive(hardwareMap);
-		//intake = new Intake(hardwareMap);
-		//linearSlides = new LinearSlides(hardwareMap);
-		//scoringBox = new ScoringBox(hardwareMap);
-	}
+        //drive = new Drive(hardwareMap);
+        //intake = new Intake(hardwareMap);
+        //linearSlides = new LinearSlides(hardwareMap);
+        scoringBox = new ScoringBox(hardwareMap);
+        //angling = new Angler(hardwareMap);
+    }
 	
 	public void stop()
 	{

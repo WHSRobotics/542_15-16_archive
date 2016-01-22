@@ -9,8 +9,8 @@ public class AutoOp extends RobotMain
     int state = 0;
     public void start()
     {
-        drive.zeroLeftEncoders();
-        drive.zeroRightEncoders();
+        //drive.zeroLeftEncoders();
+        //drive.zeroRightEncoders();
 
         time = 0.0;
     }
@@ -18,12 +18,12 @@ public class AutoOp extends RobotMain
     public void loop()
     {
         if(time < 2.0)
-        telemetry.addData("LF: %D", drive.encoderValues[drive.LF]);
-        telemetry.addData("RF: %D", drive.encoderValues[drive.RF]);
+        //telemetry.addData("LF: %D", drive.encoderValues[drive.LF]);
+        //telemetry.addData("RF: %D", drive.encoderValues[drive.RF]);
         telemetry.addData("state", state);
 
         //Note that if you make the power too big, it'll go way too fast and overshoot
-        
+
             switch(state)
             {
                 case 0:

@@ -22,7 +22,20 @@ public class Intake
 		//Should output be too coarse, uncomment this, and add an encoder
 		//intakeMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 	}
-
+    public void setIntakePosition(com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    {
+        //Intake Down
+        if(gamepad.right_bumper)
+        {
+            dropDownServo.setPosition(0.99);
+        }
+        //Intake Up
+        else if(gamepad.right_trigger == 1.0)
+        {
+            dropDownServo.setPosition(0.85);
+        }
+    }
+    /*
 	public void closeIntake(double intakeClosePosition, com.qualcomm.robotcore.hardware.Gamepad gamepad)
 	{
         if(gamepad.left_trigger == 1.0)
@@ -36,7 +49,6 @@ public class Intake
         }
 		dropDownServo.setPosition(intakeRetractedPosition);
 	}
-	
 	public void openIntake(double intakeOpenPosition ,com.qualcomm.robotcore.hardware.Gamepad gamepad)
 	{
         if(gamepad.right_trigger == 1.0)
@@ -46,11 +58,10 @@ public class Intake
         }
         else
         {
-
         }
 		dropDownServo.setPosition(intakeExtendedPosition);
 	}
-
+    */
 	public void setIntakePower(double power)
 	{
         if(intakePostition = true)

@@ -18,97 +18,82 @@ public class ScoringBox
     private double doorOpen;
     private double doorClosed;
 
-    private ProximityGP2Y0D810Z0F proximitySensor;
+    public double servoDoorValue;
+    //public double servoExtensionValue;
+
+    private int debrisCounter;
 
     boolean boxFlap = false; //Box flap, true = open, false = closed
     boolean boxExtended;//Inner box extension, true = open, false = retracted
 
-    LinearSlides linearSlide;
-	public ScoringBox(HardwareMap boxMap)
+    public static ProximityGP2Y0D810Z0F proximity0;
+    public static ProximityGP2Y0D810Z0F proximity1;
+    public static ProximityGP2Y0D810Z0F proximity2;
+    public static ProximityGP2Y0D810Z0F proximity3;
+
+    public ScoringBox(HardwareMap boxMap)
 	{
         boxExtendServo = boxMap.servo.get("box_extend");    //Inner Box Extension
-        boxFlapServo = boxMap.servo.get("box_flap");    //Box Flap Servo
+        boxExtendServo.setPosition(0.5);
+        //boxFlapServo = boxMap.servo.get("box_flap");    //Box Flap Servo
+        //boxFlapServo.setPosition(0.4);
+        //proximity0 = new ProximityGP2Y0D810Z0F(boxMap, 0);
+        //proximity1 = new ProximityGP2Y0D810Z0F(boxMap, 1);
+        //proximity2 = new ProximityGP2Y0D810Z0F(boxMap, 2);
+        //proximity3 = new ProximityGP2Y0D810Z0F(boxMap, 3);
     }
 
-
-    public void boxFlapState(com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    public void boxFlapState(double doorFlapValue)
     {
-        if(linearSlide.linearSlideExtended == true)
-        {
-            if(gamepad.a)
-            {
-                boxFlapServo.setPosition(1.0);      //Change the servo value for actual box position
-                boxFlap = true;
-            }
-            else if(gamepad.b)
-            {
-                boxFlapServo.setPosition(0.0);      //Change the servo value for actual box position
-                boxFlap = false;
-            }
-        }
-        else
-        {
-
-        }
+        //Closed
+                boxFlapServo.setPosition(doorFlapValue);     //Change the servo value for actual box position
+                                                    //Left Scoring Box Servo Value 0.85
+                                                    //Right Scoring Box Servo Value 0.15
+                //Open
+                // Change the servo value for actual box position
+                                                    //Left Scoring Box Servo Value 0.6
+                                                    //Right Scoring Box Servo Value 0.4
     }
-    public void innerBoxExtension(com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    public void innerBoxExtension(double servoExtensionValue) //com.qualcomm.robotcore.hardware.Gamepad gamepad
     {
-        if(boxExtended = false && linearSlide.linearSlideExtended == true)
+        boxExtendServo.setPosition(servoExtensionValue);
+        /*
+        //Extend
+        if(boxExtended = false)
         {
             if(gamepad.x)
             {
-                boxExtendServo.setPosition(1.0);
-                boxExtended = true;
+                servoExtensionValue = 1.0;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = true;
             }
             else
             {
-                boxExtendServo.setPosition(0.5);
-                boxExtended = false;
+                servoExtensionValue = 0.5;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = false;
             }
         }
-        else if(boxExtended = true && linearSlide.linearSlideExtended == true)
+        //Retract
+        else if(boxExtended = true)
         {
             if(gamepad.y)
             {
-                boxExtendServo.setPosition(0.0);
-                boxExtended = false;
+                servoExtensionValue = 0.0;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = false;
             }
             else
             {
-                boxExtendServo.setPosition(0.5);
-                boxExtended = true;
+                servoExtensionValue = 0.5;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = true;
             }
         }
         else
         {
             boxExtended = false;
         }
+        */
     }
-
-
-    //Use in Testing//
-    public void simpleBox(com.qualcomm.robotcore.hardware.Gamepad gamepad)
-    {
-        if(gamepad.a)
-        {
-            boxFlapServo.setPosition(0.5);
-        }
-        else if(gamepad.b)
-        {
-            boxFlapServo.setPosition(0.0);
-        }
-        else if(gamepad.x)
-        {
-            boxExtendServo.setPosition(1.0);
-        }
-        else if(gamepad.y)
-        {
-            boxExtendServo.setPosition(0.0);
-        }
-        else
-        {
-            boxExtendServo.setPosition(0.5);
-        }
-    }
-    //Use in Testing//
 }

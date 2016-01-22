@@ -2,6 +2,7 @@ package com.whs542.ftc2016.subsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //TODO: Define Subsys class
@@ -16,10 +17,15 @@ public class Drive
     private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
     private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
 
-	private static DcMotor rightFrontMotor;
-	private static DcMotor rightBackMotor;
-	private static DcMotor leftFrontMotor;
-	private static DcMotor leftBackMotor;
+	private static DcMotor driveRightFront;
+	private static DcMotor driveRightBack;
+	private static DcMotor driveLeftFront;
+	private static DcMotor driveLeftBack;
+
+    private static Servo hookLeft;
+    private static Servo hookRight;
+    private static Servo sideLeft;
+    private static Servo sideRight;
 
     public double [] encoderZeroes;
     public double [] encoderValues;
@@ -29,19 +35,34 @@ public class Drive
     public static int LF = 2;
     public static int LB = 3;
 
+    public static double hookLPosition;
+    public static double hookRPosition;
+    public static double sideLPosition;
+    public static double sideRPosition;
+
 	public Drive(HardwareMap driveMap)
 	{
-		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
-        //rightBackMotor = driveMap.dcMotor.get("drive_rb");
-        //leftFrontMotor = driveMap.dcMotor.get("drive_lf");
-        //leftBackMotor = driveMap.dcMotor.get("drive_lb");
-        //leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        //leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+		driveRightFront = driveMap.dcMotor.get("drive_rf");
+        driveRightBack = driveMap.dcMotor.get("drive_rb");
+        driveLeftFront = driveMap.dcMotor.get("drive_lf");
+        driveLeftBack = driveMap.dcMotor.get("drive_lb");
+        driveLeftFront.setDirection(DcMotor.Direction.REVERSE);
+        driveLeftBack.setDirection(DcMotor.Direction.REVERSE);
 
-        rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        driveRightFront.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        driveRightBack.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        driveLeftFront.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        driveLeftBack.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        hookLeft = driveMap.servo.get("drive_lch");
+        hookRight = driveMap.servo.get("drive_rch");
+        hookLeft.setPosition(0.9);
+        hookRight.setPosition(0.15);
+
+        sideLeft = driveMap.servo.get("drive_bs");
+        sideRight = driveMap.servo.get("drive_rs");
+        sideLeft.setPosition(0.95);
+        sideRight.setPosition(0.0);
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
@@ -49,10 +70,10 @@ public class Drive
 
     public static void setLeftRightPower(double leftPower, double rightPower)
     {
-        rightFrontMotor.setPower(rightPower);
-        //rightBackMotor.setPower(rightPower);
-        //leftFrontMotor.setPower(leftPower);
-        //leftBackMotor.setPower(leftPower);
+        driveRightFront.setPower(rightPower);
+        driveRightBack.setPower(rightPower);
+        driveLeftFront.setPower(leftPower);
+        driveLeftBack.setPower(leftPower);
     }
 
     public boolean hasTargetHit(double target)
@@ -85,21 +106,44 @@ public class Drive
 
     public void updateEncoderValues()
     {
-        encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
-        encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
-        encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
-        encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
+        encoderValues[RF] = driveRightFront.getCurrentPosition()-encoderZeroes[RF];
+        encoderValues[RB] = driveRightBack.getCurrentPosition()-encoderZeroes[RB];
+        encoderValues[LF] = driveLeftFront.getCurrentPosition()-encoderZeroes[LF];
+        encoderValues[LB] = driveLeftBack.getCurrentPosition()-encoderZeroes[LB];
     }
 
     public void zeroLeftEncoders()
     {
-        encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
-        encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
+        encoderZeroes[LF] = driveLeftFront.getCurrentPosition();
+        encoderZeroes[LB] = driveLeftBack.getCurrentPosition();
     }
 
     public void zeroRightEncoders()
     {
-        encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
-        encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
+        encoderZeroes[RF] = driveRightFront.getCurrentPosition();
+        encoderZeroes[RB] = driveRightBack.getCurrentPosition();
+    }
+
+    public void hook(double hookLPosition, double hookRPosition)
+    {
+        hookLeft.setPosition(hookLPosition);
+        hookRight.setPosition(hookRPosition);
+    }
+    public void sideClimbers(com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    {
+        if(gamepad.dpad_left)
+        {
+            sideLPosition = 0.95;
+            sideRPosition = 0.0;
+            sideLeft.setPosition(sideLPosition);
+            sideRight.setPosition(sideRPosition);
+        }
+        else if(gamepad.dpad_right)
+        {
+            sideLPosition = 0.2;
+            sideRPosition = 1.0;
+            sideLeft.setPosition(sideLPosition);
+            sideRight.setPosition(sideRPosition);
+        }
     }
 }
