@@ -31,6 +31,8 @@ public class Intake
 	// ----------------------------------
 	// -Initializes the hardware references
 
+    boolean intakePostition = false; //false is closed, true is open
+
 	public Intake(HardwareMap intakeMap)
 	{
 		dropDownServo = intakeMap.servo.get("intake_dds");

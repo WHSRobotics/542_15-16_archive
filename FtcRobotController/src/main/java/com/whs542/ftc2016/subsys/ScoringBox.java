@@ -58,7 +58,7 @@ public class ScoringBox
         switch(doorSwitch.currentState())
         {
             case 0:
-                closeDoor();
+                //closeDoor();
             break;
 
             case 1:
@@ -67,7 +67,7 @@ public class ScoringBox
         }
     }
 
-    public void closeDoor()
+    public void boxFlapState(double doorFlapValue)
     {
         switch(color)
         {
@@ -103,12 +103,12 @@ public class ScoringBox
         {
             case 1:
                 //Box Extension
-                setExtensionSpeed(boxFullyExtended()?0.5:1.0);
+                //setExtensionSpeed(boxFullyExtended()?0.5:1.0);
                 break;
 
             case 0:
                 //Box Retraction
-                setExtensionSpeed(boxFullyRetracted()?0.5:0.0);
+                //setExtensionSpeed(boxFullyRetracted()?0.5:0.0);
                 break;
         }
     }
@@ -149,10 +149,47 @@ public class ScoringBox
     {
         return boxExtensionDetector.getRawValue();
     }
-
-    public void setExtensionSpeed(double input)
+    public void innerBoxExtension(double servoExtensionValue) //com.qualcomm.robotcore.hardware.Gamepad gamepad
     {
-        extendServo.setPosition(input);
+        //boxExtendServo.setPosition(servoExtensionValue);
+        /*
+        //Extend
+        if(boxExtended = false)
+        {
+            if(gamepad.x)
+            {
+                servoExtensionValue = 1.0;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = true;
+            }
+            else
+            {
+                servoExtensionValue = 0.5;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = false;
+            }
+        }
+        //Retract
+        else if(boxExtended = true)
+        {
+            if(gamepad.y)
+            {
+                servoExtensionValue = 0.0;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = false;
+            }
+            else
+            {
+                servoExtensionValue = 0.5;
+                boxExtendServo.setPosition(servoExtensionValue);
+                //boxExtended = true;
+            }
+        }
+        else
+        {
+            boxExtended = false;
+        }
+        */
     }
 
     public void setDoorPosition(double input)

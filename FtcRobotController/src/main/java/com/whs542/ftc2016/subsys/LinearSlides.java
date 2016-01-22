@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import com.whs542.lib.Toggler;
 //
 // Linear Slides Subsystem Class
@@ -49,8 +48,16 @@ public class LinearSlides
     // ----------------------------------
     // -Initializes the hardware references
 
-    private double hookedAngle;
-    private double unhookedAngle;
+    public double shiftServoPosition;
+    public double lockServoPosition;
+
+    boolean linearSlideExtended;    // true means the linear slide is extended
+                                    // false mean the linear slide is retracted
+
+    int positionCounter;
+
+    ScoringBox scoreBox;
+    Intake intake;
 
 	public LinearSlides(HardwareMap slideMap)
 	{
