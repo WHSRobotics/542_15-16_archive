@@ -98,7 +98,7 @@ public class Intake
 
     public void dropIntake()
     {
-        dropDownServo.setPosition(1.0);
+        dropDownServo.setPosition(0.3);
     }
 
     public void raiseIntake()
