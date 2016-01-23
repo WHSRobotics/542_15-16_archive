@@ -168,11 +168,11 @@ public class LinearSlides
         switch(shiftSwitch.currentState())
         {
             case 0:
-                state = "Speed";
+                state = "Torque";
             break;
 
             case 1:
-                state = "Torque";
+                state = "Speed";
             break;
 
             case 2:
@@ -204,11 +204,11 @@ public class LinearSlides
         switch(shiftSwitch.currentState())
         {
             case 0:
-                speed();
+                torque();
             break;
 
             case 1:
-                torque();
+                speed();
             break;
 
             case 2:

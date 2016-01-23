@@ -10,7 +10,6 @@ public class DriveControlThread implements Runnable
 
     private SpeedMode speedMode;
     private MotionType motionType;
-    private WHSRobot rob;
 
     private double goal;
     private double maxVelocity;

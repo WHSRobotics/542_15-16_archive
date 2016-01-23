@@ -63,10 +63,10 @@ public class Drive
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        /*rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);*/
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
@@ -123,7 +123,7 @@ public class Drive
                 break;
 
             case 1:
-                hook();
+                hook90();
         }
     }
 
@@ -170,17 +170,17 @@ public class Drive
         switch(orientationSwitch.currentState())
         {
             case 0:
-                rightFrontMotor.setPower(7.0/9.0 * rightPower);
-                rightBackMotor.setPower(7.0/9.0 * rightPower);
-                leftFrontMotor.setPower(7.0/9.0 * leftPower);
-                leftBackMotor.setPower(7.0/9.0 * leftPower);
+                rightFrontMotor.setPower(rightPower);
+                rightBackMotor.setPower(rightPower);
+                leftFrontMotor.setPower(leftPower);
+                leftBackMotor.setPower(leftPower);
             break;
 
             case 1:
-                rightFrontMotor.setPower(-7.0/9.0 * leftPower);
-                rightBackMotor.setPower(-7.0/9.0 * leftPower);
-                leftFrontMotor.setPower(-7.0/9.0 * rightPower);
-                leftBackMotor.setPower(-7.0/9.0 * rightPower);
+                rightFrontMotor.setPower(-leftPower);
+                rightBackMotor.setPower(-leftPower);
+                leftFrontMotor.setPower(-rightPower);
+                leftBackMotor.setPower(-rightPower);
             break;
         }
     }
@@ -188,6 +188,22 @@ public class Drive
     public void setOrientation(boolean trigger)
     {
         orientationSwitch.changeState(trigger);
+    }
+
+    public String getOrientation()
+    {
+        String o = "null";
+        switch(orientationSwitch.currentState())
+        {
+            case 0:
+                o = "Normal";
+                        break;
+
+            case 1:
+                o = "Reverse";
+                break;
+        }
+        return o;
     }
 
     public boolean hasTargetHit(double target)
