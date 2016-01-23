@@ -33,10 +33,15 @@ public class Drive
     private Toggler hookSwitch = new Toggler(2);
     private Toggler orientationSwitch = new Toggler(2);
 
-	private static DcMotor rightFrontMotor;
-	private static DcMotor rightBackMotor;
-	private static DcMotor leftFrontMotor;
-	private static DcMotor leftBackMotor;
+	private static DcMotor driveRightFront;
+	private static DcMotor driveRightBack;
+	private static DcMotor driveLeftFront;
+	private static DcMotor driveLeftBack;
+
+    private static Servo hookLeft;
+    private static Servo hookRight;
+    private static Servo sideLeft;
+    private static Servo sideRight;
 
     public static double [] encoderZeroes;
     public static double [] encoderValues;
@@ -232,21 +237,44 @@ public class Drive
 
     public void updateEncoderValues()
     {
-        encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
-        encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
-        encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
-        encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
+        encoderValues[RF] = driveRightFront.getCurrentPosition()-encoderZeroes[RF];
+        encoderValues[RB] = driveRightBack.getCurrentPosition()-encoderZeroes[RB];
+        encoderValues[LF] = driveLeftFront.getCurrentPosition()-encoderZeroes[LF];
+        encoderValues[LB] = driveLeftBack.getCurrentPosition()-encoderZeroes[LB];
     }
 
     public void zeroLeftEncoders()
     {
-        encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
-        encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
+        encoderZeroes[LF] = driveLeftFront.getCurrentPosition();
+        encoderZeroes[LB] = driveLeftBack.getCurrentPosition();
     }
 
     public void zeroRightEncoders()
     {
-        encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
-        encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
+        encoderZeroes[RF] = driveRightFront.getCurrentPosition();
+        encoderZeroes[RB] = driveRightBack.getCurrentPosition();
+    }
+
+    public void hook(double hookLPosition, double hookRPosition)
+    {
+        hookLeft.setPosition(hookLPosition);
+        hookRight.setPosition(hookRPosition);
+    }
+    public void sideClimbers(com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    {
+        if(gamepad.dpad_left)
+        {
+            sideLPosition = 0.95;
+            sideRPosition = 0.0;
+            sideLeft.setPosition(sideLPosition);
+            sideRight.setPosition(sideRPosition);
+        }
+        else if(gamepad.dpad_right)
+        {
+            sideLPosition = 0.2;
+            sideRPosition = 1.0;
+            sideLeft.setPosition(sideLPosition);
+            sideRight.setPosition(sideRPosition);
+        }
     }
 }

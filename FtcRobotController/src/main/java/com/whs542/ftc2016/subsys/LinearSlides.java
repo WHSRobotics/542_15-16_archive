@@ -84,6 +84,7 @@ public class LinearSlides
         //Angle is a function of String length
         //For one rotation of the pulley, there is 4 rotation of the motor, which is a AM-NV20 with 560 pulses per rotation
         return Math.asin((Math.pow((Math.PI * anglingMotor.getCurrentPosition()/1120.0 - 0.01615593741),2.0) - 33.6177)/-31.8308393386)+0.577018458248;
+
     }
 
     //calibratory functions needed

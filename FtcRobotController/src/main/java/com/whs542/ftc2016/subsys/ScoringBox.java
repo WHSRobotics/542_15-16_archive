@@ -18,6 +18,7 @@ public class ScoringBox
 	// ----------------------------------
 
     private Alliance color;
+
     private Servo doorServo;
     private Servo extendServo;
 
