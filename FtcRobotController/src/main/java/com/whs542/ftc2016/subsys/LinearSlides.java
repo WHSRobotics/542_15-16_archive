@@ -11,15 +11,18 @@ import com.whs542.ftc2016.subsys.*;
 
 public class LinearSlides
 {
+    //
 	private DcMotor leftTransmissionMotor;
 	private DcMotor rightTransmissionMotor;
+
 	private Servo shiftServo;
+    private Servo lockServo;
 
     private double speedShiftPosition;
 	private double torqueShiftPosition;
 
-    private double hookedAngle;
-    private double unhookedAngle;
+    public double shiftServoPosition;
+    public double lockServoPosition;
 
     boolean linearSlideExtended;    // true means the linear slide is extended
                                     // false mean the linear slide is retracted
@@ -34,6 +37,8 @@ public class LinearSlides
         leftTransmissionMotor = slideMap.dcMotor.get("ls_l");
         rightTransmissionMotor = slideMap.dcMotor.get("ls_r");
         shiftServo = slideMap.servo.get("ls_ss");
+        lockServo = slideMap.servo.get("ls_ls");
+        lockServo.setPosition(0.65);
         linearSlideExtended = false;
         positionCounter = 0;
     }
@@ -41,28 +46,61 @@ public class LinearSlides
     //Slide extension state (includes box extension state)
     //Slide angle state
 
-    public void setTransmissionPower(double power, com.qualcomm.robotcore.hardware.Gamepad gamepad)
+    public void setTransmissionPower(double power)
     {
-        if(gamepad.dpad_up && scoreBox.boxFlap == true && scoreBox.boxExtended == false)
+        leftTransmissionMotor.setPower(power);
+        rightTransmissionMotor.setPower(power);
+    }
+
+    public void shiftTransmissionServo(double servoPosition) //int servoState
+    {
+        shiftServo.setPosition(servoPosition);
+        /*
+        if(gamepad.a)
         {
-            leftTransmissionMotor.setPower(power * (7.0/9.0));
-            rightTransmissionMotor.setPower(power * (7.0/9.0));
-            linearSlideExtended = true;
+            shiftServo.setPosition(0.0);
         }
-        else if(gamepad.dpad_down && scoreBox.boxFlap == false && scoreBox.boxExtended == false)
+        else if(gamepad.b)
         {
-            leftTransmissionMotor.setPower(-power * (7.0/9.0));
-            rightTransmissionMotor.setPower(-power * (7.0/9.0));
-            linearSlideExtended = false;
+            shiftServo.setPosition(0.5);
         }
-        else if(gamepad.left_bumper)
+
+        /*
+        switch(servoState)
         {
-            shiftServo.setPosition(0.7);
+
+            case 1:
+                shiftServoPosition = 0.5;
+                shiftServo.setPosition(shiftServoPosition);
+            case 2:
+                shiftServoPosition = 0.0;
+                shiftServo.setPosition(shiftServoPosition);
         }
-        else if(gamepad.right_bumper)
+        */
+    }
+    public void lockTransmissionServo(double servoPosition) //int lockState
+    {
+        lockServo.setPosition(servoPosition);
+        /*
+        if(gamepad.x)
         {
-            shiftServo.setPosition(0.3);
+            lockServo.setPosition(0.95);
         }
+        else if(gamepad.y)
+        {
+            lockServo.setPosition(0.65);
+        }
+        /*
+        switch(lockState)
+        {
+            case 1:
+                lockServoPosition = 0.95;
+                lockServo.setPosition(lockServoPosition);
+            case 2:
+                lockServoPosition = 0.65;
+                lockServo.setPosition(lockServoPosition);
+        }
+        */
     }
 
     public void setLinearPosition(com.qualcomm.robotcore.hardware.Gamepad gamepad)
