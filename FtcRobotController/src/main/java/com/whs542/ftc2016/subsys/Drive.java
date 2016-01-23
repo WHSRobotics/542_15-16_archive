@@ -22,6 +22,7 @@ public class Drive
     private static final double TICKS_TO_ROT = 1.0/1120.0;
     private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
     private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
+    private static final double JOY_THRESHOLD = 0.2;
 
     private static Servo leftChurroHook;
     private static Servo rightChurroHook;
@@ -168,21 +169,31 @@ public class Drive
 
     public void setLeftRightPower(double leftPower, double rightPower)
     {
+        rightFrontMotor.setPower(7.0/9.0 * rightPower);
+        rightBackMotor.setPower(7.0/9.0 * rightPower);
+        leftFrontMotor.setPower(7.0/9.0 * leftPower);
+        leftBackMotor.setPower(7.0/9.0 * leftPower);
+    }
+
+    public void setDrive(double leftPower, double rightPower)
+    {
+        rightPower = Math.abs(rightPower) > JOY_THRESHOLD ? rightPower * 7.0/9.0 : 0.0;
+        leftPower = Math.abs(leftPower) > JOY_THRESHOLD ? leftPower * 7.0/9.0 : 0.0;
         switch(orientationSwitch.currentState())
         {
             case 0:
-                rightFrontMotor.setPower(7.0/9.0 * rightPower);
-                rightBackMotor.setPower(7.0/9.0 * rightPower);
-                leftFrontMotor.setPower(7.0/9.0 * leftPower);
-                leftBackMotor.setPower(7.0/9.0 * leftPower);
-            break;
+                rightFrontMotor.setPower(rightPower);
+                rightBackMotor.setPower(rightPower);
+                leftFrontMotor.setPower(leftPower);
+                leftBackMotor.setPower(leftPower);
+                break;
 
             case 1:
-                rightFrontMotor.setPower(-7.0/9.0 * leftPower);
-                rightBackMotor.setPower(-7.0/9.0 * leftPower);
-                leftFrontMotor.setPower(-7.0/9.0 * rightPower);
-                leftBackMotor.setPower(-7.0/9.0 * rightPower);
-            break;
+                rightFrontMotor.setPower(-leftPower);
+                rightBackMotor.setPower(-leftPower);
+                leftFrontMotor.setPower(-rightPower);
+                leftBackMotor.setPower(-rightPower);
+                break;
         }
     }
 

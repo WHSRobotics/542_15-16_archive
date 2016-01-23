@@ -25,7 +25,7 @@ public class TeleOp extends OpMode
 
     public void loop() {
         //drive
-        bot.drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        bot.drive.setDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setSwitcher(gamepad1.right_bumper);
         bot.drive.setHook(gamepad1.right_trigger == 1.0);
