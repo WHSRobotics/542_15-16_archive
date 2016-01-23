@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.ftc2016.subsys.WHSRobot;
 import com.whs542.lib.Alliance;
 
-public class BlueForwardAuto extends OpMode
+public class ForwardAuto extends OpMode
 {
     WHSRobot bot;
 
