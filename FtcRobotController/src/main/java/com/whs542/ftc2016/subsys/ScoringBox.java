@@ -40,9 +40,8 @@ public class ScoringBox
         doorServo = boxMap.servo.get("box_door");
         extendServo = boxMap.servo.get("box_extend");
 
-        debris1 = new ProximityGP2Y0D810Z0F(boxMap, -1);
-        debris2 = new ProximityGP2Y0D810Z0F(boxMap, -1);
-        debris3 = new ProximityGP2Y0D810Z0F(boxMap, -1);
+        debris1 = new ProximityGP2Y0D810Z0F(boxMap, 0);
+        debris2 = new ProximityGP2Y0D810Z0F(boxMap, 1);
 
         boxExtensionDetector = new CurrentACS711EX(boxMap, 0);
 
@@ -53,55 +52,61 @@ public class ScoringBox
 	// Scoring Box Methods
 	// ----------------------------------
 
-    public void setDoor(boolean trigger)
+    public void setDoorRed(boolean trigger)
     {
         doorSwitch.changeState(trigger);
         switch(doorSwitch.currentState())
         {
             case 0:
-                //closeDoor();
+                closeDoorRed();
             break;
 
             case 1:
-                openDoor();
+                openDoorRed();
             break;
         }
     }
 
-    public void boxFlapState(double doorFlapValue)
+    public void setDoorBlue(boolean trigger)
     {
-        switch(color)
+        doorSwitch.changeState(trigger);
+        switch(doorSwitch.currentState())
         {
-            case RED:
+            case 0:
+                closeDoorBlue();
+                break;
+
+            case 1:
+                openDoorBlue();
+                break;
+        }
+    }
+
+    public void closeDoorRed()
+    {
                 doorServo.setPosition(0.8);
-            break;
-
-            case BLUE:
-                doorServo.setPosition(0.0);
-            break;
-        }
     }
 
-    public void openDoor()
+    public void closeDoorBlue()
     {
-        switch(color)
-        {
-            case RED:
-                doorServo.setPosition(0.6);
-            break;
+        doorServo.setPosition(0.0);
+    }
 
-            case BLUE:
-                doorServo.setPosition(0.3);
-            break;
-        }
+    public void openDoorRed()
+    {
+        doorServo.setPosition(0.5);
+    }
+
+    public void openDoorBlue()
+    {
+        doorServo.setPosition(0.3);
     }
 
     //Alter to accommodate both boxes
     public void setExtension(boolean trigger)
     {
         extensionSwitch.changeState(trigger);
-        switch(extensionSwitch.currentState())
-        {
+        switch(extensionSwitch.currentState()) {
             case 1:
                 //Box Extension
                 //setExtensionSpeed(boxFullyExtended()?0.5:1.0);
@@ -150,7 +155,12 @@ public class ScoringBox
     {
         return boxExtensionDetector.getRawValue();
     }
-    public void innerBoxExtension(double servoExtensionValue) //com.qualcomm.robotcore.hardware.Gamepad gamepad
+
+    public double getDebrisValue1() {return debris1.getValue();}
+
+    public double getDebrisValue2() {return debris2.getValue();}
+
+    public void setExtensionSpeed(double input)
     {
         //boxExtendServo.setPosition(servoExtensionValue);
         /*

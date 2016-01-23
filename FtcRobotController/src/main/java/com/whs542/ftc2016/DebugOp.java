@@ -33,7 +33,7 @@ public class DebugOp extends OpMode
         //box.setDoorPosition(gamepad1.left_stick_y);
         box.setExtension(gamepad1.b);
         //box.setExtensionSpeed(gamepad1.dpad_left, gamepad1.dpad_right);
-        box.setDoor(gamepad1.a);
+        //box.setDoor(gamepad1.a);
         telemetry.addData("servo pos", gamepad1.left_stick_y);
         telemetry.addData("Magnet", box.getExtensionValue());
 	}

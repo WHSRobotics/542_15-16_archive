@@ -24,32 +24,27 @@ public class Drive
     private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
     private static final double JOY_THRESHOLD = 0.2;
 
-    private static Servo leftChurroHook;
-    private static Servo rightChurroHook;
-    private static Servo blueSwitcher;
-    private static Servo redSwitcher;
+    private Servo leftChurroHook;
+    private Servo rightChurroHook;
+    private Servo blueSwitcher;
+    private Servo redSwitcher;
 
     private Toggler switcherSwitch = new Toggler(2);
     private Toggler hookSwitch = new Toggler(2);
     private Toggler orientationSwitch = new Toggler(2);
 
-	private static DcMotor driveRightFront;
-	private static DcMotor driveRightBack;
-	private static DcMotor driveLeftFront;
-	private static DcMotor driveLeftBack;
+	private DcMotor rightFrontMotor;
+	private DcMotor rightBackMotor;
+	private DcMotor leftFrontMotor;
+	private DcMotor leftBackMotor;
 
-    private static Servo hookLeft;
-    private static Servo hookRight;
-    private static Servo sideLeft;
-    private static Servo sideRight;
+    public double [] encoderZeroes;
+    public double [] encoderValues;
 
-    public static double [] encoderZeroes;
-    public static double [] encoderValues;
-
-    public static int RF = 0;
-    public static int RB = 1;
-    public static int LF = 2;
-    public static int LB = 3;
+    public int RF = 0;
+    public int RB = 1;
+    public int LF = 2;
+    public int LB = 3;
 
 	// ----------------------------------
 	// Drive Constructor
@@ -70,10 +65,10 @@ public class Drive
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        /*rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);*/
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
@@ -130,7 +125,7 @@ public class Drive
                 break;
 
             case 1:
-                hook();
+                hook90();
         }
     }
 
@@ -191,20 +186,36 @@ public class Drive
                 rightBackMotor.setPower(rightPower);
                 leftFrontMotor.setPower(leftPower);
                 leftBackMotor.setPower(leftPower);
-                break;
+            break;
 
             case 1:
                 rightFrontMotor.setPower(-leftPower);
                 rightBackMotor.setPower(-leftPower);
                 leftFrontMotor.setPower(-rightPower);
                 leftBackMotor.setPower(-rightPower);
-                break;
+            break;
         }
     }
 
     public void setOrientation(boolean trigger)
     {
         orientationSwitch.changeState(trigger);
+    }
+
+    public String getOrientation()
+    {
+        String o = "null";
+        switch(orientationSwitch.currentState())
+        {
+            case 0:
+                o = "Normal";
+                        break;
+
+            case 1:
+                o = "Reverse";
+                break;
+        }
+        return o;
     }
 
     public boolean hasTargetHit(double target)
