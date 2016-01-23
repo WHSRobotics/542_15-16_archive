@@ -93,7 +93,7 @@ public class ScoringBox
 
     public void openDoorRed()
     {
-        doorServo.setPosition(0.6);
+        doorServo.setPosition(0.5);
     }
 
     public void openDoorBlue()
