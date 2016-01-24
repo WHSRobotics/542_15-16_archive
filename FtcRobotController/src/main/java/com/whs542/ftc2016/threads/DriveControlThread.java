@@ -1,7 +1,5 @@
 package com.whs542.ftc2016.threads;
 
-import com.whs542.ftc2016.subsys.WHSRobot;
-
 public class DriveControlThread implements Runnable
 {
     //Milliseconds
@@ -28,9 +26,11 @@ public class DriveControlThread implements Runnable
         SPIN, TRANSLATE;
     }
 
-    public DriveControlThread()
+    public DriveControlThread(double maxVelocity, double ramptime, double position)
     {
-
+        this.maxVelocity = maxVelocity;
+        this.ramptime = ramptime;
+        this.position = position;
     }
 
     //Goal position + max velocity
@@ -86,10 +86,10 @@ public class DriveControlThread implements Runnable
 
     }
 
-    public void rampVelocity(double input)
+    public void rampVelocity()
     {
         //Speed up the motor you want to speed up
-        power = input;
+        //power = input;
 
         //double currentPower = motorToSpeedUp.getPower();
         while(power < maxVelocity)//1==1)//currentPower < powerYouWant)
@@ -103,9 +103,8 @@ public class DriveControlThread implements Runnable
         //motorToSpeedUp.setPower(powerYouWant);
     }
 
-    public void slowVelocity(double input)
+    public void slowVelocity()
     {
-        power = input;
         //power = input;
         while(power > 0)
         {
@@ -121,10 +120,7 @@ public class DriveControlThread implements Runnable
         return power;
     }
 
-    public void setPosition(double desiredPosition)
-    {
-        position = desiredPosition;
-    }
+    //public void setPosition(double desiredPosition) {position = desiredPosition;}
 
 // position = max velocity * (ramptime + constant time)
     //motor velocity = function of power we set
@@ -133,10 +129,12 @@ public class DriveControlThread implements Runnable
     {
         while(!Thread.interrupted())
         {
+            /*
+            translateStart(goal);
             switch(speedMode)
             {
                 case RAMP:
-                    rampVelocity(0.0);
+                    rampVelocity();
                     if(Math.abs(maxVelocity - power) < .5) {
                         speedMode = SpeedMode.CONSTANT;
                     }
@@ -152,10 +150,13 @@ public class DriveControlThread implements Runnable
                     break;
 
                 case SLOW:
-                    slowVelocity(1.0);
+                    slowVelocity();
                     break;
             }
-            startTime = System.currentTimeMillis();
+            */
+            power = 0.5;
+
+            /*startTime = System.currentTimeMillis();
             try
             {
                 Thread.sleep(dt + Math.max(-dt, (startTime - System.currentTimeMillis()) ));
@@ -164,6 +165,7 @@ public class DriveControlThread implements Runnable
             {
                 break;
             }
+            */
         }
     }
 
