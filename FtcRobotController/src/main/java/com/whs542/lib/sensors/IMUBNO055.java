@@ -2,6 +2,7 @@ package com.whs542.lib.sensors;
 
 import java.util.TimerTask;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class IMUBNO055
 {
@@ -30,6 +31,9 @@ public class IMUBNO055
     private static byte[] positionVector = new byte[6];
     private static long turns = 0;
     private static double[] xyz = new double[3];
+
+    private DeviceInterfaceModule module = null;
+    //private static int port = -1;
 
     public class SystemStatus {
         public int system_status;
@@ -279,9 +283,10 @@ public class IMUBNO055
      * @param port the physical port the sensor is plugged into on the roboRio
      * @param address the address the sensor is at (0x28 or 0x29)
      */
-    public IMUBNO055(int port, byte address) {
+    public IMUBNO055(HardwareMap sensorMap, int port, byte address) {
         //imu = new I2C(port, address);
 
+        this.module = sensorMap.deviceInterfaceModule.get("cdim");
         executor = new java.util.Timer();
         executor.schedule(new IMUBNO055UpdateTask(this), 0L, THREAD_PERIOD);
     }
@@ -295,9 +300,9 @@ public class IMUBNO055
      * @return the instantiated BNO055 object
      */
     public static IMUBNO055 getInstance(opmode_t mode, vector_type_t vectorType,
-                                     int port, byte address) {
+                                        HardwareMap sensorMap, int port, byte address) {
         if(instance == null) {
-            instance = new IMUBNO055(port, address);
+            instance = new IMUBNO055(sensorMap, port, address);
         }
         requestedMode = mode;
         requestedVectorType = vectorType;

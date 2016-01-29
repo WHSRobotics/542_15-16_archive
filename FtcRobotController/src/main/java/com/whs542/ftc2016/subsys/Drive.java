@@ -248,44 +248,36 @@ public class Drive
 
     public void updateEncoderValues()
     {
-        encoderValues[RF] = driveRightFront.getCurrentPosition()-encoderZeroes[RF];
-        encoderValues[RB] = driveRightBack.getCurrentPosition()-encoderZeroes[RB];
-        encoderValues[LF] = driveLeftFront.getCurrentPosition()-encoderZeroes[LF];
-        encoderValues[LB] = driveLeftBack.getCurrentPosition()-encoderZeroes[LB];
+        encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
+        encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
+        encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
+        encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
     }
 
     public void zeroLeftEncoders()
     {
-        encoderZeroes[LF] = driveLeftFront.getCurrentPosition();
-        encoderZeroes[LB] = driveLeftBack.getCurrentPosition();
+        encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
+        encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
     }
 
     public void zeroRightEncoders()
     {
-        encoderZeroes[RF] = driveRightFront.getCurrentPosition();
-        encoderZeroes[RB] = driveRightBack.getCurrentPosition();
+        encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
+        encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
     }
 
     public void hook(double hookLPosition, double hookRPosition)
     {
-        hookLeft.setPosition(hookLPosition);
-        hookRight.setPosition(hookRPosition);
+        leftChurroHook.setPosition(hookLPosition);
+        rightChurroHook.setPosition(hookRPosition);
     }
     public void sideClimbers(com.qualcomm.robotcore.hardware.Gamepad gamepad)
     {
         if(gamepad.dpad_left)
         {
-            sideLPosition = 0.95;
-            sideRPosition = 0.0;
-            sideLeft.setPosition(sideLPosition);
-            sideRight.setPosition(sideRPosition);
         }
         else if(gamepad.dpad_right)
         {
-            sideLPosition = 0.2;
-            sideRPosition = 1.0;
-            sideLeft.setPosition(sideLPosition);
-            sideRight.setPosition(sideRPosition);
         }
     }
 }

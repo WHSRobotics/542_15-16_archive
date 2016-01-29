@@ -25,15 +25,11 @@ public class BlueTeleOp extends OpMode
 
     public void loop() {
         //drive
-<<<<<<< HEAD:FtcRobotController/src/main/java/com/whs542/ftc2016/TeleOp.java
-        bot.drive.setDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
-=======
         //Slide Telemetry
         telemetry.addData("Shift", bot.slides.getShiftState());
         telemetry.addData("Lock", bot.slides.getLockState());
 
         bot.drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
->>>>>>> state-controllers:FtcRobotController/src/main/java/com/whs542/ftc2016/BlueTeleOp.java
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setSwitcher(gamepad1.right_bumper);
         bot.drive.setHook(gamepad1.right_trigger == 1.0);
