@@ -1,6 +1,7 @@
 package com.whs542.ftc2016;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.whs542.ftc2016.subsys.*;
 import com.whs542.lib.*;
 
@@ -32,11 +33,13 @@ public class BlueAutoOp extends OpMode
         telemetry.addData("state", state);
 
         //Note that if you make the power too big, it'll go way too fast and overshoot
-        
+        double k1 = 1.0; //Left proportional gain
+        double k2 = 1.0; //Right proportional gain
+
         switch(state)
         {
             case 0:
-                bot.drive.setLeftRightPower(0.1, 0.1);
+                bot.drive.setLeftRightPower(k1*0.1, k2*0.1);
                 if(bot.drive.hasTargetHit(1.0)) //value to be determined
                 {
                     state = 1;

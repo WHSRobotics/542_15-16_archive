@@ -52,6 +52,21 @@ public class ScoringBox
 	// Scoring Box Methods
 	// ----------------------------------
 
+    public void setDoor(boolean trigger)
+    {
+        doorSwitch.changeState(trigger);
+        switch(doorSwitch.currentState())
+        {
+            case 0:
+                closeDoor();
+            break;
+
+            case 1:
+                openDoor();
+            break;
+        }
+    }
+
     public void setDoorRed(boolean trigger)
     {
         doorSwitch.changeState(trigger);
@@ -101,6 +116,35 @@ public class ScoringBox
     {
         doorServo.setPosition(0.3);
     }
+
+    public void closeDoor()
+    {
+        switch(color)
+        {
+            case RED:
+                doorServo.setPosition(0.8);
+            break;
+
+            case BLUE:
+                doorServo.setPosition(0.0);
+            break;
+        }
+    }
+
+    public void openDoor()
+    {
+        switch(color)
+        {
+            case RED:
+                doorServo.setPosition(0.5);
+            break;
+
+            case BLUE:
+                doorServo.setPosition(0.3);
+            break;
+        }
+    }
+
 
     //Alter to accommodate both boxes
     public void setExtension(boolean trigger)
