@@ -37,8 +37,8 @@ public class ClearMountainAuto extends OpMode
         switch(state)
         {
             case 0:
-                bot.drive.setLeftRightPower(1.0, 1.0);
-                if(bot.drive.hasTargetHit(2.55)) //value to be determined
+                bot.drive.setLeftRightPower(0.5, 0.5);
+                if(bot.drive.hasTargetHit(3.82)) //value to be determined
                 {
                     state = 1;
                 }
