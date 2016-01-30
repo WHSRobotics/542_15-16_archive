@@ -21,14 +21,15 @@ public class IMUBNO055
     private static vector_type_t requestedVectorType;
 
     //State machine variables
-    private volatile int state = 0;
-    private volatile boolean sensorPresent = false;
-    private volatile boolean initialized = false;
-    private volatile double currentTime; //seconds
-    private volatile double nextTime; //seconds
-    private volatile byte[] positionVector = new byte[6];
-    private volatile long turns = 0;
-    private volatile double[] xyz = new double[3];
+    // Was volatile instead of static
+    private static int state = 0;
+    private static boolean sensorPresent = false;
+    private static boolean initialized = false;
+    private static double currentTime; //seconds
+    private static double nextTime; //seconds
+    private static byte[] positionVector = new byte[6];
+    private static long turns = 0;
+    private static double[] xyz = new double[3];
 
     public class SystemStatus {
         public int system_status;
@@ -278,7 +279,7 @@ public class IMUBNO055
      * @param port the physical port the sensor is plugged into on the roboRio
      * @param address the address the sensor is at (0x28 or 0x29)
      */
-    private IMUBNO055(int port, byte address) {
+    public IMUBNO055(int port, byte address) {
         //imu = new I2C(port, address);
 
         executor = new java.util.Timer();
@@ -680,7 +681,7 @@ public class IMUBNO055
      *
      * @return a vector [heading, roll, pitch]
      */
-    public double[] getVector() {
+    public static double[] getVector() {
         return xyz;
     }
 
