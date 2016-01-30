@@ -21,7 +21,7 @@ public class LinearSlides
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
     public static Toggler lockSwitch = new Toggler(2);
-    public static Toggler shiftSwitch = new Toggler(3);
+    public static Toggler shiftSwitch = new Toggler(2);
 
     public static Toggler coarseAngler = new Toggler(7,0);
     public static Toggler fineAngler = new Toggler(5,0);
@@ -220,11 +220,11 @@ public class LinearSlides
                 torque();
             break;
 
-            case 1:
+            case 2:
                 speed();
             break;
 
-            case 2:
+            case 1:
                 neutral();
             break;
         }

@@ -55,6 +55,7 @@ public class BlueTeleOp extends OpMode
 
         //Slides
         bot.slides.setShifter(gamepad2.b);
+        //bot.slides.torque();
         bot.slides.setLock(gamepad2.y);
         bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
         bot.slides.setTransmissionPower(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
