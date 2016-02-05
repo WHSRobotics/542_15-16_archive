@@ -126,7 +126,7 @@ public class ScoringBox
             break;
 
             case BLUE:
-                doorServo.setPosition(0.1);
+                doorServo.setPosition(0.0);
             break;
         }
     }
@@ -136,7 +136,7 @@ public class ScoringBox
         switch(color)
         {
             case RED:
-                doorServo.setPosition(0.0);
+                doorServo.setPosition(0.28);
             break;
 
             case BLUE:

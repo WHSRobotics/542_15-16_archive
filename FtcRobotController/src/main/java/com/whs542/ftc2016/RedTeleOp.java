@@ -29,6 +29,7 @@ public class RedTeleOp extends OpMode
         telemetry.addData("Lock", bot.slides.getLockState());
         //telemetry.addData("Angle", bot.slides.getAngle());
         //telemetry.addData("Slide Length", "");
+        telemetry.addData("Intake", bot.intake.getIntakeState());
 
         //Drive Telemetry
         telemetry.addData("Hook", bot.drive.getHookState());
@@ -41,7 +42,7 @@ public class RedTeleOp extends OpMode
         //telemetry.addData("Mag", bot.box.getExtensionValue());
         //telemetry.addData("Deb1", bot.box.getDebrisValue1());
         //telemetry.addData("Deb2", bot.box.getDebrisValue2());
-        telemetry.addData("Mag1", bot.slides.getZeroDetectorValue());
+        //telemetry.addData("Mag1", bot.slides.getZeroDetectorValue());
 
         //Drive
         bot.drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);

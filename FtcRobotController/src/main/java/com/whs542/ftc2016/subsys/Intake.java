@@ -98,6 +98,23 @@ public class Intake
         }
     }
 
+    public String getIntakeState()
+    {
+        String state = "null";
+        switch(dropSwitch.currentState())
+        {
+            case 0:
+                state = "Raised";
+                break;
+
+            case 1:
+                state = "Lowered";
+                break;
+        }
+        return state;
+    }
+
+
     public void dropIntake()
     {
         dropDownServo.setPosition(1.0);

@@ -19,7 +19,7 @@ public class Drive
 {
     private Alliance color;
     private static final double WHEEL_DIAMETER = 15.24;
-    private static final double TICKS_TO_ROT_MOTOR = 1/1120.0;
+    private static final double TICKS_TO_ROT_MOTOR = 0.75/1120.0;
     private static final double TICKS_TO_RAD_MOTOR = 2.0*Math.PI*TICKS_TO_ROT_MOTOR;
     //Sprocket ratio of 24/32
     private static final double TICKS_TO_DIST_CM_WHEEL = WHEEL_DIAMETER * Math.PI *0.75/1120.0;
@@ -171,10 +171,22 @@ public class Drive
 
     public void setLeftRightPower(double leftPower, double rightPower)
     {
-        rightFrontMotor.setPower(7.0/9.0 * rightPower);
-        rightBackMotor.setPower(7.0/9.0 * rightPower);
-        leftFrontMotor.setPower(7.0/9.0 * leftPower);
-        leftBackMotor.setPower(7.0/9.0 * leftPower);
+        switch(orientationSwitch.currentState())
+        {
+            case 0:
+                rightFrontMotor.setPower(7.0/9.0*rightPower);
+                rightBackMotor.setPower(7.0/9.0*rightPower);
+                leftFrontMotor.setPower(7.0/9.0*leftPower);
+                leftBackMotor.setPower(7.0/9.0*leftPower);
+                break;
+
+            case 1:
+                rightFrontMotor.setPower(-7.0/9.0*leftPower);
+                rightBackMotor.setPower(-7.0/9.0*leftPower);
+                leftFrontMotor.setPower(-7.0/9.0*rightPower);
+                leftBackMotor.setPower(-7.0/9.0*rightPower);
+                break;
+        }
     }
 
     public void setDrive(double leftPower, double rightPower)
