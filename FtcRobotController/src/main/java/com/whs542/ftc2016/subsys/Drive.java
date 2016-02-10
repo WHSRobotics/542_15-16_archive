@@ -19,9 +19,10 @@ public class Drive
 {
     private Alliance color;
     private static final double WHEEL_DIAMETER = 15.24;
-    private static final double TICKS_TO_ROT = 1.0/1120.0;
-    private static final double TICKS_TO_RAD = 2.0*Math.PI/1120.0;
-    private static final double TICKS_TO_DIST_CM = WHEEL_DIAMETER*Math.PI/1120.0;
+    private static final double TICKS_TO_ROT_MOTOR = 0.75/1120.0;
+    private static final double TICKS_TO_RAD_MOTOR = 2.0*Math.PI*TICKS_TO_ROT_MOTOR;
+    //Sprocket ratio of 24/32
+    private static final double TICKS_TO_DIST_CM_WHEEL = WHEEL_DIAMETER * Math.PI *0.75/1120.0;
     private static final double JOY_THRESHOLD = 0.2;
 
     private Servo leftChurroHook;
@@ -126,6 +127,7 @@ public class Drive
 
             case 1:
                 hook90();
+            break;
         }
     }
 
@@ -169,10 +171,22 @@ public class Drive
 
     public void setLeftRightPower(double leftPower, double rightPower)
     {
-        rightFrontMotor.setPower(7.0/9.0 * rightPower);
-        rightBackMotor.setPower(7.0/9.0 * rightPower);
-        leftFrontMotor.setPower(7.0/9.0 * leftPower);
-        leftBackMotor.setPower(7.0/9.0 * leftPower);
+        switch(orientationSwitch.currentState())
+        {
+            case 0:
+                rightFrontMotor.setPower(7.0/9.0*rightPower);
+                rightBackMotor.setPower(7.0/9.0*rightPower);
+                leftFrontMotor.setPower(7.0/9.0*leftPower);
+                leftBackMotor.setPower(7.0/9.0*leftPower);
+                break;
+
+            case 1:
+                rightFrontMotor.setPower(-7.0/9.0*leftPower);
+                rightBackMotor.setPower(-7.0/9.0*leftPower);
+                leftFrontMotor.setPower(-7.0/9.0*rightPower);
+                leftBackMotor.setPower(-7.0/9.0*rightPower);
+                break;
+        }
     }
 
     public void setDrive(double leftPower, double rightPower)
@@ -224,12 +238,12 @@ public class Drive
         boolean rightTargetHit = false;
         boolean leftTargetHit = false;
 
-        if(Math.abs(encoderValues[RF])*TICKS_TO_ROT > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT > target)
+        if(Math.abs(encoderValues[RF])*TICKS_TO_ROT_MOTOR > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT_MOTOR > target)
         {
             rightTargetHit = true;
         }
 
-        if(Math.abs(encoderValues[LF])*TICKS_TO_ROT> target || Math.abs(encoderValues[LB])*TICKS_TO_ROT > target)
+        if(Math.abs(encoderValues[LF])*TICKS_TO_ROT_MOTOR > target || Math.abs(encoderValues[LB])*TICKS_TO_ROT_MOTOR > target)
         {
             leftTargetHit = true;
         }
@@ -264,20 +278,5 @@ public class Drive
     {
         encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
         encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
-    }
-
-    public void hook(double hookLPosition, double hookRPosition)
-    {
-        leftChurroHook.setPosition(hookLPosition);
-        rightChurroHook.setPosition(hookRPosition);
-    }
-    public void sideClimbers(com.qualcomm.robotcore.hardware.Gamepad gamepad)
-    {
-        if(gamepad.dpad_left)
-        {
-        }
-        else if(gamepad.dpad_right)
-        {
-        }
     }
 }

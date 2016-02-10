@@ -9,6 +9,7 @@ import com.whs542.lib.sensors.IMUBNO055;
  * Created by DanielWang on 1/22/16.
  */
 public class AutoTestIMU extends OpMode{
+<<<<<<< HEAD
     private IMUBNO055 imu;
     public void init()
     {
@@ -16,7 +17,6 @@ public class AutoTestIMU extends OpMode{
     }
     public void loop()
     {
-
         telemetry.addData("asdf", imu.getHeading());
     }
     public void stop()
