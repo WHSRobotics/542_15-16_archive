@@ -1,13 +1,11 @@
-package com.whs542.ftc2016;
+package com.whs542.ftc2016.autoOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.ftc2016.subsys.*;
 import com.whs542.lib.*;
 
-/**
- * Created by DanielWang on 1/29/16.
- */
-public class ClearMountainAuto extends OpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+public class RedDebrisClearAutoOp extends OpMode
 {
     WHSRobot bot;
 
@@ -33,16 +31,20 @@ public class ClearMountainAuto extends OpMode
         telemetry.addData("state", state);
 
         //Note that if you make the power too big, it'll go way too fast and overshoot
-
+        
         switch(state)
         {
             case 0:
-                bot.drive.setLeftRightPower(0.5, 0.5);
-                if(bot.drive.hasTargetHit(3.82)) //value to be determined
+                bot.drive.setLeftRightPower(0.3, 0.3);
+                if(bot.drive.hasTargetHit(3.0)) //value to be determined
                 {
                     state = 1;
                 }
-                break;
+            break;
+
+            case 1:
+                bot.drive.setLeftRightPower(0.0,0.0);
+            break;
         }
     }
 }

@@ -1,10 +1,8 @@
 package com.whs542.ftc2016.control;
 
-import com.whs542.lib.Matrix;
-
 public class ControlLoop
 {
-	public Matrix a;
+	/*public Matrix a;
 	public Matrix b;
 	public Matrix c;
 
@@ -34,6 +32,6 @@ public class ControlLoop
 	// Calculate x_hat
 		// x_hat = A * x_hat + B * u + L * (y-C*x_hat)
 	// Generate u from x_hat
-		// r - K * x_hat
+		// r - K * x_hat*/
 }
 

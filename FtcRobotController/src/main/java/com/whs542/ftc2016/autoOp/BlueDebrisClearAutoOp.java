@@ -1,5 +1,4 @@
-package com.whs542.ftc2016;
-
+package com.whs542.ftc2016.autoOp;
 
 import com.whs542.ftc2016.subsys.*;
 import com.whs542.lib.*;

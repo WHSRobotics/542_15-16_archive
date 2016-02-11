@@ -1,4 +1,4 @@
-package com.whs542.ftc2016;
+package com.whs542.ftc2016.teleOp;
 
 import com.whs542.ftc2016.subsys.*;
 import com.whs542.lib.*;
@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  * Created by DanielWang on 12/5/15.
  */
 
-public class RedTeleOp extends OpMode
+public class BlueTeleOp extends OpMode
 {
     WHSRobot bot;
 
     public void init()
     {
-        bot = new WHSRobot(hardwareMap, Alliance.RED);
+        bot = new WHSRobot(hardwareMap, Alliance.BLUE);
     }
 
     public void start()
@@ -44,7 +44,7 @@ public class RedTeleOp extends OpMode
         //telemetry.addData("Deb2", bot.box.getDebrisValue2());
         //telemetry.addData("Mag1", bot.slides.getZeroDetectorValue());
 
-        //Drive
+        //drive
         bot.drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setSwitcher(gamepad1.right_bumper);

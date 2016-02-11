@@ -1,5 +1,4 @@
-package com.whs542.ftc2016;
-
+package com.whs542.ftc2016.autoOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.whs542.ftc2016.subsys.*;

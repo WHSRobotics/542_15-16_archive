@@ -1,8 +1,10 @@
-package com.whs542.lib.sensors;
+package com.whs542.lib.sensors.imu;
 
 import java.util.TimerTask;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 public class IMUBNO055
 {
@@ -16,7 +18,7 @@ public class IMUBNO055
 
     private static IMUBNO055 instance;
 
-    private static I2C imu;
+    //private static I2C imu;
     private static int _mode;
     private static opmode_t requestedMode; //user requested mode of operation.
     private static vector_type_t requestedVectorType;
@@ -710,7 +712,7 @@ public class IMUBNO055
     private boolean write8(reg_t reg, byte value) {
         boolean retVal = false;
 
-        retVal = imu.write(reg.getVal(), value); //Need to fix this
+        //retVal = imu.write(reg.getVal(), value); //Need to fix this
 
         return retVal;
     }
@@ -752,7 +754,7 @@ public class IMUBNO055
             return false;
         }
 
-        retVal = !imu.read(reg, buffer.length, buffer); //Need to fix this
+        //retVal = !imu.read(reg, buffer.length, buffer); //Need to fix this
 
         return retVal;
     }
