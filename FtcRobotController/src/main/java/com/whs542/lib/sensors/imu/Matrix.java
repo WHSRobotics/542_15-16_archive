@@ -1,10 +1,18 @@
 package com.whs542.lib.sensors.imu;
+//All methods verified on 2/12/16
 
 public class Matrix
 {
 	int rows;
 	int columns;
 	double [][] data;
+
+    public Matrix(int M)
+    {
+        rows = M;
+        columns = M;
+        data = new double[rows][columns];
+    }
 
 	public Matrix(int M, int N)
     {
@@ -17,6 +25,7 @@ public class Matrix
     {
         rows = m.rows;
         columns = m.columns;
+        data = new double[rows][columns];
         for (int i = 0; i < rows; i++ )
         {
             for(int j = 0; j < columns; j++)
@@ -67,7 +76,7 @@ public class Matrix
     public Vector vectorFromColumn(int columnNumber)
     {
         Vector outputVector = new Vector(rows);
-        for(int i = 0; i < columns; i++)
+        for(int i = 0; i < rows; i++)
         {
         	outputVector.setEntry(i, data[i][columnNumber]);
         }
@@ -104,6 +113,38 @@ public class Matrix
     	data[row][column] = value;
     }
 
+    public void setRow(int row, double[] rowData)
+    {
+        if(rowData.length != columns) throw new RuntimeException("Illegal Array Length");
+        data[row]=rowData;
+    }
+
+    public void setColumn(int column, double[] columnData)
+    {
+        if(columnData.length != rows) throw new RuntimeException("Illegal Array Length");
+        for(int i = 0; i < rows; i++)
+        {
+            data[i][column] = columnData[i];
+        }
+    }
+
+    public double[] getRowAsArray(int row)
+    {
+        double[] outputArray = new double[columns];
+        outputArray = data[row];
+        return outputArray;
+    }
+
+    public double[] getColumnAsArray(int column)
+    {
+        double[] outputArray = new double[rows];
+        for(int i = 0; i < rows; i++)
+        {
+            outputArray[i] = data[i][column];
+        }
+        return outputArray;
+    }
+
     public Matrix add(Matrix m)
     {
     	if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
@@ -134,109 +175,112 @@ public class Matrix
         return outputMatrix;
     }
 
-    /*public Matrix scaleBy(double scalar)
+    public Matrix scaleBy(double scalar)
     {
-
-    }*/
-
-    /*public Matrix multiplyBy(Matrix m)
-    {
-
-    }*/
-
-    /*Matrix operator * (double scalar)
-    {
-        Matrix ret;
-        for(int x = 0; x < N; x++)
+        Matrix outputMatrix = new Matrix(rows, columns);
+        for(int i = 0; i < rows; i++)
         {
-            for(int y = 0; y < N; y++)
+            for(int j = 0; j < columns; j++)
             {
-                ret._cell[x*N+y] = _cell[x*N+y] * scalar;
+                outputMatrix.setEntry(i,j, data[i][j] * scalar);
             }
         }
-        return ret;
+        return outputMatrix;
     }
 
-    Matrix operator * (Matrix m)
+    public Matrix multiplyBy(Matrix m)
     {
-        Matrix ret;
-        for(int x = 0; x < N; x++)
+        if(columns != m.rows) throw new RuntimeException("Illegal Matrix Dimensions");
+        Matrix outputMatrix = new Matrix(rows, m.columns);
+        for(int i = 0; i < outputMatrix.rows; i++)
         {
-            for(int y = 0; y < N; y++)
+            for(int j = 0; j < outputMatrix.columns; j++)
             {
-                Vector<N> row = row_to_vector(x);
-                Vector<N> col = m.col_to_vector(y);
-                ret.cell(x, y) = row.dot(col);
+                Vector row = this.vectorFromRow(i);
+                Vector column = m.vectorFromColumn(j);
+                outputMatrix.setEntry(i,j, row.dotWith(column));
             }
         }
-        return ret;
+        return outputMatrix;
     }
 
-    Matrix transpose()
+    public Matrix transpose()
     {
-        Matrix ret;
-        for(int x = 0; x < N; x++)
+        Matrix outputMatrix = new Matrix(columns,rows);
+        for(int i = 0; i < outputMatrix.rows; i++)
         {
-            for(int y = 0; y < N; y++)
+            for(int j = 0; j < outputMatrix.columns; j++)
             {
-                ret.cell(y, x) = cell(x, y);
+                outputMatrix.setEntry(i, j, data[j][i]);
             }
         }
-        return ret;
+        return outputMatrix;
     }
 
-    Matrix<N-1> minor_matrix(int row, int col)
+    Matrix minorMatrix(int row, int column)
     {
-        int colCount = 0, rowCount = 0;
-        Matrix<N-1> ret;
-        for(int i = 0; i < N; i++ )
+        if(rows != columns) throw new RuntimeException("Non-square matrix");
+        int columnCount = 0;
+        int rowCount = 0;
+        Matrix outputMatrix = new Matrix(rows - 1);
+        for(int i = 0; i < rows; i++)
         {
-            if( i != row )
+            if(i != row)
             {
-                for(int j = 0; j < N; j++ )
+                for(int j = 0; j < columns; j++)
                 {
-                    if( j != col )
+                    if(j != column)
                     {
-                        ret(rowCount, colCount) = cell(i, j);
-                        colCount++;
+                        outputMatrix.setEntry(rowCount,columnCount, this.data[i][j]);
+                        columnCount ++;
                     }
                 }
-                rowCount++;
+                rowCount ++;
+                //The code didn't have the column reset, would probably have led to array error?
+                //Don't know, because in C++ they just had a long array thing as a matrix
+                columnCount = 0;
             }
         }
-        return ret;
+        return outputMatrix;
     }
 
     double determinant()
     {
-        if(N == 1)
-            return cell(0, 0);
-
-        float det = 0.0;
-        for(int i = 0; i < N; i++ )
+        if(rows != columns) throw new RuntimeException("Non-square matrix");
+        if(rows == 1)
         {
-            Matrix<N-1> minor = minor_matrix(0, i);
-            det += (i%2==1?-1.0:1.0) * cell(0, i) * minor.determinant();
+            return data[0][0];
         }
-        return det;
+
+        double outputDeterminant = 0.0;
+        for(int i = 0; i < rows; i++)
+        {
+            Matrix minor = minorMatrix(0, i);
+            outputDeterminant += (i%2==1?-1.0:1.0) * data[0][i] * minor.determinant();
+        }
+        return outputDeterminant;
     }
 
     Matrix invert()
     {
-        Matrix ret;
-        float det = determinant();
+        if(rows != columns) throw new RuntimeException("Non-square matrix");
+        Matrix outputMatrix = new Matrix(rows);
+        double det = determinant();
 
-        for(int x = 0; x < N; x++)
+        for(int i = 0; i < rows; i++)
         {
-            for(int y = 0; y < N; y++)
+            for(int j = 0; j < columns; j++)
             {
-                Matrix<N-1> minor = minor_matrix(y, x);
-                ret(x, y) = det*minor.determinant();
-                if( (x+y)%2 == 1)
-                    ret(x, y) = -ret(x, y);
+                Matrix minor = minorMatrix(j, i);
+                //The original code had the minordet * det instead of minordet/det
+                outputMatrix.setEntry(i, j,minor.determinant()/det);
+                if( (i+j)%2 == 1)
+                {
+                    outputMatrix.setEntry(i, j,-outputMatrix.getEntry(i, j));
+                }
             }
         }
-        return ret;
-    }*/
+        return outputMatrix;
+    }
 
 }
