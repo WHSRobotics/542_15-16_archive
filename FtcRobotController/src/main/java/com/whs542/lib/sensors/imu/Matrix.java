@@ -1,6 +1,26 @@
 package com.whs542.lib.sensors.imu;
 //All methods verified on 2/12/16
 
+/*
+    Translated to Java from C++
+    Inertial Measurement Unit Maths Library
+    Copyright (C) 2013-2014  Samuel Cowen
+    www.camelsoftware.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 public class Matrix
 {
 	int rows;
@@ -154,7 +174,7 @@ public class Matrix
         {
             for(int j = 0; j < columns; j++)
             {
-                outputMatrix.setEntry(i,j, data[i][j] + m.getEntry(i,j));
+                outputMatrix.data[i][j] = data[i][j] + m.data[i][j];
             }
         }
         return outputMatrix;
@@ -169,7 +189,7 @@ public class Matrix
         {
             for(int j = 0; j < columns; j++)
             {
-                outputMatrix.setEntry(i,j, data[i][j] - m.getEntry(i,j));
+                outputMatrix.data[i][j] = data[i][j] - m.data[i][j];
             }
         }
         return outputMatrix;
@@ -182,7 +202,7 @@ public class Matrix
         {
             for(int j = 0; j < columns; j++)
             {
-                outputMatrix.setEntry(i,j, data[i][j] * scalar);
+                outputMatrix.data[i][j] = data[i][j] * scalar;
             }
         }
         return outputMatrix;
@@ -198,7 +218,7 @@ public class Matrix
             {
                 Vector row = this.vectorFromRow(i);
                 Vector column = m.vectorFromColumn(j);
-                outputMatrix.setEntry(i,j, row.dotWith(column));
+                outputMatrix.data[i][j] = row.dotWith(column);
             }
         }
         return outputMatrix;
@@ -211,7 +231,7 @@ public class Matrix
         {
             for(int j = 0; j < outputMatrix.columns; j++)
             {
-                outputMatrix.setEntry(i, j, data[j][i]);
+                outputMatrix.data[i][j] = data[j][i];
             }
         }
         return outputMatrix;
@@ -231,7 +251,7 @@ public class Matrix
                 {
                     if(j != column)
                     {
-                        outputMatrix.setEntry(rowCount,columnCount, this.data[i][j]);
+                        outputMatrix.data[rowCount][columnCount] = data[i][j];
                         columnCount ++;
                     }
                 }
@@ -273,10 +293,10 @@ public class Matrix
             {
                 Matrix minor = minorMatrix(j, i);
                 //The original code had the minordet * det instead of minordet/det
-                outputMatrix.setEntry(i, j,minor.determinant()/det);
+                outputMatrix.data[i][j]=minor.determinant()/det;
                 if( (i+j)%2 == 1)
                 {
-                    outputMatrix.setEntry(i, j,-outputMatrix.getEntry(i, j));
+                    outputMatrix.data[i][j] = -outputMatrix.data[i][j];
                 }
             }
         }

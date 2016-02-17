@@ -1,5 +1,25 @@
 package com.whs542.lib.sensors.imu;
-//All methods verified on 2/11/16
+//All methods verified on 2/12/16
+
+/*
+    Translated to Java from C++
+    Inertial Measurement Unit Maths Library
+    Copyright (C) 2013-2014  Samuel Cowen
+    www.camelsoftware.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 public class Vector
 {
@@ -22,33 +42,33 @@ public class Vector
         }
     }
 
-    public Vector(int N, double a)
+    public Vector(double a)
     {
-    	n = N < 1 ? 1 : N;
+    	n = 1;
     	p_vec = new double[n];
         p_vec[0] = a;
     }
 
-    public Vector(int N, double a, double b)
+    public Vector(double a, double b)
     {
-    	n = N < 2 ? 2 : N;
+    	n = 2;
     	p_vec = new double[n];
         p_vec[0] = a;
         p_vec[1] = b;
     }
 
-    public Vector(int N, double a, double b, double c)
+    public Vector(double a, double b, double c)
     {
-    	n = N < 3 ? 3 : N;
+    	n = 3;
     	p_vec = new double[n];
         p_vec[0] = a;
         p_vec[1] = b;
         p_vec[2] = c;
     }
 
-    public Vector(int N, double a, double b, double c, double d)
+    public Vector(double a, double b, double c, double d)
     {
-  		n = N < 4 ? 4 : N;
+  		n = 4;
     	p_vec = new double[n];
         p_vec[0] = a;
         p_vec[1] = b;
@@ -116,7 +136,7 @@ public class Vector
     	double partwiseSum = 0;
     	for(int i = 0; i < n; i++)
     	{
-    		partwiseSum += this.p_vec[i] * v.p_vec[i];
+    		partwiseSum = partwiseSum + this.p_vec[i] * v.p_vec[i];
     	}
     	return partwiseSum;
     }
