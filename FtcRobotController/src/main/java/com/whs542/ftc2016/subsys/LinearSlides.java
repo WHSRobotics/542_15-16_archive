@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.whs542.lib.Toggler;
+import com.whs542.lib.sensors.CurrentACS711EX;
 //
 // Linear Slides Subsystem Class
 //
@@ -20,10 +21,12 @@ public class LinearSlides
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
     public static Toggler lockSwitch = new Toggler(2);
-    public static Toggler shiftSwitch = new Toggler(3);
+    public static Toggler shiftSwitch = new Toggler(2);
 
     public static Toggler coarseAngler = new Toggler(7,0);
     public static Toggler fineAngler = new Toggler(5,0);
+
+    public CurrentACS711EX zeroDetector;
 
     private static DcMotor anglingMotor;
 
@@ -74,7 +77,13 @@ public class LinearSlides
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
+<<<<<<< HEAD
         //highestMinimum = anglingMotor.getCurrentPosition();
+=======
+        highestMinimum = anglingMotor.getCurrentPosition();
+
+        zeroDetector = new CurrentACS711EX(slideMap, 1);
+>>>>>>> origin/IMU
     }
 
     // ----------------------------------
@@ -217,11 +226,11 @@ public class LinearSlides
                 torque();
             break;
 
-            case 1:
+            case 2:
                 speed();
             break;
 
-            case 2:
+            case 1:
                 neutral();
             break;
         }
@@ -283,5 +292,10 @@ public class LinearSlides
     public void setShiftServoPosition(double input)
     {
         shiftServo.setPosition(Math.abs(input));
+    }
+
+    public double getZeroDetectorValue()
+    {
+        return zeroDetector.getRawValue();
     }
 }

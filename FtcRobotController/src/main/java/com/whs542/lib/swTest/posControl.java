@@ -42,7 +42,7 @@ public class posControl extends OpMode
 			{-130200000000.0}
 	};
 
-	Matrix A = new Matrix(Adata);
+	/*Matrix A = new Matrix(Adata);
 	Matrix B = new Matrix(Bdata);
 	Matrix C = new Matrix(Cdata);
 	Matrix K = new Matrix(Kdata);
@@ -50,7 +50,7 @@ public class posControl extends OpMode
 
 	Matrix y = new Matrix(1,1);
 	Matrix r = new Matrix(1,1);
-	Matrix u = new Matrix(1,1);
+	Matrix u = new Matrix(1,1);*/
 
 	double power = 0.0;
 	DcMotor office;
@@ -67,7 +67,7 @@ public class posControl extends OpMode
 		voltSense = hardwareMap.voltageSensor.get("motorc");
 		input = new Toggler(9, 4);
 
-		position = new ControlLoop(A,B,C,K,L);
+		//position = new ControlLoop(A,B,C,K,L);
 	}
 
 	public void start()
@@ -79,7 +79,7 @@ public class posControl extends OpMode
 	{
 		input.changeState(gamepad1.dpad_up,gamepad1.dpad_down);
 
-		y.data[0][0] = (office.getCurrentPosition() * TICKS_TO_RAD);
+		/*y.data[0][0] = (office.getCurrentPosition() * TICKS_TO_RAD);
 		r.data[0][0] = input.currentState() * TWO_PI/8.0 * Nbar;
 		u = position.nextInput(y, u, r);
 		power = u.data[0][0] / voltSense.getVoltage() * 7.0/9.0;
@@ -87,7 +87,7 @@ public class posControl extends OpMode
 		office.setPower(power);
 		telemetry.addData("u", u.data[0][0] / voltSense.getVoltage() * 7.0/9.0);
 		telemetry.addData("power", power);
-		telemetry.addData("input", input.currentState() + " " + input.currentState() * TWO_PI/8.0);
+		telemetry.addData("input", input.currentState() + " " + input.currentState() * TWO_PI/8.0);*/
 	}
 
 	public double clamp(double input)

@@ -10,7 +10,11 @@ public class servoTest extends OpMode
 {
     Integer [] servoNum = new Integer[6];
     Servo [] servos = new Servo[6];
+<<<<<<< HEAD
     WHSRobot bot;
+=======
+
+>>>>>>> origin/IMU
     @Override
     public void init()
     {
@@ -18,7 +22,10 @@ public class servoTest extends OpMode
         {
             servoNum[i-1] = new Integer(i);
             servos[i-1] = hardwareMap.servo.get(servoNum[i-1].toString());
+<<<<<<< HEAD
             bot = new WHSRobot(hardwareMap, Alliance.RED);
+=======
+>>>>>>> origin/IMU
         }
     }
 
@@ -27,6 +34,7 @@ public class servoTest extends OpMode
     {
         for(int i  = 1; i<7; i++)
         {
+<<<<<<< HEAD
             servos[i-1].setPosition(1.0 - Math.abs(gamepad1.left_stick_y * 0.46)); //Closed position is 0.8 for the servo box
         }
         telemetry.addData("gamepad left stick", gamepad1.left_stick_y);
@@ -35,5 +43,9 @@ public class servoTest extends OpMode
     public void stop()
     {
 
+=======
+            servos[i-1].setPosition(Math.abs(gamepad1.left_stick_y));
+        }
+>>>>>>> origin/IMU
     }
 }

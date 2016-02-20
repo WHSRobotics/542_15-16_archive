@@ -1,11 +1,11 @@
-package com.whs542.ftc2016;
+package com.whs542.ftc2016.autoOp;
 
+import com.whs542.ftc2016.subsys.*;
+import com.whs542.lib.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.whs542.ftc2016.subsys.WHSRobot;
-import com.whs542.lib.Alliance;
 
-public class ForwardAuto extends OpMode
+public class RedDebrisClearAutoOp extends OpMode
 {
     WHSRobot bot;
 
@@ -13,7 +13,7 @@ public class ForwardAuto extends OpMode
 
     public void init()
     {
-        bot = new WHSRobot(hardwareMap, Alliance.BLUE);
+        bot = new WHSRobot(hardwareMap, Alliance.RED);
     }
 
     public void start()
@@ -35,24 +35,15 @@ public class ForwardAuto extends OpMode
         switch(state)
         {
             case 0:
-                bot.intake.dropIntake();
-                bot.drive.setLeftRightPower(0.5, 0.5);
-                if(bot.drive.hasTargetHit(1.0)) //value to be determined
+                bot.drive.setLeftRightPower(0.3, 0.3);
+                if(bot.drive.hasTargetHit(3.0)) //value to be determined
                 {
-                    time = 0.0;
                     state = 1;
                 }
             break;
 
             case 1:
-                //Turn left towards beacon
-                bot.drive.setLeftRightPower(0.0, 0.0);
-                bot.intake.setRun(true, false);
-                if(time > 3.0)
-                {
-                    bot.intake.setRun(false, false);
-                }
-                //bot.drive.updateEncoderValues;
+                bot.drive.setLeftRightPower(0.0,0.0);
             break;
         }
     }
