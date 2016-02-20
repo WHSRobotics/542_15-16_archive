@@ -27,7 +27,6 @@ public class RedTeleOp extends OpMode
         //Slide Telemetry
         telemetry.addData("Shift", bot.slides.getShiftState());
         telemetry.addData("Lock", bot.slides.getLockState());
-
         
         //drive
         bot.drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
