@@ -35,8 +35,8 @@ public class Intake
 
 	public Intake(HardwareMap intakeMap)
 	{
-		dropDownServo = intakeMap.servo.get("intake_dds");
-		intakeMotor = intakeMap.dcMotor.get("intake_motor");
+		//dropDownServo = intakeMap.servo.get("intake_dds");
+		//intakeMotor = intakeMap.dcMotor.get("intake_motor");
 
 
 

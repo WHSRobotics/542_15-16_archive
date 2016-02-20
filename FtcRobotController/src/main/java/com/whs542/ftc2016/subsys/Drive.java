@@ -38,6 +38,9 @@ public class Drive
 	private DcMotor leftFrontMotor;
 	private DcMotor leftBackMotor;
 
+    public DcMotor testMot;
+    public DcMotor testMot2;
+
     public double [] encoderZeroes;
     public double [] encoderValues;
 
@@ -45,6 +48,9 @@ public class Drive
     public int RB = 1;
     public int LF = 2;
     public int LB = 3;
+    //PID Testing//
+    public int TM = 4;
+    public int TM2 = 5;
 
 	// ----------------------------------
 	// Drive Constructor
@@ -53,25 +59,31 @@ public class Drive
 
 	public Drive(HardwareMap driveMap, Alliance side)
 	{
-        rightChurroHook = driveMap.servo.get("drive_rch");
-        leftChurroHook = driveMap.servo.get("drive_lch");
-        blueSwitcher = driveMap.servo.get("drive_bs");
-        redSwitcher = driveMap.servo.get("drive_rs");
+        //rightChurroHook = driveMap.servo.get("drive_rch");
+        //leftChurroHook = driveMap.servo.get("drive_lch");
+        //blueSwitcher = driveMap.servo.get("drive_bs");
+        //redSwitcher = driveMap.servo.get("drive_rs");
 
-		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
-        rightBackMotor = driveMap.dcMotor.get("drive_rb");
-        leftFrontMotor = driveMap.dcMotor.get("drive_lf");
-        leftBackMotor = driveMap.dcMotor.get("drive_lb");
-        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+		//rightFrontMotor = driveMap.dcMotor.get("drive_rf");
+        //rightBackMotor = driveMap.dcMotor.get("drive_rb");
+        //leftFrontMotor = driveMap.dcMotor.get("drive_lf");
+        //leftBackMotor = driveMap.dcMotor.get("drive_lb");
+        //leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        //leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        /*rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);*/
+        //rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        encoderZeroes = new double[4];
-        encoderValues = new double[4];
+        //PID Testing//
+        testMot = driveMap.dcMotor.get("motor");
+        testMot2 = driveMap.dcMotor.get("motor2");
+        testMot.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        testMot2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        encoderZeroes = new double[6]; //was 4, need to return it to 4 after testing PID
+        encoderValues = new double[6]; //was 4, need to return it to 4 after testing PID
         color = side;
     }
 
@@ -169,10 +181,15 @@ public class Drive
 
     public void setLeftRightPower(double leftPower, double rightPower)
     {
+        //PID Testing//
+        testMot.setPower(7.0/9.0 * rightPower);
+        testMot2.setPower(7.0/9.0 * leftPower);
+        /*
         rightFrontMotor.setPower(7.0/9.0 * rightPower);
         rightBackMotor.setPower(7.0/9.0 * rightPower);
         leftFrontMotor.setPower(7.0/9.0 * leftPower);
         leftBackMotor.setPower(7.0/9.0 * leftPower);
+        */
     }
 
     public void setDrive(double leftPower, double rightPower)
@@ -224,6 +241,7 @@ public class Drive
         boolean rightTargetHit = false;
         boolean leftTargetHit = false;
 
+        /*
         if(Math.abs(encoderValues[RF])*TICKS_TO_ROT > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT > target)
         {
             rightTargetHit = true;
@@ -244,26 +262,53 @@ public class Drive
         {
             return false;
         }
+        */
+        //PID Testing//
+        if(Math.abs(encoderValues[TM])*TICKS_TO_ROT > target)
+        {
+            rightTargetHit = true;
+        }
+        if(Math.abs(encoderValues[TM2])*TICKS_TO_ROT > target)
+        {
+            leftTargetHit = true;
+        }
+        if(leftTargetHit && rightTargetHit)
+        {
+            zeroLeftEncoders();
+            zeroRightEncoders();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void updateEncoderValues()
     {
-        encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
-        encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
-        encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
-        encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
+        //PID Testing//
+        encoderValues[TM] = testMot.getCurrentPosition() - encoderZeroes[TM];
+        encoderValues[TM2] = testMot2.getCurrentPosition() - encoderZeroes[TM2];
+        //encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
+        //encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
+        //encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
+        //encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
     }
 
     public void zeroLeftEncoders()
     {
-        encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
-        encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
+        //PID Testing//
+        encoderZeroes[TM] = testMot.getCurrentPosition();
+        //encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
+        //encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
     }
 
     public void zeroRightEncoders()
     {
-        encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
-        encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
+        //PID Testing//
+        encoderZeroes[TM2] = testMot2.getCurrentPosition();
+        //encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
+        //encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
     }
 
     public void hook(double hookLPosition, double hookRPosition)

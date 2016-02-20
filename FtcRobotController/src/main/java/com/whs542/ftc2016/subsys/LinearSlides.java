@@ -61,18 +61,20 @@ public class LinearSlides
 
 	public LinearSlides(HardwareMap slideMap)
 	{
-        anglingMotor = slideMap.dcMotor.get("ls_am");
+        //anglingMotor = slideMap.dcMotor.get("ls_am");
         leftExtensionMotor = slideMap.dcMotor.get("ls_le");
         rightExtensionMotor = slideMap.dcMotor.get("ls_re");
 
-        shiftServo = slideMap.servo.get("ls_ss");
-        lockServo = slideMap.servo.get("ls_ls");
+        //shiftServo = slideMap.servo.get("ls_ss");
+        //lockServo = slideMap.servo.get("ls_ls");
 
-        anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        leftExtensionMotor.setDirection(DcMotor.Direction.REVERSE); //Delete this later
+
+        //anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        highestMinimum = anglingMotor.getCurrentPosition();
+        //highestMinimum = anglingMotor.getCurrentPosition();
     }
 
     // ----------------------------------

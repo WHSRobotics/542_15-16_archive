@@ -19,8 +19,8 @@ public class BlueAutoOp extends OpMode
 
     public void start()
     {
-        bot.drive.zeroLeftEncoders();
-        bot.drive.zeroRightEncoders();
+        //bot.drive.zeroLeftEncoders();
+        //bot.drive.zeroRightEncoders();
 
         time = 0.0;
     }

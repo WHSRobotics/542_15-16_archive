@@ -19,16 +19,16 @@ public class RedAutoOp extends OpMode
 
     public void start()
     {
-        bot.drive.zeroLeftEncoders();
-        bot.drive.zeroRightEncoders();
+        //bot.drive.zeroLeftEncoders();
+        //bot.drive.zeroRightEncoders();
 
         time = 0.0;
     }
 
     public void loop()
     {
-        telemetry.addData("LF: %D", bot.drive.encoderValues[bot.drive.LF]);
-        telemetry.addData("RF: %D", bot.drive.encoderValues[bot.drive.RF]);
+        //telemetry.addData("LF: %D", bot.drive.encoderValues[bot.drive.LF]);
+        //telemetry.addData("RF: %D", bot.drive.encoderValues[bot.drive.RF]);
         telemetry.addData("state", state);
 
         //Note that if you make the power too big, it'll go way too fast and overshoot
@@ -36,8 +36,8 @@ public class RedAutoOp extends OpMode
         switch(state)
         {
             case 0:
-                bot.drive.setLeftRightPower(0.1, 0.1);
-                if(bot.drive.hasTargetHit(1.0)) //value to be determined
+                //bot.drive.setLeftRightPower(0.1, 0.1);
+                //if(bot.drive.hasTargetHit(1.0)) //value to be determined
                 {
                     state = 1;
                 }
@@ -45,9 +45,9 @@ public class RedAutoOp extends OpMode
 
             case 1:
                 //Turn left towards beacon
-                bot.drive.setLeftRightPower(0.0, 0.1);
+                //bot.drive.setLeftRightPower(0.0, 0.1);
                 //bot.drive.updateEncoderValues;
-                if(bot.drive.hasTargetHit(1.0))
+                //if(bot.drive.hasTargetHit(1.0))
                 {
                     state = 2;
                 }
@@ -55,8 +55,8 @@ public class RedAutoOp extends OpMode
 
             case 2:
                 //Drive forward towards beacon
-                bot.drive.setLeftRightPower(0.1, 0.1);
-                if(bot.drive.hasTargetHit(0.5))
+                //bot.drive.setLeftRightPower(0.1, 0.1);
+                //if(bot.drive.hasTargetHit(0.5))
                 {
                     state = 3;
                 }
@@ -64,7 +64,7 @@ public class RedAutoOp extends OpMode
 
             case 3:
                 //Stop drive and switch beacon
-                bot.drive.setLeftRightPower(0.0, 0.0);
+                //bot.drive.setLeftRightPower(0.0, 0.0);
                 if(1 == 1)//beacon has been switched
                 {
                     state = 4;
@@ -73,16 +73,16 @@ public class RedAutoOp extends OpMode
 
             case 4:
                 //Back up from beacon and angle to drop climbers in shelter
-                bot.drive.setLeftRightPower(-0.05, -0.1);
-                if(bot.drive.hasTargetHit(1.0))
+                //bot.drive.setLeftRightPower(-0.05, -0.1);
+                //if(bot.drive.hasTargetHit(1.0))
                 {
                     state = 5;
                 }
             break;
 
             case 5:
-                bot.drive.setLeftRightPower(0.1, 0.1); //maybe just make this a separate case itself
-                if(bot.drive.hasTargetHit(0.5))
+                //bot.drive.setLeftRightPower(0.1, 0.1); //maybe just make this a separate case itself
+                //if(bot.drive.hasTargetHit(0.5))
                 {
                     state = 6;
                 }
@@ -91,7 +91,7 @@ public class RedAutoOp extends OpMode
 
             case 6:
                 //Drop climbers into shelter
-                bot.drive.setLeftRightPower(0.0, 0.0);
+                //bot.drive.setLeftRightPower(0.0, 0.0);
 
                 //Set Extension
                 //bot.slides.setExtension(true);
@@ -106,8 +106,8 @@ public class RedAutoOp extends OpMode
 
             case 7:
                 //Back up from beacon and angle towards mountain
-                bot.drive.setLeftRightPower(-0.1, 0.0);
-                if(bot.drive.hasTargetHit(0.75))
+                //bot.drive.setLeftRightPower(-0.1, 0.0);
+                //if(bot.drive.hasTargetHit(0.75))
                 {
                     state = 8;
                 }
@@ -115,8 +115,8 @@ public class RedAutoOp extends OpMode
 
             case 8:
                 //Move towards mountain and climb onto midzone
-                bot.drive.setLeftRightPower(0.1, 0.1);
-                if(bot.drive.hasTargetHit(1.0))
+                //bot.drive.setLeftRightPower(0.1, 0.1);
+                //if(bot.drive.hasTargetHit(1.0))
                 {
                     state = 9;
                 }
@@ -124,7 +124,7 @@ public class RedAutoOp extends OpMode
 
             case 9:
                 //Stop robot
-                bot.drive.setLeftRightPower(0.0, 0.0);
+                //bot.drive.setLeftRightPower(0.0, 0.0);
             break;
         }
     }

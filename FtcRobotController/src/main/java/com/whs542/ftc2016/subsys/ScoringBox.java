@@ -37,13 +37,13 @@ public class ScoringBox
 
 	public ScoringBox(HardwareMap boxMap, Alliance side)
 	{
-        doorServo = boxMap.servo.get("box_door");
-        extendServo = boxMap.servo.get("box_extend");
+        //doorServo = boxMap.servo.get("box_door");
+        //extendServo = boxMap.servo.get("box_extend");
 
-        debris1 = new ProximityGP2Y0D810Z0F(boxMap, 0);
-        debris2 = new ProximityGP2Y0D810Z0F(boxMap, 1);
+        //debris1 = new ProximityGP2Y0D810Z0F(boxMap, 0);
+        //debris2 = new ProximityGP2Y0D810Z0F(boxMap, 1);
 
-        boxExtensionDetector = new CurrentACS711EX(boxMap, 0);
+        //boxExtensionDetector = new CurrentACS711EX(boxMap, 0);
 
         color = side;
 	}
