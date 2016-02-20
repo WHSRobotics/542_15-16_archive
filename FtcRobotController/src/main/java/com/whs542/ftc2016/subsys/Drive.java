@@ -183,17 +183,10 @@ public class Drive
 
     public void setLeftRightPower(double leftPower, double rightPower)
     {
-<<<<<<< HEAD
         //PID Testing//
-        testMot.setPower(7.0/9.0 * rightPower);
-        testMot2.setPower(7.0/9.0 * leftPower);
-        /*
-        rightFrontMotor.setPower(7.0/9.0 * rightPower);
-        rightBackMotor.setPower(7.0/9.0 * rightPower);
-        leftFrontMotor.setPower(7.0/9.0 * leftPower);
-        leftBackMotor.setPower(7.0/9.0 * leftPower);
-        */
-=======
+        //testMot.setPower(7.0/9.0 * rightPower);
+        //testMot2.setPower(7.0/9.0 * leftPower);
+
         switch(orientationSwitch.currentState())
         {
             case 0:
@@ -210,7 +203,6 @@ public class Drive
                 leftBackMotor.setPower(-7.0/9.0*rightPower);
                 break;
         }
->>>>>>> origin/IMU
     }
 
     public void setDrive(double leftPower, double rightPower)
@@ -231,7 +223,7 @@ public class Drive
                 rightBackMotor.setPower(-leftPower);
                 leftFrontMotor.setPower(-rightPower);
                 leftBackMotor.setPower(-rightPower);
-            break;
+                break;
         }
     }
 
@@ -262,12 +254,7 @@ public class Drive
         boolean rightTargetHit = false;
         boolean leftTargetHit = false;
 
-<<<<<<< HEAD
-        /*
-        if(Math.abs(encoderValues[RF])*TICKS_TO_ROT > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT > target)
-=======
         if(Math.abs(encoderValues[RF])*TICKS_TO_ROT_MOTOR > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT_MOTOR > target)
->>>>>>> origin/IMU
         {
             rightTargetHit = true;
         }
@@ -287,7 +274,7 @@ public class Drive
         {
             return false;
         }
-        */
+        /*
         //PID Testing//
         if(Math.abs(encoderValues[TM])*TICKS_TO_ROT > target)
         {
@@ -307,6 +294,7 @@ public class Drive
         {
             return false;
         }
+        */
     }
 
     public void updateEncoderValues()

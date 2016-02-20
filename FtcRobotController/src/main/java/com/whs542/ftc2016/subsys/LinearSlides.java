@@ -77,13 +77,9 @@ public class LinearSlides
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-<<<<<<< HEAD
-        //highestMinimum = anglingMotor.getCurrentPosition();
-=======
         highestMinimum = anglingMotor.getCurrentPosition();
 
         zeroDetector = new CurrentACS711EX(slideMap, 1);
->>>>>>> origin/IMU
     }
 
     // ----------------------------------
