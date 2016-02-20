@@ -23,9 +23,9 @@ package com.whs542.lib.sensors.imu;
 
 public class Matrix
 {
-	int rows;
-	int columns;
-	double [][] data;
+    int rows;
+    int columns;
+    double [][] data;
 
     public Matrix(int M)
     {
@@ -34,9 +34,9 @@ public class Matrix
         data = new double[rows][columns];
     }
 
-	public Matrix(int M, int N)
+    public Matrix(int M, int N)
     {
-    	rows = M;
+        rows = M;
         columns = N;
         data = new double[rows][columns];
     }
@@ -72,7 +72,7 @@ public class Matrix
 
     public void setEqualTo(Matrix m)
     {
-    	if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
+        if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
 
         for (int i = 0; i < rows; i++ )
         {
@@ -88,7 +88,7 @@ public class Matrix
         Vector outputVector = new Vector(columns);
         for(int i = 0; i < columns; i++)
         {
-        	outputVector.setEntry(i, data[rowNumber][i]);
+            outputVector.setEntry(i, data[rowNumber][i]);
         }
         return outputVector;
     }
@@ -98,14 +98,14 @@ public class Matrix
         Vector outputVector = new Vector(rows);
         for(int i = 0; i < rows; i++)
         {
-        	outputVector.setEntry(i, data[i][columnNumber]);
+            outputVector.setEntry(i, data[i][columnNumber]);
         }
         return outputVector;
     }
 
     public void rowFromVector(Vector v, int rowNumber)
     {
-    	if (columns != v.n) throw new RuntimeException("Illegal vector dimensions.");
+        if (columns != v.n) throw new RuntimeException("Illegal vector dimensions.");
 
         for(int i = 0; i < columns; i++)
         {
@@ -115,7 +115,7 @@ public class Matrix
 
     public void columnFromVector(Vector v, int columnNumber)
     {
-    	if (rows != v.n) throw new RuntimeException("Illegal vector dimensions.");
+        if (rows != v.n) throw new RuntimeException("Illegal vector dimensions.");
 
         for(int i = 0; i < rows; i++)
         {
@@ -125,12 +125,12 @@ public class Matrix
 
     public double getEntry(int row, int column)
     {
-    	return data[row][column];
+        return data[row][column];
     }
 
     public void setEntry(int row, int column, double value)
     {
-    	data[row][column] = value;
+        data[row][column] = value;
     }
 
     public void setRow(int row, double[] rowData)
@@ -167,7 +167,7 @@ public class Matrix
 
     public Matrix add(Matrix m)
     {
-    	if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
+        if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
 
         Matrix outputMatrix = new Matrix(rows, columns);
         for(int i = 0; i < rows; i++)
@@ -182,7 +182,7 @@ public class Matrix
 
     public Matrix subtract(Matrix m)
     {
-    	if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
+        if (rows != m.rows || columns != m.columns) throw new RuntimeException("Illegal matrix dimensions.");
 
         Matrix outputMatrix = new Matrix(rows, columns);
         for(int i = 0; i < rows; i++)
@@ -216,7 +216,7 @@ public class Matrix
         {
             for(int j = 0; j < outputMatrix.columns; j++)
             {
-                Vector row = this.vectorFromRow(i);
+                Vector row = vectorFromRow(i);
                 Vector column = m.vectorFromColumn(j);
                 outputMatrix.data[i][j] = row.dotWith(column);
             }
