@@ -24,8 +24,11 @@ public class LinearSlides
 
     public static Alliance color;
 
+    public Servo rampServo;
+
     public static Toggler coarseAngler = new Toggler(7,0);
     public static Toggler fineAngler = new Toggler(5,0);
+    public static Toggler rampSwitch = new Toggler(2);
 
     private static DcMotor anglingMotor;
     private static DcMotor intakeMotor;
@@ -58,6 +61,8 @@ public class LinearSlides
 	{
         anglingMotor = slideMap.dcMotor.get("ls_am");
         intakeMotor = slideMap.dcMotor.get("intake_motor");
+
+        rampServo = slideMap.servo.get("ls_ramp");
 
         leftExtensionMotor = slideMap.dcMotor.get("ls_le");
         rightExtensionMotor = slideMap.dcMotor.get("ls_re");
@@ -109,7 +114,7 @@ public class LinearSlides
         }
         else
         {
-            coarseAngler.changeState(up,down);
+            coarseAngler.changeState(up, down);
         }
         //Add more conditions so that we can zero out automatically to allow easier control
         setAngle(29.0 * coarseAngler.currentState() / 3.0 + 5.0 - 29.0 * fineAngler.currentState() / 15.0);
@@ -147,6 +152,51 @@ public class LinearSlides
         }
     }
 
+    public void setRamp(boolean trigger)
+    {
+        rampSwitch.changeState(trigger);
+        switch(rampSwitch.currentState())
+        {
+            case 0:
+                //Ramp Up
+                rampUp();
+                break;
+
+            case 1:
+                //Ramp Down
+                rampDown();
+                break;
+        }
+    }
+
+    public void rampDown()
+    {
+        switch(color)
+        {
+            case RED:
+                rampServo.setPosition(0.0);
+                break;
+
+            case BLUE:
+                rampServo.setPosition(0.0);
+                break;
+        }
+    }
+
+    public void rampUp()
+    {
+        switch(color)
+        {
+            case RED:
+                rampServo.setPosition(1.0);
+                break;
+
+            case BLUE:
+                rampServo.setPosition(1.0);
+                break;
+        }
+    }
+
     //Set extension speed
     public void setTransmissionPower(boolean up, boolean down)
     {
@@ -176,19 +226,19 @@ public class LinearSlides
     // Conveyor Methods
     // ----------------------------------
 
-    public void setConveyorMotor(boolean up, boolean down)
+    public void setIntake(boolean up, boolean down)
     {
         if(up)
         {
-            conveyorMotor.setPower(7.0/9.0);
+            intakeMotor.setPower(7.0/9.0);
         }
         else if(down)
         {
-            conveyorMotor.setPower(-7.0/9.0);
+            intakeMotor.setPower(-7.0/9.0);
         }
         else
         {
-            conveyorMotor.setPower(0.0);
+            intakeMotor.setPower(0.0);
         }
     }
 

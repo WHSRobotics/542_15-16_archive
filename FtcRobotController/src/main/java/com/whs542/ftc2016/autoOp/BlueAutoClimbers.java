@@ -25,7 +25,7 @@ public class BlueAutoClimbers extends OpMode{
                 break;
 
             case 1:
-                bot.drive.servoArmDump();
+                bot.drive.autoDump();
                 state = 2;
                 break;
 

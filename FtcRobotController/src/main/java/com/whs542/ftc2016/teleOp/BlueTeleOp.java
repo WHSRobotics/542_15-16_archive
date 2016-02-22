@@ -37,10 +37,10 @@ public class BlueTeleOp extends OpMode
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setHook(gamepad1.right_trigger == 1.0);
 
-        //Intake
-
         //Slides
+        bot.slides.setRamp(gamepad1.right_bumper);
         bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
+        bot.slides.setIntake(gamepad1.left_trigger == 1.0, gamepad1.left_bumper);
         bot.slides.setTransmissionPower(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
     }
 

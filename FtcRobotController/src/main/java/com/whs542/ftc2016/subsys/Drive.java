@@ -27,10 +27,7 @@ public class Drive
 
     private Servo leftChurroHook;
     private Servo rightChurroHook;
-    private Servo blueSwitcher;
-    private Servo redSwitcher;
 
-    private Toggler switcherSwitch = new Toggler(2);
     private Toggler hookSwitch = new Toggler(2);
     private Toggler orientationSwitch = new Toggler(2);
 
@@ -39,9 +36,7 @@ public class Drive
 	private DcMotor leftFrontMotor;
 	private DcMotor leftBackMotor;
 
-    private Servo servoArm;
-
-    public double position;
+    private Servo autoArm;
 
     public double [] encoderZeroes;
     public double [] encoderValues;
@@ -59,6 +54,7 @@ public class Drive
 	{
         rightChurroHook = driveMap.servo.get("drive_rch");
         leftChurroHook = driveMap.servo.get("drive_lch");
+        autoArm = driveMap.servo.get("drive_auto");
 
 		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
         rightBackMotor = driveMap.dcMotor.get("drive_rb");
@@ -75,50 +71,6 @@ public class Drive
         encoderZeroes = new double[4];
         encoderValues = new double[4];
         color = side;
-    }
-
-    // ----------------------------------
-    // Side Climber Methods
-    // ----------------------------------
-
-    //Distribute Alliance color to necessary classes
-    public void setSwitcher(boolean trigger)
-    {
-        switcherSwitch.changeState(trigger);
-        switch(switcherSwitch.currentState())
-        {
-            case 0:
-                //closed
-                switcherUp();
-            break;
-
-            case 1:
-                //open
-                switcherDown();
-            break;
-        }
-    }
-
-    public void switcherUp()
-    {
-        redSwitcher.setPosition(0.9);
-        blueSwitcher.setPosition(0.0);
-    }
-
-    public void switcherDown()
-    {
-        switch(color)
-        {
-            case RED:
-                redSwitcher.setPosition(0.15);
-                blueSwitcher.setPosition(0.0);
-            break;
-
-            case BLUE:
-                blueSwitcher.setPosition(0.7);
-                redSwitcher.setPosition(0.9);
-            break;
-        }
     }
 
     // ----------------------------------
@@ -297,16 +249,26 @@ public class Drive
     // Servo Arm Method
     // ----------------------------------
     //Reference servoArmTest
-    public void servoArmDump()
+
+    public void autoDump()
     {
-        if(position > 0.2)
-        {
-            servoArm.setPosition(position);
-            position -= 0.0000005;
+        setAutoArmPosition(1.0, 0000005);
+    }
+
+    public void autoNeutral()
+    {
+        autoArm.setPosition(0.0);
+    }
+
+    static double currentPosition = 0.5;
+
+    public void setAutoArmPosition(double target, double delta)
+    {
+        if (target > currentPosition) {
+            currentPosition = ((currentPosition + delta) > 1.0) ? 1.0 : currentPosition + delta;
+        } else if (target < currentPosition) {
+            currentPosition = ((currentPosition - delta) < 0.0) ? 0.0 : currentPosition - delta;
         }
-        else
-        {
-            servoArm.setPosition(0.0);
-        }
+        autoArm.setPosition(currentPosition);
     }
 }

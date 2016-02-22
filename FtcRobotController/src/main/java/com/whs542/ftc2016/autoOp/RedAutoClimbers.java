@@ -18,6 +18,7 @@ public class RedAutoClimbers extends OpMode{
         switch(state)
         {
             case 0:
+                bot.drive.setLeftRightPower(1.0,1.0);
                 if(bot.drive.hasTargetHit(6.0))
                 {
                     state = 1;
@@ -25,7 +26,8 @@ public class RedAutoClimbers extends OpMode{
             break;
 
             case 1:
-                bot.drive.servoArmDump();
+                bot.drive.setLeftRightPower(0.0,0.0);
+                bot.drive.autoDump();
                 state = 2;
             break;
 
