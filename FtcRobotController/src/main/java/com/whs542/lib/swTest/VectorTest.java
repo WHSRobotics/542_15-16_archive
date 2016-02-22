@@ -1,6 +1,8 @@
+package com.whs542.lib.swTest;
+
 public class VectorTest
 {
-	private static void printVector(Vector v)
+	/*private static void printVector(Vector v)
 	{
 		for(int i = 0; i < v.getDim(); i++)
 		{
@@ -81,5 +83,5 @@ public class VectorTest
 		System.out.println("X value is: " + degreesVector.x());
 		System.out.println("Y value is: " + degreesVector.y());
 		System.out.println("Z value is: " + degreesVector.z());
-	}
+	}*/
 }

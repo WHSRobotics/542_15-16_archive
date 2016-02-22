@@ -1,9 +1,12 @@
+package com.whs542.lib.swTest;
+
 import java.util.Arrays;
+import com.whs542.lib.sensors.imu.*;
 
 public class MatrixTest
 {
 	//I suppose we can use the get entry or get array methods
-	public static void printMatrix(Matrix m)
+	/*public static void printMatrix(Matrix m)
 	{
 		double [][] dataMatrix = new double[m.rows][m.columns];
 		for(int i = 0; i < m.rows; i++)
@@ -138,5 +141,5 @@ public class MatrixTest
 		//Checked against wolfram alpha
 		System.out.println("Matrix Inverse");
 		printMatrix(detM.invert().scaleBy(32.0));
-	}
+	}*/
 }

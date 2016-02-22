@@ -34,7 +34,6 @@ public class ForwardAuto extends OpMode
         switch(state)
         {
             case 0:
-                bot.intake.dropIntake();
                 bot.drive.setLeftRightPower(0.5, 0.5);
                 if(bot.drive.hasTargetHit(1.0)) //value to be determined
                 {
@@ -46,10 +45,8 @@ public class ForwardAuto extends OpMode
             case 1:
                 //Turn left towards beacon
                 bot.drive.setLeftRightPower(0.0, 0.0);
-                bot.intake.setRun(true, false);
                 if(time > 3.0)
                 {
-                    bot.intake.setRun(false, false);
                 }
                 //bot.drive.updateEncoderValues;
             break;

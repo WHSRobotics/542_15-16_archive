@@ -60,31 +60,23 @@ public class Drive
 
 	public Drive(HardwareMap driveMap, Alliance side)
 	{
-        //rightChurroHook = driveMap.servo.get("drive_rch");
-        //leftChurroHook = driveMap.servo.get("drive_lch");
-        //blueSwitcher = driveMap.servo.get("drive_bs");
-        //redSwitcher = driveMap.servo.get("drive_rs");
+        rightChurroHook = driveMap.servo.get("drive_rch");
+        leftChurroHook = driveMap.servo.get("drive_lch");
 
-		//rightFrontMotor = driveMap.dcMotor.get("drive_rf");
-        //rightBackMotor = driveMap.dcMotor.get("drive_rb");
-        //leftFrontMotor = driveMap.dcMotor.get("drive_lf");
-        //leftBackMotor = driveMap.dcMotor.get("drive_lb");
-        //leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        //leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+		rightFrontMotor = driveMap.dcMotor.get("drive_rf");
+        rightBackMotor = driveMap.dcMotor.get("drive_rb");
+        leftFrontMotor = driveMap.dcMotor.get("drive_lf");
+        leftBackMotor = driveMap.dcMotor.get("drive_lb");
+        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        //rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        //PID Testing//
-        testMot = driveMap.dcMotor.get("motor");
-        testMot2 = driveMap.dcMotor.get("motor2");
-        testMot.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        testMot2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
-        encoderZeroes = new double[6]; //was 4, need to return it to 4 after testing PID
-        encoderValues = new double[6]; //was 4, need to return it to 4 after testing PID
+        encoderZeroes = new double[4];
+        encoderValues = new double[4];
         color = side;
     }
 

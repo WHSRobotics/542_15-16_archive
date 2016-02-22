@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.whs542.lib.Alliance;
 import com.whs542.lib.Toggler;
 import com.whs542.lib.sensors.CurrentACS711EX;
 //
@@ -20,20 +21,17 @@ public class LinearSlides
     // ----------------------------------
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
-    public static Toggler lockSwitch = new Toggler(2);
-    public static Toggler shiftSwitch = new Toggler(2);
+
+    public static Alliance color;
 
     public static Toggler coarseAngler = new Toggler(7,0);
     public static Toggler fineAngler = new Toggler(5,0);
 
-    public CurrentACS711EX zeroDetector;
-
     private static DcMotor anglingMotor;
+    private static DcMotor intakeMotor;
 
 	private static DcMotor leftExtensionMotor;
 	private static DcMotor rightExtensionMotor;
-	private static Servo shiftServo;
-    private static Servo lockServo;
 
     public static double fullLength;
 
@@ -59,19 +57,15 @@ public class LinearSlides
 
     int positionCounter;
 
-    ScoringBox scoreBox;
-    Intake intake;
-
-	public LinearSlides(HardwareMap slideMap)
+	public LinearSlides(HardwareMap slideMap, Alliance side)
 	{
-        //anglingMotor = slideMap.dcMotor.get("ls_am");
+        anglingMotor = slideMap.dcMotor.get("ls_am");
+        intakeMotor = slideMap.dcMotor.get("intake_motor");
+
         leftExtensionMotor = slideMap.dcMotor.get("ls_le");
         rightExtensionMotor = slideMap.dcMotor.get("ls_re");
 
-        //shiftServo = slideMap.servo.get("ls_ss");
-        //lockServo = slideMap.servo.get("ls_ls");
-
-        leftExtensionMotor.setDirection(DcMotor.Direction.REVERSE); //Delete this later
+        leftExtensionMotor.setDirection(DcMotor.Direction.REVERSE);
 
         //anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
@@ -79,7 +73,7 @@ public class LinearSlides
 
         highestMinimum = anglingMotor.getCurrentPosition();
 
-        zeroDetector = new CurrentACS711EX(slideMap, 1);
+        color = side;
     }
 
     // ----------------------------------
@@ -151,115 +145,18 @@ public class LinearSlides
         }
     }
 
-    public void setLock(boolean trigger)
-    {
-        lockSwitch.changeState(trigger);
-        switch(lockSwitch.currentState())
-        {
-            case 0:
-                unlock();
-            break;
-
-            case 1:
-                lock();
-            break;
-        }
-    }
-
-    public void lock()
-    {
-        lockServo.setPosition(0.5);
-    }
-
-    public void unlock()
-    {
-        //I suspect lock is too much, test 0.9 as a value
-        lockServo.setPosition(1.0);
-    }
-
-    public String getShiftState()
-    {
-        String state = "null";
-        switch(shiftSwitch.currentState())
-        {
-            case 0:
-                state = "Torque";
-            break;
-
-            case 1:
-                state = "Speed";
-            break;
-
-            case 2:
-                state = "Neutral";
-            break;
-        }
-        return state;
-    }
-
-    public String getLockState()
-    {
-        String state = "null";
-        switch(lockSwitch.currentState())
-        {
-            case 0:
-                state = "Unlocked";
-            break;
-
-            case 1:
-                state = "Locked";
-            break;
-        }
-        return state;
-    }
-
-    public void setShifter(boolean trigger)
-    {
-        shiftSwitch.changeState(trigger);
-        switch(shiftSwitch.currentState())
-        {
-            case 0:
-                torque();
-            break;
-
-            case 2:
-                speed();
-            break;
-
-            case 1:
-                neutral();
-            break;
-        }
-    }
-
-    public void speed()
-    {
-        shiftServo.setPosition(0.2);
-    }
-
-    public void torque()
-    {
-        shiftServo.setPosition(0.9);
-    }
-
-    public void neutral()
-    {
-        shiftServo.setPosition(0.5);
-    }
-
     //Set extension speed
     public void setTransmissionPower(boolean up, boolean down)
     {
-        //&& lockSwitch.currentState() == 0
         if(up)
         {
-            leftExtensionMotor.setPower(-1.0 * 7.0/9.0);
-            rightExtensionMotor.setPower(-1.0 * 7.0/9.0);
+            leftExtensionMotor.setPower(-1.0);
+            rightExtensionMotor.setPower(-1.0);
         }
         else if(down)
         {
-            leftExtensionMotor.setPower(1.0 * 7.0/9.0);
-            rightExtensionMotor.setPower(1.0 * 7.0/9.0);
+            leftExtensionMotor.setPower(1.0);
+            rightExtensionMotor.setPower(1.0);
         }
         else
         {
@@ -273,25 +170,5 @@ public class LinearSlides
        return  SPEED_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
     }
 
-    public double getExtensionLengthTorque()
-    {
-        //get last speed extension length
-        return TORQUE_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
-    }
 
-    public void setLockServo(double input)
-    {
-        lockServo.setPosition(Math.abs(input));
-    }
-
-
-    public void setShiftServoPosition(double input)
-    {
-        shiftServo.setPosition(Math.abs(input));
-    }
-
-    public double getZeroDetectorValue()
-    {
-        return zeroDetector.getRawValue();
-    }
 }

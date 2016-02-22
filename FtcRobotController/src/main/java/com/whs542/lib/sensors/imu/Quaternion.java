@@ -1,3 +1,5 @@
+package com.whs542.lib.sensors.imu;
+
 /*
     Inertial Measurement Unit Maths Library
     Copyright (C) 2013-2014  Samuel Cowen

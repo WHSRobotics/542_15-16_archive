@@ -26,16 +26,16 @@ public class Dependencies
             //rob.box.closeDoor();
 
             //boxExtended = false; //box should not be extended either
-            rob.box.setExtensionSpeed(0.0);
+           // rob.box.setExtensionSpeed(0.0);
 
             //intake = true;
-            rob.intake.runIntake(true, false);
+            //rob.intake.runIntake(true, false);
 
         }
         else //linear slides extended
         {
             //intake = false;
-            rob.intake.runIntake(false, false); //Intake should not be running
+            //rob.intake.runIntake(false, false); //Intake should not be running
         }
     }
 
