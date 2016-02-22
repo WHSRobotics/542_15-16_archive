@@ -41,6 +41,7 @@ public class RedTeleOp extends OpMode
         //Slides
         bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
         bot.slides.setTransmissionPower(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
+        bot.slides.setConveyorMotor(gamepad2.right_trigger == 1.0, gamepad2.right_bumper);
 
     }
 

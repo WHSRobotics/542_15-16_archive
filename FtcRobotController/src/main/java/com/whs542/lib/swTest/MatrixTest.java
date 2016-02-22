@@ -3,8 +3,12 @@ package com.whs542.lib.swTest;
 import java.util.Arrays;
 import com.whs542.lib.sensors.imu.*;
 
+import com.whs542.lib.sensors.imu.Matrix;
+import com.whs542.lib.sensors.imu.Vector;
+
 public class MatrixTest
 {
+    /*
 	//I suppose we can use the get entry or get array methods
 	/*public static void printMatrix(Matrix m)
 	{
@@ -142,4 +146,5 @@ public class MatrixTest
 		System.out.println("Matrix Inverse");
 		printMatrix(detM.invert().scaleBy(32.0));
 	}*/
+
 }

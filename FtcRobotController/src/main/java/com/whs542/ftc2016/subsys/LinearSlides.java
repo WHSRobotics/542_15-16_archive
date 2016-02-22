@@ -49,9 +49,6 @@ public class LinearSlides
     // ----------------------------------
     // -Initializes the hardware references
 
-    public double shiftServoPosition;
-    public double lockServoPosition;
-
     boolean linearSlideExtended;    // true means the linear slide is extended
                                     // false mean the linear slide is retracted
 
@@ -78,6 +75,11 @@ public class LinearSlides
 
     // ----------------------------------
     // Linear Slide Methods
+    // ----------------------------------
+
+
+    // ----------------------------------
+    // Angler Methods
     // ----------------------------------
 
     public double getAngle()
@@ -110,7 +112,7 @@ public class LinearSlides
             coarseAngler.changeState(up,down);
         }
         //Add more conditions so that we can zero out automatically to allow easier control
-        setAngle(29.0*coarseAngler.currentState()/3.0 + 5.0 - 29.0*fineAngler.currentState()/15.0);
+        setAngle(29.0 * coarseAngler.currentState() / 3.0 + 5.0 - 29.0 * fineAngler.currentState() / 15.0);
 
     }
 
@@ -167,8 +169,27 @@ public class LinearSlides
 
     public double getExtensionLength()
     {
-       return  SPEED_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
+        return SPEED_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
     }
 
+    // ----------------------------------
+    // Conveyor Methods
+    // ----------------------------------
+
+    public void setConveyorMotor(boolean up, boolean down)
+    {
+        if(up)
+        {
+            conveyorMotor.setPower(7.0/9.0);
+        }
+        else if(down)
+        {
+            conveyorMotor.setPower(-7.0/9.0);
+        }
+        else
+        {
+            conveyorMotor.setPower(0.0);
+        }
+    }
 
 }
