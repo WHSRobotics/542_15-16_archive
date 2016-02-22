@@ -80,7 +80,7 @@ public class Intake
             intakeMotor.setPower(0.0);
         }
     }
-
+    /*
     public void setDrop(boolean trigger)
     {
         dropSwitch.changeState(trigger);
@@ -97,7 +97,7 @@ public class Intake
             break;
         }
     }
-
+    */
     public String getIntakeState()
     {
         String state = "null";

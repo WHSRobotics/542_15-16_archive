@@ -20,13 +20,6 @@ public class ScoringBox
     private Alliance color;
 
     private Servo doorServo;
-    private Servo extendServo;
-
-    private ProximityGP2Y0D810Z0F debris1;
-    private ProximityGP2Y0D810Z0F debris2;
-    private ProximityGP2Y0D810Z0F debris3;
-
-    private CurrentACS711EX boxExtensionDetector;
 
     private Toggler doorSwitch = new Toggler(2);
     private Toggler extensionSwitch = new Toggler(2);
@@ -39,9 +32,6 @@ public class ScoringBox
 	{
         //doorServo = boxMap.servo.get("box_door");
         //extendServo = boxMap.servo.get("box_extend");
-
-        //debris1 = new ProximityGP2Y0D810Z0F(boxMap, 0);
-        //debris2 = new ProximityGP2Y0D810Z0F(boxMap, 1);
 
         //boxExtensionDetector = new CurrentACS711EX(boxMap, 0);
 
@@ -99,7 +89,7 @@ public class ScoringBox
 
     public void closeDoorRed()
     {
-                doorServo.setPosition(0.8);
+        doorServo.setPosition(0.8);
     }
 
     public void closeDoorBlue()
@@ -162,23 +152,6 @@ public class ScoringBox
                 break;
         }
     }
-
-    public void setExtensionSpeed(boolean left, boolean right)
-    {
-        if(left)
-        {
-            extendServo.setPosition(0.0);
-        }
-        else if(right)
-        {
-            extendServo.setPosition(1.0);
-        }
-        else
-        {
-            extendServo.setPosition(0.5);
-        }
-    }
-
     public String getDoorState()
     {
         String state = null;
@@ -193,93 +166,5 @@ public class ScoringBox
             break;
         }
         return state;
-    }
-
-    public double getExtensionValue()
-    {
-        return boxExtensionDetector.getRawValue();
-    }
-
-    public double getDebrisValue1() {return debris1.getValue();}
-
-    public double getDebrisValue2() {return debris2.getValue();}
-
-    public void setExtensionSpeed(double input)
-    {
-        //boxExtendServo.setPosition(servoExtensionValue);
-        /*
-        //Extend
-        if(boxExtended = false)
-        {
-            if(gamepad.x)
-            {
-                servoExtensionValue = 1.0;
-                boxExtendServo.setPosition(servoExtensionValue);
-                //boxExtended = true;
-            }
-            else
-            {
-                servoExtensionValue = 0.5;
-                boxExtendServo.setPosition(servoExtensionValue);
-                //boxExtended = false;
-            }
-        }
-        //Retract
-        else if(boxExtended = true)
-        {
-            if(gamepad.y)
-            {
-                servoExtensionValue = 0.0;
-                boxExtendServo.setPosition(servoExtensionValue);
-                //boxExtended = false;
-            }
-            else
-            {
-                servoExtensionValue = 0.5;
-                boxExtendServo.setPosition(servoExtensionValue);
-                //boxExtended = true;
-            }
-        }
-        else
-        {
-            boxExtended = false;
-        }
-        */
-    }
-
-    public void setDoorPosition(double input)
-    {
-        doorServo.setPosition(Math.abs(input));
-    }
-
-    public boolean boxFullyExtended() {
-        boolean output = false;
-        switch(color)
-        {
-            case RED:
-                output = (boxExtensionDetector.getRawValue() < 260);
-            break;
-
-            case BLUE:
-                output = (boxExtensionDetector.getRawValue() < -1);
-            break;
-        }
-        return output;
-    }
-
-    public boolean boxFullyRetracted()
-    {
-        boolean output = false;
-        switch(color)
-        {
-            case RED:
-                output = (boxExtensionDetector.getRawValue() > 610);
-            break;
-
-            case BLUE:
-                output = (boxExtensionDetector.getRawValue() > -1);
-            break;
-        }
-        return output;
     }
 }

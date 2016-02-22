@@ -24,14 +24,7 @@ public class PIDController{
         double error = reference - sensorValue;
         double output = kp * error + ki * errorSum - kd * (error - lastError);
         lastError = error;
-        if(errorSum > 1.0)
-        {
-            errorSum = (1/errorSum) *(errorSum + error); //integralDamper
-        }
-        else
-        {
-            errorSum = integralDamper * (errorSum + error);
-        }
+        errorSum = integralDamper * (errorSum + error);
         return output;
     }
 }

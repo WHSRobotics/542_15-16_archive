@@ -25,8 +25,8 @@ public class RedTeleOp extends OpMode
 
     public void loop() {
         //Slide Telemetry
-        telemetry.addData("Shift", bot.slides.getShiftState());
-        telemetry.addData("Lock", bot.slides.getLockState());
+        //telemetry.addData("Shift", bot.slides.getShiftState());
+        //telemetry.addData("Lock", bot.slides.getLockState());
         //telemetry.addData("Angle", bot.slides.getAngle());
         //telemetry.addData("Slide Length", "");
         telemetry.addData("Intake", bot.intake.getIntakeState());
@@ -52,18 +52,14 @@ public class RedTeleOp extends OpMode
 
         //Intake
         bot.intake.setRun(gamepad1.left_bumper, gamepad1.left_trigger == 1.0);
-        bot.intake.setDrop(gamepad1.b);
 
         //Slides
-        bot.slides.setShifter(gamepad2.b);
-        bot.slides.setLock(gamepad2.y);
         bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
         bot.slides.setTransmissionPower(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
+        bot.slides.setConveyorMotor(gamepad2.right_trigger == 1.0, gamepad2.right_bumper);
 
         //Box
         bot.box.setDoor(gamepad2.right_bumper);
-        //bot.box.setExtension(gamepad2.right_trigger == 1.0);
-        bot.box.setExtensionSpeed(gamepad2.dpad_right, gamepad2.dpad_left);
     }
 
     public void stop()

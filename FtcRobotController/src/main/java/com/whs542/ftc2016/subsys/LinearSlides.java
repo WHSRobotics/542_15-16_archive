@@ -20,8 +20,8 @@ public class LinearSlides
     // ----------------------------------
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
-    public static Toggler lockSwitch = new Toggler(2);
-    public static Toggler shiftSwitch = new Toggler(2);
+    //public static Toggler lockSwitch = new Toggler(2);
+    //public static Toggler shiftSwitch = new Toggler(2);
 
     public static Toggler coarseAngler = new Toggler(7,0);
     public static Toggler fineAngler = new Toggler(5,0);
@@ -32,8 +32,8 @@ public class LinearSlides
 
 	private static DcMotor leftExtensionMotor;
 	private static DcMotor rightExtensionMotor;
-	private static Servo shiftServo;
-    private static Servo lockServo;
+
+    private static DcMotor conveyorMotor;
 
     public static double fullLength;
 
@@ -51,9 +51,6 @@ public class LinearSlides
     // ----------------------------------
     // -Initializes the hardware references
 
-    public double shiftServoPosition;
-    public double lockServoPosition;
-
     boolean linearSlideExtended;    // true means the linear slide is extended
                                     // false mean the linear slide is retracted
 
@@ -67,11 +64,7 @@ public class LinearSlides
         //anglingMotor = slideMap.dcMotor.get("ls_am");
         leftExtensionMotor = slideMap.dcMotor.get("ls_le");
         rightExtensionMotor = slideMap.dcMotor.get("ls_re");
-
-        //shiftServo = slideMap.servo.get("ls_ss");
-        //lockServo = slideMap.servo.get("ls_ls");
-
-        leftExtensionMotor.setDirection(DcMotor.Direction.REVERSE); //Delete this later
+        conveyorMotor = slideMap.dcMotor.get("ls_cm");
 
         //anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
@@ -84,6 +77,11 @@ public class LinearSlides
 
     // ----------------------------------
     // Linear Slide Methods
+    // ----------------------------------
+
+
+    // ----------------------------------
+    // Angler Methods
     // ----------------------------------
 
     public double getAngle()
@@ -116,7 +114,7 @@ public class LinearSlides
             coarseAngler.changeState(up,down);
         }
         //Add more conditions so that we can zero out automatically to allow easier control
-        setAngle(29.0*coarseAngler.currentState()/3.0 + 5.0 - 29.0*fineAngler.currentState()/15.0);
+        setAngle(29.0 * coarseAngler.currentState() / 3.0 + 5.0 - 29.0 * fineAngler.currentState() / 15.0);
 
     }
 
@@ -151,101 +149,9 @@ public class LinearSlides
         }
     }
 
-    public void setLock(boolean trigger)
-    {
-        lockSwitch.changeState(trigger);
-        switch(lockSwitch.currentState())
-        {
-            case 0:
-                unlock();
-            break;
-
-            case 1:
-                lock();
-            break;
-        }
-    }
-
-    public void lock()
-    {
-        lockServo.setPosition(0.5);
-    }
-
-    public void unlock()
-    {
-        //I suspect lock is too much, test 0.9 as a value
-        lockServo.setPosition(1.0);
-    }
-
-    public String getShiftState()
-    {
-        String state = "null";
-        switch(shiftSwitch.currentState())
-        {
-            case 0:
-                state = "Torque";
-            break;
-
-            case 1:
-                state = "Speed";
-            break;
-
-            case 2:
-                state = "Neutral";
-            break;
-        }
-        return state;
-    }
-
-    public String getLockState()
-    {
-        String state = "null";
-        switch(lockSwitch.currentState())
-        {
-            case 0:
-                state = "Unlocked";
-            break;
-
-            case 1:
-                state = "Locked";
-            break;
-        }
-        return state;
-    }
-
-    public void setShifter(boolean trigger)
-    {
-        shiftSwitch.changeState(trigger);
-        switch(shiftSwitch.currentState())
-        {
-            case 0:
-                torque();
-            break;
-
-            case 2:
-                speed();
-            break;
-
-            case 1:
-                neutral();
-            break;
-        }
-    }
-
-    public void speed()
-    {
-        shiftServo.setPosition(0.2);
-    }
-
-    public void torque()
-    {
-        shiftServo.setPosition(0.9);
-    }
-
-    public void neutral()
-    {
-        shiftServo.setPosition(0.5);
-    }
+    // ----------------------------------
+    // Extension Methods
+    // ----------------------------------
 
     //Set extension speed
     public void setTransmissionPower(boolean up, boolean down)
@@ -270,7 +176,7 @@ public class LinearSlides
 
     public double getExtensionLength()
     {
-       return  SPEED_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
+        return SPEED_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
     }
 
     public double getExtensionLengthTorque()
@@ -279,19 +185,29 @@ public class LinearSlides
         return TORQUE_TICK_TO_IN * (leftExtensionMotor.getCurrentPosition() + rightExtensionMotor.getCurrentPosition())/2.0;
     }
 
-    public void setLockServo(double input)
-    {
-        lockServo.setPosition(Math.abs(input));
-    }
-
-
-    public void setShiftServoPosition(double input)
-    {
-        shiftServo.setPosition(Math.abs(input));
-    }
-
     public double getZeroDetectorValue()
     {
         return zeroDetector.getRawValue();
     }
+
+    // ----------------------------------
+    // Conveyor Methods
+    // ----------------------------------
+
+    public void setConveyorMotor(boolean up, boolean down)
+    {
+        if(up)
+        {
+            conveyorMotor.setPower(7.0/9.0);
+        }
+        else if(down)
+        {
+            conveyorMotor.setPower(-7.0/9.0);
+        }
+        else
+        {
+            conveyorMotor.setPower(0.0);
+        }
+    }
+
 }

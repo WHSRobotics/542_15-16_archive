@@ -1,6 +1,5 @@
 package com.whs542.lib.hwTest;
 
-import com.qualcomm.hardware.ModernRoboticsUsbServoController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.whs542.ftc2016.subsys.WHSRobot;

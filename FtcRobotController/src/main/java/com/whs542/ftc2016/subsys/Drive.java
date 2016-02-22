@@ -39,8 +39,9 @@ public class Drive
 	private DcMotor leftFrontMotor;
 	private DcMotor leftBackMotor;
 
-    public DcMotor testMot;
-    public DcMotor testMot2;
+    private Servo servoArm;
+
+    public double position;
 
     public double [] encoderZeroes;
     public double [] encoderValues;
@@ -49,10 +50,6 @@ public class Drive
     public int RB = 1;
     public int LF = 2;
     public int LB = 3;
-    //PID Testing//
-    public int TM = 4;
-    public int TM2 = 5;
-
 	// ----------------------------------
 	// Drive Constructor
 	// ----------------------------------
@@ -77,16 +74,18 @@ public class Drive
         //leftFrontMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         //rightBackMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        //PID Testing//
-        testMot = driveMap.dcMotor.get("motor");
-        testMot2 = driveMap.dcMotor.get("motor2");
-        testMot.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        testMot2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        //servoArm = hardwareMap.servo.get("servo_test");
 
-        encoderZeroes = new double[6]; //was 4, need to return it to 4 after testing PID
-        encoderValues = new double[6]; //was 4, need to return it to 4 after testing PID
+        encoderZeroes = new double[4];
+        encoderValues = new double[4];
+
+        position = 1.0;
         color = side;
     }
+
+    // ----------------------------------
+    // Side Climber Methods
+    // ----------------------------------
 
     //Distribute Alliance color to necessary classes
     public void setSwitcher(boolean trigger)
@@ -127,6 +126,10 @@ public class Drive
             break;
         }
     }
+
+    // ----------------------------------
+    // Hook Methods
+    // ----------------------------------
 
     public void setHook(boolean trigger)
     {
@@ -274,53 +277,42 @@ public class Drive
         {
             return false;
         }
-        /*
-        //PID Testing//
-        if(Math.abs(encoderValues[TM])*TICKS_TO_ROT > target)
-        {
-            rightTargetHit = true;
-        }
-        if(Math.abs(encoderValues[TM2])*TICKS_TO_ROT > target)
-        {
-            leftTargetHit = true;
-        }
-        if(leftTargetHit && rightTargetHit)
-        {
-            zeroLeftEncoders();
-            zeroRightEncoders();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-        */
     }
 
     public void updateEncoderValues()
     {
-        //PID Testing//
-        encoderValues[TM] = testMot.getCurrentPosition() - encoderZeroes[TM];
-        encoderValues[TM2] = testMot2.getCurrentPosition() - encoderZeroes[TM2];
-        //encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
-        //encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
-        //encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
-        //encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
+        encoderValues[RF] = rightFrontMotor.getCurrentPosition()-encoderZeroes[RF];
+        encoderValues[RB] = rightBackMotor.getCurrentPosition()-encoderZeroes[RB];
+        encoderValues[LF] = leftFrontMotor.getCurrentPosition()-encoderZeroes[LF];
+        encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
     }
 
     public void zeroLeftEncoders()
     {
-        //PID Testing//
-        encoderZeroes[TM] = testMot.getCurrentPosition();
-        //encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
-        //encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
+        encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
+        encoderZeroes[LB] = leftBackMotor.getCurrentPosition();
     }
 
     public void zeroRightEncoders()
     {
-        //PID Testing//
-        encoderZeroes[TM2] = testMot2.getCurrentPosition();
-        //encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
-        //encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
+        encoderZeroes[RF] = rightFrontMotor.getCurrentPosition();
+        encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
+    }
+
+    // ----------------------------------
+    // Servo Arm Method
+    // ----------------------------------
+    //Reference servoArmTest
+    public void servoArmDump()
+    {
+        if(position > 0.2)
+        {
+            servoArm.setPosition(position);
+            position -= 0.0000005;
+        }
+        else
+        {
+            servoArm.setPosition(0.0);
+        }
     }
 }

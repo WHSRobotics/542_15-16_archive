@@ -26,7 +26,7 @@ public class Dependencies
             //rob.box.closeDoor();
 
             //boxExtended = false; //box should not be extended either
-            rob.box.setExtensionSpeed(0.0);
+            //rob.box.setExtensionSpeed(0.0);
 
             //intake = true;
             rob.intake.runIntake(true, false);
