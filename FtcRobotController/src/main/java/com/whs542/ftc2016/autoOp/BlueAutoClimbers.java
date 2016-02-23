@@ -18,7 +18,8 @@ public class BlueAutoClimbers extends OpMode{
         switch(state) {
             case 0:
                 bot.drive.setLeftRightPower(1.0, 1.0);
-                if (bot.drive.hasTargetHit(5.5)) {
+                //2.25 feet
+                if (bot.drive.hasTargetHit(2.25)) {
                     state = 1;
                 }
                 break;
@@ -33,7 +34,7 @@ public class BlueAutoClimbers extends OpMode{
 
             case 2:
                 bot.drive.setLeftRightPower(1.0, 1.0);
-                if (bot.drive.hasTargetHit(1.0)) {
+                if (bot.drive.hasTargetHit(5.6568)) {
                     state = 4;
                 }
                 break;
@@ -46,8 +47,9 @@ public class BlueAutoClimbers extends OpMode{
                 break;
 
             case 4:
+
                 bot.drive.setLeftRightPower(1.0, 1.0);
-                if (bot.drive.hasTargetHit(3.0)) {
+                if (bot.drive.hasTargetHit(2.25)) {
                     state = 5;
                 }
                 break;

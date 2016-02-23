@@ -17,11 +17,11 @@ import com.whs542.lib.*;
 
 public class Drive
 {
-    private static final double WHEEL_DIAMETER = 15.24;
-    private static final double TICKS_TO_ROT_MOTOR = 0.75/1120.0;
-    private static final double TICKS_TO_RAD_MOTOR = 2.0*Math.PI*TICKS_TO_ROT_MOTOR;
+    private static final double WHEEL_DIAMETER = 0.5;
+    private static final double TICKS_TO_ROT_WHEEL = 0.75/1120.0;
+    private static final double TICKS_TO_RAD_MOTOR = 2.0*Math.PI*TICKS_TO_ROT_WHEEL;
     //Sprocket ratio of 24/32
-    private static final double TICKS_TO_DIST_CM_WHEEL = WHEEL_DIAMETER * Math.PI *0.75/1120.0;
+    private static final double TICKS_TO_FT = WHEEL_DIAMETER * Math.PI *TICKS_TO_ROT_WHEEL;
     private static final double JOY_THRESHOLD = 0.2;
 
     private Servo leftChurroHook;
@@ -130,10 +130,6 @@ public class Drive
 
     public void setLeftRightPower(double leftPower, double rightPower)
     {
-        //PID Testing//
-        //testMot.setPower(7.0/9.0 * rightPower);
-        //testMot2.setPower(7.0/9.0 * leftPower);
-
         switch(orientationSwitch.currentState())
         {
             case 0:
@@ -201,12 +197,12 @@ public class Drive
         boolean rightTargetHit = false;
         boolean leftTargetHit = false;
 
-        if(Math.abs(encoderValues[RF])*TICKS_TO_ROT_MOTOR > target || Math.abs(encoderValues[RB])*TICKS_TO_ROT_MOTOR > target)
+        if(Math.abs(encoderValues[RF])*TICKS_TO_FT > target || Math.abs(encoderValues[RB])*TICKS_TO_FT > target)
         {
             rightTargetHit = true;
         }
 
-        if(Math.abs(encoderValues[LF])*TICKS_TO_ROT_MOTOR > target || Math.abs(encoderValues[LB])*TICKS_TO_ROT_MOTOR > target)
+        if(Math.abs(encoderValues[LF])*TICKS_TO_FT > target || Math.abs(encoderValues[LB])*TICKS_TO_FT > target)
         {
             leftTargetHit = true;
         }
@@ -258,7 +254,7 @@ public class Drive
         autoArm.setPosition(0.0);
     }
 
-    static double currentPosition = 0.5;
+    double currentPosition = 0.5;
 
     public void setAutoArmPosition(double target, double delta)
     {
