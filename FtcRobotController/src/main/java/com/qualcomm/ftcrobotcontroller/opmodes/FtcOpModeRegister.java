@@ -65,11 +65,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Blue TeleOp", BlueTeleOp.class);
     manager.register("Red TeleOp", RedTeleOp.class);
     //AutoOp
-    manager.register("ForwardAuto", ForwardAuto.class);
     manager.register("DebugOp", DebugOp.class);
     manager.register("Servo", servoTest.class);
-    manager.register("BlueDebrisClearAuto", BlueDebrisClearAutoOp.class);
-    manager.register("RedDebrisClearAuto", RedDebrisClearAutoOp.class);
     //Test//
     manager.register("PID Test", PIDTest.class);
     manager.register("Servo Arm", servoArmTest.class);

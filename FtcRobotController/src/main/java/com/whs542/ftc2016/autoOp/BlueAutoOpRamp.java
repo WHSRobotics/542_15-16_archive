@@ -30,7 +30,7 @@ public class BlueAutoOpRamp extends OpMode {
         //AutoOp that goes directly towards the ramp
         switch (state) {
             case 0:
-                bot.drive.setLeftRightPower(0.1, 0.1);
+                bot.drive.setLeftRightPower(1.0, 0.1);
                 if (bot.drive.hasTargetHit(1.0)) //value to be determined
                 {
                     state = 1;
