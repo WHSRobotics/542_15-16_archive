@@ -15,29 +15,62 @@ public class RedAutoClimbers extends OpMode{
     }
     public void loop()
     {
-        switch(state)
-        {
+        switch(state) {
             case 0:
-                bot.drive.setLeftRightPower(1.0,1.0);
-                if(bot.drive.hasTargetHit(6.0))
-                {
+                bot.drive.setLeftRightPower(1.0, 1.0);
+                if (bot.drive.hasTargetHit(5.5)) {
                     state = 1;
                 }
-            break;
+                break;
 
             case 1:
-                bot.drive.setLeftRightPower(0.0,0.0);
-                bot.drive.autoDump();
+                bot.drive.setLeftRightPower(1.0, -1.0);
+                if (bot.drive.hasTargetHit(1.0)) ;
+            {
                 state = 2;
+            }
             break;
 
             case 2:
-                if(bot.drive.hasTargetHit(-1.0))
-                {
-                    state = 3;
+                bot.drive.setLeftRightPower(1.0, 1.0);
+                if (bot.drive.hasTargetHit(1.0)) {
+                    state = 4;
                 }
                 break;
+
+            case 3:
+                bot.drive.setLeftRightPower(1.0, -1.0);
+                if (bot.drive.hasTargetHit(5.0)) {
+                    state = 4;
+                }
+                break;
+
+            case 4:
+                bot.drive.setLeftRightPower(1.0, 1.0);
+                if (bot.drive.hasTargetHit(3.0)) {
+                    state = 5;
+                }
+                break;
+
+            case 5:
+                bot.drive.setLeftRightPower(0.0, 0.0);
+                bot.drive.autoDump();
+                state = 6;
+                break;
+
+            case 6:
+                bot.slides.setTransmissionPower(true, false);
+                if(bot.slides.fullyExtended(30.0))
+                {
+                    state = 7;
+                }
+                break;
+
+            case 7:
+                bot.slides.setTransmissionPower(false,false);
+                break;
         }
+
     }
     public void stop()
     {
