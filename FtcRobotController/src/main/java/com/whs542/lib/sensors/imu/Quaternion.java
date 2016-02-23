@@ -117,7 +117,7 @@ public class Quaternion
 	//Tested
 	//We want a result of a unit quaternion
 	//We have an axis angle representation
-	void fromAxisAngle(Vector axisAngle)
+	public void fromAxisAngle(Vector axisAngle)
 	{
 		if(axisAngle.getDim() != 3) throw new RuntimeException("Illegal vector length");
 
@@ -132,7 +132,7 @@ public class Quaternion
 
 
 	//Tested, but need more test cases
-	void fromMatrix(Matrix m)
+	public void fromMatrix(Matrix m)
 	{
 		if(m.rows != 3 || m.columns != 3) throw new RuntimeException("Illegal Matrix Dimensions");
 		double trace = m.getEntry(0,0) + m.getEntry(1,1) + m.getEntry(2,2);
@@ -173,7 +173,7 @@ public class Quaternion
 	}
 
 	//Tested
-	Vector toAxisAngle()
+	public Vector toAxisAngle()
 	{
 		Vector axisAngleVector = new Vector(3);
 		if(Math.abs((Math.abs(w) - 1)) < 0.00001)
@@ -190,7 +190,7 @@ public class Quaternion
 	}
 
 	//Tested but need more test cases
-	Matrix toMatrix()
+	public Matrix toMatrix()
 	{
 		Matrix outputMatrix = new Matrix(3,3);
 		outputMatrix.setEntry(0, 0, 1.0-2.0*Math.pow(y,2.0)-2.0*Math.pow(z,2.0) );
@@ -220,7 +220,7 @@ public class Quaternion
 	//
 
 	//Tested, more test cases
-	Vector toEuler()
+	public Vector toEuler()
 	{
 		Vector outputVector = new Vector(3);
 		double wsq = Math.pow(w, 2.0);
@@ -251,7 +251,7 @@ public class Quaternion
 	}
 
 	//tested
-	Vector rotateVector(Vector v)
+	public Vector rotateVector(Vector v)
 	{
 		Vector qv = new Vector(x,y,z);
 		Vector t = (qv.crossWith(v)).scaleBy(2.0);
@@ -259,7 +259,7 @@ public class Quaternion
 	}
 
 	//Tested, more samples needed
-	Quaternion multiplyBy(Quaternion q)
+	public Quaternion multiplyBy(Quaternion q)
 	{
 
 		// x | 1 | i | j | k |
@@ -276,7 +276,7 @@ public class Quaternion
 	}
 
 	//tested
-	Quaternion add(Quaternion q)
+	public Quaternion add(Quaternion q)
 	{
 		Quaternion outputQuaternion = new Quaternion();
 		outputQuaternion.w = w+q.w;
@@ -298,7 +298,7 @@ public class Quaternion
 	}
 
 	//Tested
-	Quaternion scaleDownBy(double scalar)
+	public Quaternion scaleDownBy(double scalar)
 	{
 		Quaternion outputQuaternion = new Quaternion();
 		outputQuaternion.w = w/scalar;
@@ -309,7 +309,7 @@ public class Quaternion
 	}
 
 	//Tested
-	Quaternion scaleBy(double scalar)
+	public Quaternion scaleBy(double scalar)
 	{
 		Quaternion outputQuaternion = new Quaternion();
 		outputQuaternion.w = w*scalar;

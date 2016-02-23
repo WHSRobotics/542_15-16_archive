@@ -15,7 +15,7 @@ public class Dependencies
 
     public Dependencies()
     {
-        linearSlidesExtended = (rob.slides.getExtensionLength() != 0);
+        //linearSlidesExtended = (rob.slides.getExtensionLength() != 0);
         //bocOpen = rob.box.getDoorState().equals("Open");
         //boxExtended = (!rob.box.boxFullyRetracted());
         //intake = (rob.intake.INTAKE_EXTENSION_STATE != 0);

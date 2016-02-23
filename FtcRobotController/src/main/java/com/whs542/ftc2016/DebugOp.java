@@ -5,56 +5,87 @@ package com.whs542.ftc2016;
 //
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.whs542.ftc2016.subsys.*;
-import com.whs542.ftc2016.threads.DriveThread;
-import com.whs542.lib.Alliance;
+import com.whs542.lib.sensors.imu.*;
+
+import org.FTC5866.lib.Bno055;
+import org.FTC5866.lib.DataLogger;
 
 public class DebugOp extends OpMode
 {
-    Drive drive;
+    Bno055 imu;
+    Quaternion imuData = new Quaternion();
 
-    volatile float armPower;
+    boolean     initComplete        = false;        // Flag to stop initialization
 
-    public class ArmThread implements Runnable
+    Bno055.ScheduleItem     sensorData,fusionData,  // Data read schedules
+            tempData,calibData;
+
+    public void updateQuaternion(Quaternion q, double w, double x, double y, double z)
     {
-        public void run()
-        {
-            while (true)
-            {
-                armPower = gamepad2.right_stick_y;
-                // Sleep for 10 ms.
-                try { Thread.sleep(10); }
-                // Catch an interrupt exception that hopefully never happens.
-                catch (InterruptedException ex)
-                {Thread.currentThread().interrupt(); }
-            }
-        }
+        q.setW(w);
+        q.setX(x);
+        q.setY(y);
+        q.setZ(z);
+    }
+
+    public void printQuaternion(Quaternion q)
+    {
+        telemetry.addData("W", q.getW());
+        telemetry.addData("X", q.getX());
+        telemetry.addData("Y", q.getY());
+        telemetry.addData("Z", q.getZ());
+    }
+
+    public void printVector(Vector v)
+    {
+        telemetry.addData("Euler X", v.x());
+        telemetry.addData("Euler Y", v.y());
+        telemetry.addData("Euler Z", v.z());
     }
 
     public void init()
     {
-
+        imu = new Bno055(hardwareMap, "imu");
+        imu.init();
     }
 
-    Thread armThread;
+    public void init_loop()
+    {
+        if (imu.isInitActive()) {
+            imu.init_loop();
+        } else if (!initComplete) {
+            initComplete        = true;
+            String status  = imu.isInitDone()?"OK":"Failed";
+            telemetry.addData("Init", status);
+        }
+    }
 
     @Override
     public void start()
     {
-        armPower = 0;
-        armThread = new Thread(new ArmThread());
-        armThread.start();
+        sensorData  = imu.startSchedule(Bno055.BnoPolling.SENSOR, 100);     // 10 Hz
+        fusionData  = imu.startSchedule(Bno055.BnoPolling.FUSION, 33);      // 30 Hz
+        tempData    = imu.startSchedule(Bno055.BnoPolling.TEMP, 200);       // 5 Hz
+        calibData   = imu.startSchedule(Bno055.BnoPolling.CALIB, 250);      // 4 Hz
     }
     @Override
     public void loop()
     { // normal loop for drive motors
-        telemetry.addData("left", gamepad1.left_stick_y );
-        telemetry.addData("right", gamepad1.right_stick_y );
-        telemetry.addData("arm", armPower );
+        imu.loop();
+        updateQuaternion(imuData, imu.quaternionW(), imu.quaternionX(), imu.quaternionY(), imu.quaternionZ());
+        imuData.normalize();
+        printVector(imuData.toEuler());
+        printQuaternion(imuData);
+        telemetry.addData("Euler sX", imu.eulerX());
+        telemetry.addData("Euler sY", imu.eulerY());
+        telemetry.addData("Euler sZ", imu.eulerZ());
+        telemetry.addData("ReqC", imu.requestCount());
+        telemetry.addData("RspC", imu.responseCount());
+        telemetry.addData("RdC", imu.readCount());
     }
 
     public void stop()
     {
-        armThread.interrupt();
+        imu.stop();
     }
 }
