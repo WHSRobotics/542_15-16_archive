@@ -11,8 +11,8 @@ import com.whs542.lib.sensors.PIDController;
  * Created by DanielWang on 2/12/16.
  */
 public class PIDTest extends OpMode{
-    public DcMotor testMot;
-    public DcMotor testMot2;
+    //public DcMotor testMot;
+    //public DcMotor testMot2;
     PIDController pidControl;
 
     private DcMotor leftExtensionMotor;
@@ -31,17 +31,15 @@ public class PIDTest extends OpMode{
 
         leftExtensionMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        //anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
 
         pidControl = new PIDController(0.0000001, 0.001, 0.0055, 0.0001);
     }
     public void testLinearSlide(double power, double power2)
     {
         leftExtensionMotor.setPower(power/2 + pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition()));
-        rightExtensionMotor.setPower(power2/2 - pidControl.update(testMot.getCurrentPosition(), testMot2.getCurrentPosition()));
+        rightExtensionMotor.setPower(power2/2 - pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition()));
     }
     public void loop()
     {

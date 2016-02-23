@@ -22,14 +22,14 @@ public class LinearSlides
     // -Hardware object reference variables for motors and servos
     // -Double variables for servo positions
 
-    public static Alliance color;
+    private Alliance color;
 
-    public Servo rampServo;
+    private Servo rampServo;
 
-    public static Toggler rampSwitch = new Toggler(2);
+    private Toggler rampSwitch = new Toggler(2);
 
-    private static DcMotor anglingMotor;
-    private static DcMotor intakeMotor;
+    private DcMotor anglingMotor;
+    private DcMotor intakeMotor;
 
 	private DcMotor leftExtensionMotor;
 	private DcMotor rightExtensionMotor;
