@@ -33,8 +33,8 @@ public class LinearSlides
     private static DcMotor anglingMotor;
     private static DcMotor intakeMotor;
 
-	private static DcMotor leftExtensionMotor;
-	private static DcMotor rightExtensionMotor;
+	private DcMotor leftExtensionMotor;
+	private DcMotor rightExtensionMotor;
 
     public static double fullLength;
 

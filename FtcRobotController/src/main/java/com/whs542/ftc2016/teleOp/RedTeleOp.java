@@ -24,23 +24,43 @@ public class RedTeleOp extends OpMode
     }
 
     public void loop() {
+        //-----------------
+        //Gamepad 1
+        //-----------------
         //Drive Telemetry
         telemetry.addData("Hook", bot.drive.getHookState());
         telemetry.addData("Orientation", bot.drive.getOrientation());
-        telemetry.addData("Joy", gamepad1.left_stick_y/2.0 + " " + gamepad1.right_stick_y/2.0);
+        telemetry.addData("Joy", gamepad1.left_stick_y / 2.0 + " " + gamepad1.right_stick_y / 2.0);
 
         //drive
-        bot.drive.setLeftRightPower(gamepad1.left_stick_y/2.0, gamepad1.right_stick_y/2.0);
+        bot.drive.setLeftRightPower(gamepad1.left_stick_y / 2.0, gamepad1.right_stick_y / 2.0);
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setHook(gamepad1.right_trigger == 1.0);
 
         //Slides
         bot.slides.setRamp(gamepad1.right_bumper);
-        bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
+        bot.slides.setAngle(gamepad1.dpad_up, gamepad1.dpad_down);
         bot.slides.setIntake(gamepad1.left_trigger == 1.0, gamepad1.left_bumper);
-        bot.slides.setTransmissionPower(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
-    }
+        bot.slides.setTransmissionPower(gamepad1.y, gamepad1.x);
+        //-----------------
+        //Gamepad 2
+        //-----------------
+        //Drive Telemetry
+        telemetry.addData("Hook", bot.drive.getHookState());
+        telemetry.addData("Orientation", bot.drive.getOrientation());
+        telemetry.addData("Joy", gamepad2.left_stick_y / 2.0 + " " + gamepad2.right_stick_y / 2.0);
 
+        //Drive
+        bot.drive.setLeftRightPower(gamepad2.left_stick_y / 2.0, gamepad2.right_stick_y / 2.0);
+        bot.drive.setOrientation(gamepad2.a);
+        bot.drive.setHook(gamepad2.right_trigger == 1.0);
+
+        //Slides
+        bot.slides.setRamp(gamepad2.right_bumper);
+        bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
+        bot.slides.setIntake(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
+        bot.slides.setTransmissionPower(gamepad2.y, gamepad2.x);
+    }
     public void stop()
     {
 
