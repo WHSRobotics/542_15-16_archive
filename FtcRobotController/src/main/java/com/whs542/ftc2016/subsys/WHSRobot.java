@@ -10,7 +10,7 @@ public class WHSRobot
 
     public WHSRobot(HardwareMap map, Alliance side)
     {
-        drive = new Drive(map, side);
+        drive = new Drive(map);
         slides = new LinearSlides(map, side);
     }
 }

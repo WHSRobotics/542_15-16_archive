@@ -47,11 +47,6 @@ public class LinearSlides
     private static final double TORQUE_TICK_TO_IN = 9.0*Math.PI/12544.0;
     private static final double SPEED_TICK_TO_IN = 9.0*Math.PI/3136.0;
 
-    // ----------------------------------
-    // Intake Constructor
-    // ----------------------------------
-    // -Initializes the hardware references
-
     boolean linearSlideExtended;    // true means the linear slide is extended
                                     // false mean the linear slide is retracted
 

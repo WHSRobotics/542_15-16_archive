@@ -24,16 +24,14 @@ public class BlueTeleOp extends OpMode
     }
 
     public void loop() {
-        //Slide Telemetry
-        //telemetry.addData("Angle", bot.slides.getAngle());
-        //telemetry.addData("Slide Length", "");
 
         //Drive Telemetry
         telemetry.addData("Hook", bot.drive.getHookState());
         telemetry.addData("Orientation", bot.drive.getOrientation());
+        telemetry.addData("Joy", gamepad1.left_stick_y/2.0 + " " + gamepad1.right_stick_y/2.0);
 
         //drive
-        bot.drive.setLeftRightPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        bot.drive.setLeftRightPower(gamepad1.left_stick_y/2.0, gamepad1.right_stick_y/2.0);
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setHook(gamepad1.right_trigger == 1.0);
 

@@ -17,7 +17,6 @@ import com.whs542.lib.*;
 
 public class Drive
 {
-    private Alliance color;
     private static final double WHEEL_DIAMETER = 15.24;
     private static final double TICKS_TO_ROT_MOTOR = 0.75/1120.0;
     private static final double TICKS_TO_RAD_MOTOR = 2.0*Math.PI*TICKS_TO_ROT_MOTOR;
@@ -50,7 +49,7 @@ public class Drive
 	// ----------------------------------
 	// -Initializes the hardware references
 
-	public Drive(HardwareMap driveMap, Alliance side)
+	public Drive(HardwareMap driveMap)
 	{
         rightChurroHook = driveMap.servo.get("drive_rch");
         leftChurroHook = driveMap.servo.get("drive_lch");
@@ -70,7 +69,6 @@ public class Drive
 
         encoderZeroes = new double[4];
         encoderValues = new double[4];
-        color = side;
     }
 
     // ----------------------------------
