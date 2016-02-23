@@ -30,3 +30,6 @@ FtcRobotController/FtcRobotController.iml
 FtcRobotController/build.gradle
 FtcRobotController/FtcRobotController.iml
 FtcRobotController/FtcRobotController.iml
+FtcRobotController/build.gradle
+FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/FtcOpModeRegister.java
+FtcRobotController/build.gradle
