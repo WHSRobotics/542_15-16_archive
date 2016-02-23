@@ -11,35 +11,50 @@ import com.whs542.lib.Alliance;
 
 public class DebugOp extends OpMode
 {
-    //public Thread driveThread;
-    ScoringBox box;
-    LinearSlides slid;
+    Drive drive;
+
+    volatile float armPower;
+
+    public class ArmThread implements Runnable
+    {
+        public void run()
+        {
+            while (true)
+            {
+                armPower = gamepad2.right_stick_y;
+                // Sleep for 10 ms.
+                try { Thread.sleep(10); }
+                // Catch an interrupt exception that hopefully never happens.
+                catch (InterruptedException ex)
+                {Thread.currentThread().interrupt(); }
+            }
+        }
+    }
 
     public void init()
     {
-        //slid = new LinearSlides(hardwareMap);
-        box = new ScoringBox(hardwareMap, Alliance.RED);
-        //driveThread = new Thread(new DriveThread(robot));
+
     }
 
+    Thread armThread;
+
+    @Override
     public void start()
     {
-        //driveThread.start();
+        armPower = 0;
+        armThread = new Thread(new ArmThread());
+        armThread.start();
     }
-
-	public void loop()
-	{
-        //slid.setTransmissionPower(9.0/7.0, gamepad1.dpad_up, gamepad1.dpad_down);
-        //box.setDoorPosition(gamepad1.left_stick_y);
-        box.setExtension(gamepad1.b);
-        //box.setExtensionSpeed(gamepad1.dpad_left, gamepad1.dpad_right);
-        //box.setDoor(gamepad1.a);
-        telemetry.addData("servo pos", gamepad1.left_stick_y);
-        telemetry.addData("Magnet", box.getExtensionValue());
-	}
+    @Override
+    public void loop()
+    { // normal loop for drive motors
+        telemetry.addData("left", gamepad1.left_stick_y );
+        telemetry.addData("right", gamepad1.right_stick_y );
+        telemetry.addData("arm", armPower );
+    }
 
     public void stop()
     {
-        //driveThread.interrupt();
+        armThread.interrupt();
     }
 }

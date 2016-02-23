@@ -12,6 +12,7 @@ import java.lang.Override;
 public class motorTest extends OpMode
 {
     DcMotor testMot;
+    DcMotor testMot2;
     Toggler changePower;
     Toggler activateMot;
     VoltageSensor voltSense;
@@ -23,8 +24,8 @@ public class motorTest extends OpMode
         activateMot = new Toggler(2);
         changePower = new Toggler(21, 10);
         voltSense = hardwareMap.voltageSensor.get("motorc");
-        testMot = hardwareMap.dcMotor.get("motor");
-        testMot.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        testMot = hardwareMap.dcMotor.get("ts1");
+        testMot2 = hardwareMap.dcMotor.get("ts2");
 
         RobotLog.i("StartLog");
     }
@@ -41,6 +42,7 @@ public class motorTest extends OpMode
 
         RobotLog.i(getRuntime() + " " + testMot.getCurrentPosition() + " " + (voltSense.getVoltage()*power) );
         testMot.setPower(power);
+        testMot2.setPower(power);
 
         telemetry.addData("","power: " + (changePower.currentState()-10) + "On: " + activateMot.currentState());
 
