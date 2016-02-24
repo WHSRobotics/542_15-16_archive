@@ -14,6 +14,7 @@ public class DebugOp extends OpMode
 {
     Bno055 imu;
     Quaternion imuData = new Quaternion();
+    Vector imuEuler = new Vector(3);
 
     boolean     initComplete        = false;        // Flag to stop initialization
 
@@ -74,11 +75,10 @@ public class DebugOp extends OpMode
         imu.loop();
         updateQuaternion(imuData, imu.quaternionW(), imu.quaternionX(), imu.quaternionY(), imu.quaternionZ());
         imuData.normalize();
-        printVector(imuData.toEuler());
+        imuEuler = imuData.toEuler();
+        imuEuler.toDegrees();
+        printVector(imuEuler);
         printQuaternion(imuData);
-        telemetry.addData("Euler sX", imu.eulerX());
-        telemetry.addData("Euler sY", imu.eulerY());
-        telemetry.addData("Euler sZ", imu.eulerZ());
         telemetry.addData("ReqC", imu.requestCount());
         telemetry.addData("RspC", imu.responseCount());
         telemetry.addData("RdC", imu.readCount());
