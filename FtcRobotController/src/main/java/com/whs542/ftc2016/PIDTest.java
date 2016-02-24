@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.util.RobotLog;
-import com.whs542.lib.Alliance;
 import com.whs542.lib.sensors.PIDController;
 
 /**
@@ -14,6 +13,7 @@ public class PIDTest extends OpMode{
     //public DcMotor testMot;
     //public DcMotor testMot2;
     PIDController pidControl;
+    private double correction;
 
     private DcMotor leftExtensionMotor;
     private DcMotor rightExtensionMotor;
@@ -34,16 +34,33 @@ public class PIDTest extends OpMode{
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        pidControl = new PIDController(0.0000001, 0.001, 0.0055, 0.0001);
+        pidControl = new PIDController(0.00025, 0.0, 0.0, 0.6);
     }
-    public void testLinearSlide(double power, double power2)
+
+    public double clamp(double value)
     {
-        leftExtensionMotor.setPower(power/2 + pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition()));
-        rightExtensionMotor.setPower(power2/2 - pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition()));
+        if(value > 1.0)
+        {
+            return 1.0;
+        }
+        else if(value < -1.0)
+        {
+            return -1.0;
+        }
+        else
+        {
+            return value;
+        }
+    }
+    public void testLinearSlide(double power, double output)
+    {
+
+        leftExtensionMotor.setPower(clamp(power - output));
+        rightExtensionMotor.setPower(clamp(power));
     }
     public void loop()
     {
-        pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition());
+        correction = pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition());
         /*
         if((Math.abs(testMot.getCurrentPosition() * (1.0/1120.0)) > 10.0) ||
         (Math.abs(testMot2.getCurrentPosition() * (1.0/1120.0)) > 10.0))
@@ -57,9 +74,10 @@ public class PIDTest extends OpMode{
             testMot2.setPower(0.5 - pidControl.update(testMot.getCurrentPosition(), testMot2.getCurrentPosition()));
         }
         */
-        testLinearSlide(gamepad1.left_stick_y, gamepad1.right_stick_y);
-        telemetry.addData("testmot", leftExtensionMotor.getCurrentPosition() * (1.0/1120.0));
-        telemetry.addData("testmot2", rightExtensionMotor.getCurrentPosition() * (1.0/1120.0));
-        RobotLog.i(getRuntime() + " TestMot: " + leftExtensionMotor.getCurrentPosition() + " TestMot2: " + rightExtensionMotor.getCurrentPosition() + " Update: " + (pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition()) * 100) + " " + pidControl.lastError);
+        testLinearSlide(gamepad1.left_stick_y, correction);
+        telemetry.addData("Left Motor", leftExtensionMotor.getCurrentPosition() * (1.0/1120.0));
+        telemetry.addData("Right Motor", rightExtensionMotor.getCurrentPosition() * (1.0/1120.0));
+        telemetry.addData("Output", correction);
+        RobotLog.i(getRuntime() + " TestMot: " + leftExtensionMotor.getCurrentPosition() + " TestMot2: " + rightExtensionMotor.getCurrentPosition() + " Update: " + correction);
     }
 }

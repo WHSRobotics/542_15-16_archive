@@ -31,8 +31,8 @@ public class LinearSlides
     private DcMotor anglingMotor;
     private DcMotor intakeMotor;
 
-	private DcMotor leftExtensionMotor;
-	private DcMotor rightExtensionMotor;
+	public DcMotor leftExtensionMotor;
+	public DcMotor rightExtensionMotor;
 
     //Pulley Circumference = 3pi in/2 rot
 
@@ -138,6 +138,40 @@ public class LinearSlides
         {
             leftExtensionMotor.setPower(1.0);
             rightExtensionMotor.setPower(1.0);
+        }
+        else
+        {
+            leftExtensionMotor.setPower(0.0);
+            rightExtensionMotor.setPower(0.0);
+        }
+    }
+
+    public double clamp(double value)
+    {
+        if(value > 1.0)
+        {
+            return 1.0;
+        }
+        else if(value < -1.0)
+        {
+            return -1.0;
+        }
+        else
+        {
+            return value;
+        }
+    }
+    public void testLinearSlide(double power, double output, boolean extend, boolean retract)
+    {
+        if(retract)
+        {
+            leftExtensionMotor.setPower(clamp(power - output));
+            rightExtensionMotor.setPower(clamp(power));
+        }
+        else if(extend)
+        {
+            leftExtensionMotor.setPower(clamp(-power - output));
+            rightExtensionMotor.setPower(clamp(-power));
         }
         else
         {
