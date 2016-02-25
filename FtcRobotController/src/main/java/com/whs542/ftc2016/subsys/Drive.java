@@ -194,20 +194,12 @@ public class Drive
     public boolean hasTargetHit(double target)
     {
         updateEncoderValues();
-        boolean rightTargetHit = false;
-        boolean leftTargetHit = false;
-
-        if(Math.abs(encoderValues[RF])*TICKS_TO_FT > target || Math.abs(encoderValues[RB])*TICKS_TO_FT > target)
+        double max = 0;
+        for(int i = 0; i < 4; i++)
         {
-            rightTargetHit = true;
+            max = (encoderValues[i] > max) ? encoderValues[i] : max;
         }
-
-        if(Math.abs(encoderValues[LF])*TICKS_TO_FT > target || Math.abs(encoderValues[LB])*TICKS_TO_FT > target)
-        {
-            leftTargetHit = true;
-        }
-
-        if(leftTargetHit && rightTargetHit)
+        if(Math.abs(max)*TICKS_TO_FT > target)
         {
             zeroLeftEncoders();
             zeroRightEncoders();
@@ -227,6 +219,16 @@ public class Drive
         encoderValues[LB] = leftBackMotor.getCurrentPosition()-encoderZeroes[LB];
     }
 
+    public double leftEncoderAvg()
+    {
+        return TICKS_TO_FT*(encoderValues[LF] + encoderValues[LB])/2.0;
+    }
+
+    public double rightEncoderAvg()
+    {
+        return TICKS_TO_FT*(encoderValues[RF] + encoderValues[RB])/2.0;
+    }
+
     public void zeroLeftEncoders()
     {
         encoderZeroes[LF] = leftFrontMotor.getCurrentPosition();
@@ -239,6 +241,26 @@ public class Drive
         encoderZeroes[RB] = rightBackMotor.getCurrentPosition();
     }
 
+    public double leftFrontFeet()
+    {
+        return encoderValues[LF] * TICKS_TO_FT;
+    }
+
+    public double leftBackFeet()
+    {
+        return encoderValues[LB] * TICKS_TO_FT;
+    }
+
+    public double rightFrontFeet()
+    {
+        return encoderValues[RF] * TICKS_TO_FT;
+    }
+
+    public double rightBackFeet()
+    {
+        return encoderValues[RB] * TICKS_TO_FT;
+    }
+
     // ----------------------------------
     // Servo Arm Method
     // ----------------------------------
@@ -246,7 +268,7 @@ public class Drive
 
     public void autoDump()
     {
-        setAutoArmPosition(0.75, 0005);
+        autoArm.setPosition(0.75);
     }
 
     public void autoNeutral()

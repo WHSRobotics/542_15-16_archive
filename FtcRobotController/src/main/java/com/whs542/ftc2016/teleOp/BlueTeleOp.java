@@ -45,6 +45,8 @@ public class BlueTeleOp extends OpMode
         bot = new WHSRobot(hardwareMap, Alliance.BLUE);
         imu = new Bno055(hardwareMap, "imu");
         imu.init();
+        bot.drive.zeroLeftEncoders();
+        bot.drive.zeroRightEncoders();
     }
 
     public void init_loop()
@@ -69,12 +71,15 @@ public class BlueTeleOp extends OpMode
     public void loop() {
 
         imu.loop();
+        bot.drive.updateEncoderValues();
         updateQuaternion(imuData, imu.quaternionW(), imu.quaternionX(), imu.quaternionY(), imu.quaternionZ());
         imuData.normalize();
         imuEuler = imuData.toEuler();
         imuEuler.toDegrees();
         printVector(imuEuler);
 
+        telemetry.addData("RF", bot.drive.rightFrontFeet());
+        telemetry.addData("RB", bot.drive.rightBackFeet());
         //-----------------
         //Gamepad 1
         //-----------------
