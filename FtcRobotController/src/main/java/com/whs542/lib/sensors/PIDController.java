@@ -11,6 +11,8 @@ public class PIDController{
     private double integralDamper;
     public double lastError = 0.0;
     private double errorSum = 0.1;
+    private double error;
+    private double output;
 
     public PIDController(double pIn, double iIn, double dIn, double damping)
     {
@@ -19,10 +21,16 @@ public class PIDController{
         kd = dIn;
         integralDamper = damping;
     }
+
+    public double getError()
+    {
+        return error;
+    }
+
     public double update(double reference, double sensorValue)
     {
-        double error = reference - sensorValue;
-        double output = kp * error + ki * errorSum - kd * (error - lastError);
+        error = reference - sensorValue;
+        output = kp * error + ki * errorSum - kd * (error - lastError);
         lastError = error;
         errorSum = integralDamper * (errorSum + error);
         return output;

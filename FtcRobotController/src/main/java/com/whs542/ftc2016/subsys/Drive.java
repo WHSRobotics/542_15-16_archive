@@ -246,7 +246,7 @@ public class Drive
 
     public void autoDump()
     {
-        setAutoArmPosition(1.0, 0000005);
+        setAutoArmPosition(0.75, 0005);
     }
 
     public void autoNeutral()
@@ -262,6 +262,9 @@ public class Drive
             currentPosition = ((currentPosition + delta) > 1.0) ? 1.0 : currentPosition + delta;
         } else if (target < currentPosition) {
             currentPosition = ((currentPosition - delta) < 0.0) ? 0.0 : currentPosition - delta;
+        } else if(Math.abs(target - currentPosition) < 0.01)
+        {
+           currentPosition = target;
         }
         autoArm.setPosition(currentPosition);
     }

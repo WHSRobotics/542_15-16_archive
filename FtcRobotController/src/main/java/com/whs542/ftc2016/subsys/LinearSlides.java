@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.whs542.lib.Alliance;
 import com.whs542.lib.Toggler;
 import com.whs542.lib.sensors.CurrentACS711EX;
+import com.whs542.lib.sensors.PIDController;
 //
 // Linear Slides Subsystem Class
 //
@@ -34,6 +35,11 @@ public class LinearSlides
 	public DcMotor leftExtensionMotor;
 	public DcMotor rightExtensionMotor;
 
+    private double output;
+
+    public PIDController pidControl;
+
+
     //Pulley Circumference = 3pi in/2 rot
 
     private static final double TICK_TO_IN = 3.0*Math.PI/2240.0;
@@ -53,6 +59,7 @@ public class LinearSlides
         //anglingMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightExtensionMotor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        pidControl = new PIDController(0.00025, 0.0, 0.0, 0.6);
 
         color = side;
     }
@@ -69,11 +76,11 @@ public class LinearSlides
     {
         if(up)
         {
-            anglingMotor.setPower(1.0);
+            anglingMotor.setPower(-1.0);
         }
         else if(down)
         {
-            anglingMotor.setPower(-1.0);
+            anglingMotor.setPower(1.0);
         }
         else
         {
@@ -107,7 +114,7 @@ public class LinearSlides
                 break;
 
             case BLUE:
-                rampServo.setPosition(0.0);
+                rampServo.setPosition(1.0);
                 break;
         }
     }
@@ -121,7 +128,7 @@ public class LinearSlides
                 break;
 
             case BLUE:
-                rampServo.setPosition(1.0);
+                rampServo.setPosition(0.0);
                 break;
         }
     }
@@ -161,8 +168,9 @@ public class LinearSlides
             return value;
         }
     }
-    public void testLinearSlide(double power, double output, boolean extend, boolean retract)
+    public void testLinearSlide(double power, boolean extend, boolean retract)
     {
+        output = pidControl.update(leftExtensionMotor.getCurrentPosition(), rightExtensionMotor.getCurrentPosition());
         if(retract)
         {
             leftExtensionMotor.setPower(clamp(power - output));

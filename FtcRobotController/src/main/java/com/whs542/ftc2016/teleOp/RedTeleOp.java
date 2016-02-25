@@ -47,7 +47,7 @@ public class RedTeleOp extends OpMode
         bot.slides.setAngle(gamepad1.dpad_up, gamepad1.dpad_down);
         bot.slides.setIntake(gamepad1.left_trigger == 1.0, gamepad1.left_bumper);
         //bot.slides.setTransmissionPower(gamepad1.y, gamepad1.x);
-        bot.slides.testLinearSlide(0.5, correction, gamepad1.y, gamepad1.x);
+        bot.slides.testLinearSlide(0.5, gamepad1.y, gamepad1.x);
         //-----------------
         //Gamepad 2
         //-----------------
@@ -66,7 +66,7 @@ public class RedTeleOp extends OpMode
         bot.slides.setAngle(gamepad2.dpad_up, gamepad2.dpad_down);
         bot.slides.setIntake(gamepad2.left_trigger == 1.0, gamepad2.left_bumper);
         //bot.slides.setTransmissionPower(gamepad2.y, gamepad2.x);
-        bot.slides.testLinearSlide(0.5, correction, gamepad2.y, gamepad2.x);
+        bot.slides.testLinearSlide(0.5, gamepad2.y, gamepad2.x);
     }
     public void stop()
     {
