@@ -62,6 +62,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("NullOp", NullOp.class);
       manager.register("Debug", DebugOp.class);
 
+      manager.register("encB", encBehavior.class);
+
     //Teleop
     manager.register("Blue TeleOp", BlueTeleOp.class);
     manager.register("Red TeleOp", RedTeleOp.class);

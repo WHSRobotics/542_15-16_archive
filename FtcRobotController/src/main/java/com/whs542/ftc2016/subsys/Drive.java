@@ -194,12 +194,7 @@ public class Drive
     public boolean hasTargetHit(double target)
     {
         updateEncoderValues();
-        double max = 0;
-        for(int i = 0; i < 4; i++)
-        {
-            max = (encoderValues[i] > max) ? encoderValues[i] : max;
-        }
-        if(Math.abs(max)*TICKS_TO_FT > target)
+        if(Math.abs(rightEncoderAvg()) > target)
         {
             zeroLeftEncoders();
             zeroRightEncoders();
@@ -209,6 +204,17 @@ public class Drive
         {
             return false;
         }
+    }
+
+    public double maxEncValue()
+    {
+        updateEncoderValues();
+        double max = 0.0;
+        for(int i = 0; i < 4; i++)
+        {
+            max = (encoderValues[i] > max) ? encoderValues[i] : max;
+        }
+        return Math.abs(max) * TICKS_TO_FT;
     }
 
     public void updateEncoderValues()
@@ -266,9 +272,26 @@ public class Drive
     // ----------------------------------
     //Reference servoArmTest
 
-    public void autoDump()
+    Toggler autoSwitch = new Toggler(2);
+
+    public void setAutoArm(boolean trigger)
     {
-        autoArm.setPosition(0.75);
+        autoSwitch.changeState(trigger);
+        switch(autoSwitch.currentState())
+        {
+            case 0:
+                autoArm.setPosition(0.0);
+                break;
+
+            case 1:
+                autoArm.setPosition(1.0);
+                break;
+        }
+    }
+
+    public void autoDump(double pos)
+    {
+        autoArm.setPosition(pos);
     }
 
     public void autoNeutral()
