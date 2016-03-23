@@ -23,28 +23,28 @@ public class motorTest extends OpMode
     {
         activateMot = new Toggler(2);
         changePower = new Toggler(21, 10);
-        voltSense = hardwareMap.voltageSensor.get("motorc");
+        //voltSense = hardwareMap.voltageSensor.get("motorc");
         testMot = hardwareMap.dcMotor.get("ts1");
-        testMot2 = hardwareMap.dcMotor.get("ts2");
+        //testMot2 = hardwareMap.dcMotor.get("ts2");
 
-        RobotLog.i("StartLog");
+        //RobotLog.i("StartLog");
     }
 
     @Override
     public void loop()
     {
-        activateMot.changeState(gamepad1.a);
-        changePower.changeState(gamepad1.dpad_up,gamepad1.dpad_down);
+        //activateMot.changeState(gamepad1.a);
+        //changePower.changeState(gamepad1.dpad_up,gamepad1.dpad_down);
 
-        power = activateMot.currentState() == 1
+        /*power = activateMot.currentState() == 1
                 ? (double)(changePower.currentState()-10) *0.1
                 : 0.0;
 
-        RobotLog.i(getRuntime() + " " + testMot.getCurrentPosition() + " " + (voltSense.getVoltage()*power) );
-        testMot.setPower(power);
-        testMot2.setPower(power);
+        RobotLog.i(getRuntime() + " " + testMot.getCurrentPosition() + " " + (voltSense.getVoltage()*power) );*/
+        testMot.setPower(gamepad1.left_stick_y);
+        //testMot2.setPower(power);
 
-        telemetry.addData("","power: " + (changePower.currentState()-10) + "On: " + activateMot.currentState());
+        //telemetry.addData("","power: " + (changePower.currentState()-10) + "On: " + activateMot.currentState());
 
 
     }

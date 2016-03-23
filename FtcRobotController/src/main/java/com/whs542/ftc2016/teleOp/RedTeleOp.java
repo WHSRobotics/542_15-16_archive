@@ -25,11 +25,13 @@ public class RedTeleOp extends OpMode
         //Drive Telemetry
         telemetry.addData("Hook", bot.drive.getHookState());
         telemetry.addData("Orientation", bot.drive.getOrientation());
+        telemetry.addData("Scale", bot.drive.scale);
 
         //drive
-        bot.drive.setLeftRightPower(gamepad1.left_stick_y * 0.8, gamepad1.right_stick_y * 0.8);
+        bot.drive.setDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
         bot.drive.setOrientation(gamepad1.a);
         bot.drive.setHook(gamepad1.right_trigger == 1.0);
+        bot.drive.setPower(gamepad1.start);
 
         //Slides
         bot.slides.setRamp(gamepad1.right_bumper);

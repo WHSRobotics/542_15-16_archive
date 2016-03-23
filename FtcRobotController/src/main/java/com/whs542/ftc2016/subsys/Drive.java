@@ -22,13 +22,14 @@ public class Drive
     private static final double TICKS_TO_RAD_MOTOR = 2.0*Math.PI*TICKS_TO_ROT_WHEEL;
     //Sprocket ratio of 24/32
     private static final double TICKS_TO_FT = WHEEL_DIAMETER * Math.PI *TICKS_TO_ROT_WHEEL;
-    private static final double JOY_THRESHOLD = 0.2;
+    private static final double JOY_THRESHOLD = 0.1;
 
     private Servo leftChurroHook;
     private Servo rightChurroHook;
 
     private Toggler hookSwitch = new Toggler(2);
     private Toggler orientationSwitch = new Toggler(2);
+    private Toggler drivePowerSwitch = new Toggler(2);
 
 	private DcMotor rightFrontMotor;
 	private DcMotor rightBackMotor;
@@ -150,22 +151,38 @@ public class Drive
 
     public void setDrive(double leftPower, double rightPower)
     {
-        rightPower = Math.abs(rightPower) > JOY_THRESHOLD ? rightPower * 7.0/9.0 : 0.0;
-        leftPower = Math.abs(leftPower) > JOY_THRESHOLD ? leftPower * 7.0/9.0 : 0.0;
+        rightPower = Math.abs(rightPower) > JOY_THRESHOLD ? rightPower : 0.0;
+        leftPower = Math.abs(leftPower) > JOY_THRESHOLD ? leftPower : 0.0;
         switch(orientationSwitch.currentState())
         {
             case 0:
-                rightFrontMotor.setPower(rightPower);
-                rightBackMotor.setPower(rightPower);
-                leftFrontMotor.setPower(leftPower);
-                leftBackMotor.setPower(leftPower);
+                rightFrontMotor.setPower(rightPower * scale);
+                rightBackMotor.setPower(rightPower * scale);
+                leftFrontMotor.setPower(leftPower * scale);
+                leftBackMotor.setPower(leftPower * scale);
             break;
 
             case 1:
-                rightFrontMotor.setPower(-leftPower);
-                rightBackMotor.setPower(-leftPower);
-                leftFrontMotor.setPower(-rightPower);
-                leftBackMotor.setPower(-rightPower);
+                rightFrontMotor.setPower(-leftPower * scale);
+                rightBackMotor.setPower(-leftPower * scale);
+                leftFrontMotor.setPower(-rightPower * scale);
+                leftBackMotor.setPower(-rightPower * scale);
+                break;
+        }
+    }
+
+    public double scale;
+    public void setPower(boolean trigger)
+    {
+        drivePowerSwitch.changeState(trigger);
+        switch(drivePowerSwitch.currentState())
+        {
+            case 0:
+                scale = 1.0;
+                break;
+
+            case 1:
+                scale = 0.8;
                 break;
         }
     }
@@ -194,7 +211,12 @@ public class Drive
     public boolean hasTargetHit(double target)
     {
         updateEncoderValues();
-        if(Math.abs(rightEncoderAvg()) > target)
+        double max = 0;
+        for(int i = 0; i < 4; i++)
+        {
+            max = (encoderValues[i] > max) ? encoderValues[i] : max;
+        }
+        if(Math.abs(max)*TICKS_TO_FT > target)
         {
             zeroLeftEncoders();
             zeroRightEncoders();

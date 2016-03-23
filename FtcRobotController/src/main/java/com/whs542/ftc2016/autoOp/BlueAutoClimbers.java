@@ -20,7 +20,7 @@ public class BlueAutoClimbers extends OpMode{
     Vector imuEuler = new Vector(3);
 
     PIDController angularMove = new PIDController(0.015, 0.0, 0.0, 0.0);
-    PIDController linearMove = new PIDController(2.0, 0.5, 0.0, 0.1);
+    PIDController linearMove = new PIDController(1.5, 0.1, 0.0, 0.1);
 
     boolean initComplete = false;        // Flag to stop initialization
 
@@ -42,7 +42,7 @@ public class BlueAutoClimbers extends OpMode{
         }
         else if(Math.abs(value) > 1.0)
         {
-            return Math.signum(value);
+            return Math.signum(value) ;
         }
         else
         {
@@ -91,6 +91,8 @@ public class BlueAutoClimbers extends OpMode{
         tempData    = imu.startSchedule(Bno055.BnoPolling.TEMP, 200);       // 5 Hz
         calibData   = imu.startSchedule(Bno055.BnoPolling.CALIB, 250);      // 4 Hz
     }
+
+    double timeChange;
     public void loop() {
         bot.drive.setHook(false);
         telemetry.addData("state", state);
@@ -104,12 +106,12 @@ public class BlueAutoClimbers extends OpMode{
 
         switch(state) {
             case 0:
-                correction = linearMove.update(1.75, bot.drive.maxEncValue());
+                correction = linearMove.update(1.0, bot.drive.rightEncoderAvg());
                 correction = clamp(correction);
                 bot.drive.setLeftRightPower(correction, correction);
                 bot.drive.autoNeutral();
                 //2.25 feet
-                if (bot.drive.hasTargetHit(1.75)) {
+                if (bot.drive.hasTargetHit(1.0)) {
                     bot.drive.setLeftRightPower(0.0, 0.0);
                     currentHeading = imuEuler.x();
                     state = 1;
@@ -119,7 +121,7 @@ public class BlueAutoClimbers extends OpMode{
             case 1:
                 correction = angularMove.update(45.0, Math.abs(imuEuler.x() - currentHeading));
                 correction = clamp(correction);
-                bot.drive.setLeftRightPower(correction, -correction);
+                bot.drive.setLeftRightPower(-correction, correction);
                 if (Math.abs(Math.abs(imuEuler.x() - currentHeading) - 45.0) < 0.5)
                 {
                     bot.drive.setLeftRightPower(0.0, 0.0);
@@ -127,10 +129,10 @@ public class BlueAutoClimbers extends OpMode{
                     bot.drive.zeroRightEncoders();
                     state = 2;
                 }
-            break;
+                break;
 
             case 2:
-                correction = linearMove.update(3.75, bot.drive.maxEncValue());
+                correction = linearMove.update(3.75, bot.drive.rightEncoderAvg());
                 correction = clamp(correction);
                 bot.drive.setLeftRightPower(correction, correction);
                 if (bot.drive.hasTargetHit(3.75)) {
@@ -143,7 +145,7 @@ public class BlueAutoClimbers extends OpMode{
             case 3:
                 correction = angularMove.update(45.0, Math.abs(imuEuler.x() - currentHeading));
                 correction = clamp(correction);
-                bot.drive.setLeftRightPower(correction, -correction);
+                bot.drive.setLeftRightPower(-correction, correction);
                 if (Math.abs(Math.abs(imuEuler.x() - currentHeading) - 45.0) < 0.5)
                 {
                     bot.drive.setLeftRightPower(0.0, 0.0);
@@ -155,29 +157,31 @@ public class BlueAutoClimbers extends OpMode{
 
             //implement an an angle wrap around thng
             case 4:
-                correction = linearMove.update(2.0, bot.drive.maxEncValue());
+                correction = linearMove.update(1.75, bot.drive.rightEncoderAvg());
                 correction = clamp(correction);
                 bot.drive.setLeftRightPower(correction, correction);
-                if (bot.drive.hasTargetHit(2.0)) {
+                if (bot.drive.hasTargetHit(1.75)) {
                     bot.drive.setLeftRightPower(0.0, 0.0);
                     state = 5;
+                    timeChange = time;
                 }
                 break;
 
             case 5:
-                bot.drive.autoDump(1.0);
-                //state = 6;
-            break;
-
-            /*case 6:
+                //bot.drive.autoDump(1.0);
                 //bot.slides.setTransmissionPower(true, false);
-                if(bot.slides.fullyExtended(30.0))
+                if (time > timeChange + 4.0)
                 {
-                    state = 7;
+                    state = 6;
                 }
+                break;
+
+            case 6:
+                bot.slides.setTransmissionPower(false, false);
+                //state 7
             break;
 
-            case 7:
+            /*case 7:
                 //bot.slides.setTransmissionPower(false,false);
             break;*/
         }
