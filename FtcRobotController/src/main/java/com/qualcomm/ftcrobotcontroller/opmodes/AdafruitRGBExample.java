@@ -179,6 +179,8 @@ public class AdafruitRGBExample extends LinearOpMode {
 
       // wait a hardware cycle before iterating.
       waitOneFullHardwareCycle();
+
+      int hello;
     }
   }
 }
