@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.whs542.lib.Wire.Bno055;
 
+
 import static java.lang.Math.*;
 
 /**
@@ -71,6 +72,14 @@ public class Drivetrain {
         oldDeg = driveGyro.eulerZ();
         newDeg = oldDeg+degDifference;
 
+        if(direction){
+            while (newDeg<oldDeg){
+                frontRight.setPower(0.7);
+                backRight.setPower(0.7);
+            }
+        }else if(direction = false){
+
+        }
 
 
     }

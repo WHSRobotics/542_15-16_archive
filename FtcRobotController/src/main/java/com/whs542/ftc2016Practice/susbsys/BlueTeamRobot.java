@@ -8,11 +8,11 @@ import com.whs542.lib.Wire.*;
  */
 public class BlueTeamRobot {
 
-    Drivetrain drivetrain;
-    Intake intake;
-    ScoringMechanism scoringMechanism;
+    public Drivetrain drivetrain;
+    public Intake intake;
+    public ScoringMechanism scoringMechanism;
 
-    Bno055 gyro;
+    public Bno055 gyro;
 
     public BlueTeamRobot(HardwareMap mainMap){
         drivetrain = new Drivetrain(mainMap);
