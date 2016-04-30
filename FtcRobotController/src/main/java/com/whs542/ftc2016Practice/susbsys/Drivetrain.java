@@ -2,7 +2,7 @@ package com.whs542.ftc2016Practice.susbsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.whs542.lib.Wire.Bno055;
 
 import static java.lang.Math.*;
 
@@ -22,15 +22,21 @@ public class Drivetrain {
     DcMotor backLeft;
     DcMotor backRight;
 
+    Bno055 driveGyro;
+
     double rotations;
     double distanceTraveled;
-    double pos;
+
+    int oldDeg;
+    int newDeg;
 
     public Drivetrain (HardwareMap driveMap) {
         frontLeft = driveMap.dcMotor.get("frontLeft");
         frontRight = driveMap.dcMotor.get("frontRight");
         backLeft = driveMap.dcMotor.get("backLeft");
         backRight = driveMap.dcMotor.get("backRight");
+
+        driveGyro = new Bno055(driveMap, "driveGyro");
     }
 
     public void move (double leftStickY, double rightStickY){
@@ -58,6 +64,15 @@ public class Drivetrain {
                 distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
 
         }
+    }
+
+    public void turn (int degDifference, boolean direction){                     //True = Right, False = Left
+
+        oldDeg = driveGyro.eulerZ();
+        newDeg = oldDeg+degDifference;
+
+
+
     }
 
 
