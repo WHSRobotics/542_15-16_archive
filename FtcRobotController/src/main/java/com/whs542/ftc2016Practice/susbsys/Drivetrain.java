@@ -23,21 +23,18 @@ public class Drivetrain {
     DcMotor backLeft;
     DcMotor backRight;
 
-    Bno055 driveGyro;
 
     double rotations;
     double distanceTraveled;
 
-    int oldDeg;
-    int newDeg;
+    int startingDeg;
+    int targetDeg;
 
     public Drivetrain (HardwareMap driveMap) {
         frontLeft = driveMap.dcMotor.get("frontLeft");
         frontRight = driveMap.dcMotor.get("frontRight");
         backLeft = driveMap.dcMotor.get("backLeft");
         backRight = driveMap.dcMotor.get("backRight");
-
-        driveGyro = new Bno055(driveMap, "driveGyro");
     }
 
     public void move (double leftStickY, double rightStickY){
@@ -49,38 +46,41 @@ public class Drivetrain {
 
     }
 
-    public void moveAuto (double distance, double speed){
+    public void moveAuto (double distance, double speed){                 //Distance should always be positive
 
         rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
         distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
 
         while (distanceTraveled<distance){
 
-                frontLeft.setPower(speed);
-                frontRight.setPower(speed);
-                backLeft.setPower(speed);
-                backRight.setPower(speed);
-
-                rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
-                distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
+            frontLeft.setPower(speed);
+            frontRight.setPower(speed);
+            backLeft.setPower(speed);
+            backRight.setPower(speed);
 
         }
     }
 
-    public void turn (int degDifference, boolean direction){                     //True = Right, False = Left
+    //Turning:
 
-        oldDeg = driveGyro.eulerZ();
-        newDeg = oldDeg+degDifference;
+    public void setStartingDeg (int StartingGryoZ){
+        startingDeg = StartingGryoZ;
+    }
 
-        if(direction){
-            while (newDeg<oldDeg){
-                frontRight.setPower(0.7);
-                backRight.setPower(0.7);
-            }
-        }else if(direction = false){
+    public boolean turn (int degDifference, boolean direction, double speed, int gyroZ){            //True = Right, False = Left
 
+        targetDeg = startingDeg+degDifference;
+
+        if(direction && gyroZ<targetDeg){
+            frontRight.setPower(0.7);
+            backRight.setPower(0.7);
+        }else if(!direction && gyroZ>targetDeg){
+            frontLeft.setPower(speed);
+            backLeft.setPower(speed);
+        }else{
+            return true;
         }
-
+        return false;
 
     }
 
