@@ -3,7 +3,6 @@ package com.whs542.ftc2016Practice.susbsys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-//Joyce was here
 /**
  * Created by Amar on 4/27/2016.
  */

@@ -1,0 +1,10 @@
+Drivetrain:
+    DcMotors:
+        frontLeft
+        frontRight
+        backLeft
+        backRight
+Intake:
+    DcMotors:
+        intake
+ScoringMechanism:

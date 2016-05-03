@@ -14,7 +14,8 @@ public class ScoringMechanism {
     public ScoringMechanism(HardwareMap scoringMap) {
         motor = scoringMap.dcMotor.get("scoringMechanism");
     }
-    public void run(boolean forwards, boolean backwards){
+
+    public void useScoring(boolean forwards, boolean backwards){
         if (motor.getCurrentPosition()< ENCODER_TICKS/3 && forwards) {
             motor.setPower(0.5);
         }else if(motor.getCurrentPosition()>0 && backwards){
@@ -23,4 +24,6 @@ public class ScoringMechanism {
             motor.setPower(0.0);
         }
     }
+
+
 }

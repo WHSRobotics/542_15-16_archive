@@ -2,7 +2,6 @@ package com.whs542.ftc2016Practice.susbsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.whs542.lib.Wire.Bno055;
 
 
 import static java.lang.Math.*;
