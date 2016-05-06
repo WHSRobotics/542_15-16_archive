@@ -8,3 +8,5 @@ Intake:
     DcMotors:
         intake
 ScoringMechanism:
+    DcMotors:
+        scoringMechanism

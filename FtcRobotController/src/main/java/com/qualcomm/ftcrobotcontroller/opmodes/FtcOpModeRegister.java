@@ -33,6 +33,10 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
+import com.whs542.ftc2016Practice.AutoOp;
+import com.whs542.ftc2016Practice.TeleOp;
+import com.whs542.lib.hwTest.GyroTest;
+import com.whs542.lib.hwTest.RandomTest;
 
 /**
  * Register Op Modes
@@ -54,14 +58,20 @@ public class FtcOpModeRegister implements OpModeRegister {
      *
      * If two or more op modes are registered with the same name, the app will display an error.
      */
+    //Whs542 BlueTeam:
+    manager.register("GyroTest", GyroTest.class);
+    manager.register("RandomTest", RandomTest.class);
+    manager.register("Blue AutoOp", AutoOp.class);
+    manager.register("Blue TeleOp", TeleOp.class);
 
+    //FTC:
     manager.register("NullOp", NullOp.class);
 
     //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
-    manager.register("K9TeleOp", K9TeleOp.class);
-    manager.register("K9Line", K9Line.class);
-    manager.register ("PushBotAuto", PushBotAuto.class);
-    manager.register ("PushBotManual", PushBotManual.class);
+    // manager.register("K9TeleOp", K9TeleOp.class);
+    // manager.register("K9Line", K9Line.class);
+    // manager.register ("PushBotAuto", PushBotAuto.class);
+    // manager.register ("PushBotManual", PushBotManual.class);
 
 
 
@@ -96,5 +106,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.java);
     //manager.register("PushBotIrSeek", PushBotIrSeek.java);
     //manager.register("PushBotSquare", PushBotSquare.java);
+
   }
 }
