@@ -13,7 +13,7 @@ public class Drivetrain {
     //Drivetrain is one word. This is important.
     //All measurements in inches, because 'murica
 
-    public static final double WHEEL_DIAMETER = ;
+    public static final double WHEEL_DIAMETER = 4;
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
     public static final int ENCODER_TICKS = ;
 
@@ -62,8 +62,8 @@ public class Drivetrain {
 
     //Turning:
 
-    public void setStartingDeg (int StartingGryoZ){
-        startingDeg = StartingGryoZ;
+    public void setStartingDeg (int startingGryoZ){
+        startingDeg = startingGryoZ;
     }
 
     public boolean turn (int degDifference, boolean direction, double speed, int gyroZ){            //True = Right, False = Left
@@ -71,8 +71,8 @@ public class Drivetrain {
         targetDeg = startingDeg+degDifference;
 
         if(direction && gyroZ<targetDeg){
-            frontRight.setPower(0.7);
-            backRight.setPower(0.7);
+            frontRight.setPower(speed);
+            backRight.setPower(speed);
         }else if(!direction && gyroZ>targetDeg){
             frontLeft.setPower(speed);
             backLeft.setPower(speed);

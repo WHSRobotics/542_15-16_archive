@@ -10,3 +10,6 @@ Intake:
 ScoringMechanism:
     DcMotors:
         scoringMechanism
+LinearSlides:
+    DcMotors:
+        linearSlides

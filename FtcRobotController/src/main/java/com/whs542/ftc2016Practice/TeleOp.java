@@ -22,8 +22,8 @@ public class TeleOp extends OpMode{
 
         robot.drivetrain.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
         robot.intake.useIntake(gamepad1.right_bumper, gamepad1.left_bumper);
-
-
+        robot.linearSlides.extendSlides(gamepad1.a, gamepad1.b);
+        robot.scoringMechanism.useScoring(gamepad1.x, gamepad1.y);
 
     }
 }

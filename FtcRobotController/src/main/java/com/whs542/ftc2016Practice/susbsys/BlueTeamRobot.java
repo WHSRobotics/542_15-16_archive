@@ -11,6 +11,7 @@ public class BlueTeamRobot {
     public Drivetrain drivetrain;
     public Intake intake;
     public ScoringMechanism scoringMechanism;
+    public LinearSlides linearSlides;
 
     public Bno055 gyro;
 
@@ -18,6 +19,7 @@ public class BlueTeamRobot {
         drivetrain = new Drivetrain(mainMap);
         intake = new Intake(mainMap);
         scoringMechanism = new ScoringMechanism(mainMap);
+        linearSlides = new LinearSlides(mainMap);
         gyro = new Bno055(mainMap, "gyro");
     }
 

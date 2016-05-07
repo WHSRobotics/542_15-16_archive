@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class ScoringMechanism {
 
-    public static final double ENCODER_TICKS = ;
+    static final double ENCODER_TICKS = ;
     DcMotor motor;
 
     public ScoringMechanism(HardwareMap scoringMap) {
