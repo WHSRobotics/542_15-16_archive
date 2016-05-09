@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class ScoringMechanism {
 
-    static final double ENCODER_TICKS = ;
+    static final double ENCODER_TICKS = 1120 ;
     DcMotor motor;
 
     public ScoringMechanism(HardwareMap scoringMap) {
@@ -18,7 +18,7 @@ public class ScoringMechanism {
     public void useScoring(boolean forwards, boolean backwards){
         if (motor.getCurrentPosition()< ENCODER_TICKS/3 && forwards) {
             motor.setPower(0.5);
-        }else if(motor.getCurrentPosition()>0 && backwards){
+        }else if(motor.getCurrentPosition()>  -(ENCODER_TICKS/3) && backwards){
             motor.setPower(-0.5);
         }else{
             motor.setPower(0.0);
