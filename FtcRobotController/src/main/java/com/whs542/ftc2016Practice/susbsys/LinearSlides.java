@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class LinearSlides {
     //All measurements in inches
     static final double PULLEY_DIAMETER = 1;
-    static final double SLIDE_LIMIT = ;
-    static final int ENCODER_TICKS = ;
+    static final double SLIDE_LIMIT = 22;
+    static final int ENCODER_TICKS = 1120;
     static final double ROTATION_LIMIT = PULLEY_DIAMETER*Math.PI/SLIDE_LIMIT;
 
     DcMotor slideMotor;

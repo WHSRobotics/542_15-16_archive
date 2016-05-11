@@ -33,10 +33,9 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
-import com.whs542.ftc2016Practice.AutoOp;
-import com.whs542.ftc2016Practice.TeleOp;
-import com.whs542.lib.hwTest.GyroTest;
-import com.whs542.lib.hwTest.RandomTest;
+import com.whs542.ftc2016Practice.*;
+import com.whs542.lib.hwTest.*;
+
 
 /**
  * Register Op Modes
@@ -63,6 +62,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("RandomTest", RandomTest.class);
     manager.register("Blue AutoOp", AutoOp.class);
     manager.register("Blue TeleOp", TeleOp.class);
+
+    manager.register("Setpositiontest", motorTest.class);
 
     //FTC:
     manager.register("NullOp", NullOp.class);
