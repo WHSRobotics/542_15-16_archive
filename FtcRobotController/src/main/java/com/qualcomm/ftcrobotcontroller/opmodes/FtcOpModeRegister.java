@@ -64,6 +64,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Blue TeleOp", TeleOp.class);
 
     manager.register("Setpositiontest", motorTest.class);
+    manager.register("Scoring Test", ScoringTest.class);
 
     //FTC:
     manager.register("NullOp", NullOp.class);
