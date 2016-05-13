@@ -26,6 +26,8 @@ public class Drivetrain {
     double rotations;
     double distanceTraveled;
 
+    double startingDistance;
+
     int startingDeg;
     int targetDeg;
 
@@ -45,10 +47,15 @@ public class Drivetrain {
 
     }
 
+    public void setStartingDistance(){
+        rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
+        startingDistance = rotations*WHEEL_CIRCUMFERENCE;
+    }
+
     public void moveAuto (double distance, double speed){                 //Distance should always be positive
 
         rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
-        distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
+        distanceTraveled = (rotations*WHEEL_CIRCUMFERENCE)-startingDistance;
 
         while (distanceTraveled<distance){
 

@@ -20,10 +20,14 @@ public class AutoOp extends OpMode{
     public void loop(){
         switch (i){
             case(1):
+                robot.drivetrain.moveAuto(10,1.0);
+                i = 2;
+            case(2):
+                robot.drivetrain.setStartingDeg(robot.gyro.eulerZ());
+                while(!robot.drivetrain.turn(90, true, 0.75, robot.gyro.eulerZ())){
 
-
-
-
+                }
+                i = 3;
         }
     }
 }
