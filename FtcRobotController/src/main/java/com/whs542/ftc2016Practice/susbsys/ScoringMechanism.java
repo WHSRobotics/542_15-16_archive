@@ -9,19 +9,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class ScoringMechanism {
 
     static final double ENCODER_TICKS = 1120 ;
-    DcMotor motor;
+    public DcMotor scoringMotor;
 
     public ScoringMechanism(HardwareMap scoringMap) {
-        motor = scoringMap.dcMotor.get("scoringMechanism");
+        scoringMotor = scoringMap.dcMotor.get("scoringMechanism");
     }
 
     public void useScoring(boolean forwards, boolean backwards){
-        if (motor.getCurrentPosition()< ENCODER_TICKS/3 && forwards) {
-            motor.setPower(0.5);
-        }else if(motor.getCurrentPosition()>  -(ENCODER_TICKS/3) && backwards){
-            motor.setPower(-0.5);
+        if (scoringMotor.getCurrentPosition()< ENCODER_TICKS/3 && forwards) {
+            scoringMotor.setPower(0.5);
+        }else if(scoringMotor.getCurrentPosition()>0 && backwards){
+            scoringMotor.setPower(-0.5);
         }else{
-            motor.setPower(0.0);
+            scoringMotor.setPower(0.0);
         }
     }
 

@@ -12,11 +12,12 @@ public class ScoringTest extends OpMode{
 
     @Override
     public void init(){
-        ScoringMechanism scoringMechanism = new ScoringMechanism(hardwareMap);
+        scoringMechanism = new ScoringMechanism(hardwareMap);
     }
 
     @Override
     public void loop(){
         scoringMechanism.useScoring(gamepad1.a, gamepad1.b);
+        telemetry.addData("Encoder Ticks", scoringMechanism.scoringMotor.getCurrentPosition());
     }
 }
