@@ -4,10 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-import static java.lang.Math.*;
-
 /**
- * Created by Amar2 on 4/28/2016.
+ * Created by Amar on 4/28/2016.
  */
 public class Drivetrain {
     //Drivetrain is one word. This is important.
