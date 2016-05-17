@@ -2,6 +2,7 @@ package com.whs542.ftc2016Practice.susbsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.whs542.lib.sensors.EncoderTicks;
 
 
 /**
@@ -13,7 +14,6 @@ public class Drivetrain {
 
     public static final double WHEEL_DIAMETER = 4;
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
-    public static final int ENCODER_TICKS = 1120;
 
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -46,13 +46,13 @@ public class Drivetrain {
     }
 
     public void setStartingDistance(){
-        rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
+        rotations = frontLeft.getCurrentPosition()/ EncoderTicks.FRONT_LEFT;
         startingDistance = rotations*WHEEL_CIRCUMFERENCE;
     }
 
     public void moveAuto (double distance, double speed){                 //Distance should always be positive
 
-        rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
+        rotations = frontLeft.getCurrentPosition()/EncoderTicks.FRONT_LEFT;
         distanceTraveled = (rotations*WHEEL_CIRCUMFERENCE)-startingDistance;
 
         while (distanceTraveled<distance){
