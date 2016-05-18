@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
+
 import com.whs542.ftc2016Practice.*;
 import com.whs542.lib.hwTest.*;
 
@@ -57,14 +58,14 @@ public class FtcOpModeRegister implements OpModeRegister {
      *
      * If two or more op modes are registered with the same name, the app will display an error.
      */
+
     //Whs542 BlueTeam:
-    manager.register("GyroTest", GyroTest.class);
-    manager.register("RandomTest", RandomTest.class);
     manager.register("Blue AutoOp", AutoOp.class);
     manager.register("Blue TeleOp", TeleOp.class);
 
-    manager.register("Setpositiontest", motorTest.class);
+    manager.register("MotorTest", motorTest.class);
     manager.register("Scoring Test", ScoringTest.class);
+    manager.register("GyroTest", GyroTest.class);
 
     //FTC:
     manager.register("NullOp", NullOp.class);
@@ -80,7 +81,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */
-    manager.register("MR Gyro Test", MRGyroTest.class);
+    //manager.register("MR Gyro Test", MRGyroTest.class);
 
     //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);

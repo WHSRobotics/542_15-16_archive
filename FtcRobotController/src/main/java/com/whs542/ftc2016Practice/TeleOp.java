@@ -14,15 +14,20 @@ public class TeleOp extends OpMode{
     public void init(){
 
         robot = new BlueTeamRobot(hardwareMap);
-
     }
 
     @Override
     public void loop(){
+        //Drive train
+        robot.drivetrain.setLRDrivePower(gamepad1.left_stick_y, gamepad1.right_stick_y);
 
-        robot.drivetrain.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        //Intake
         robot.intake.useIntake(gamepad1.right_bumper, gamepad1.left_bumper);
+
+        //Linear Slides
         robot.linearSlides.extendSlides(gamepad1.a, gamepad1.b);
+
+        //Scoring Mechanism
         robot.scoringMechanism.useScoring(gamepad1.x, gamepad1.y);
 
     }

@@ -2,12 +2,11 @@ package com.whs542.ftc2016Practice.susbsys;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.whs542.lib.sensors.EncoderTicks;
 
-
-import static java.lang.Math.*;
 
 /**
- * Created by Amar2 on 4/28/2016.
+ * Created by Amar on 4/28/2016.
  */
 public class Drivetrain {
     //Drivetrain is one word. This is important.
@@ -17,45 +16,52 @@ public class Drivetrain {
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
     public static final int ENCODER_TICKS = 1120;
 
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor backLeft;
-    DcMotor backRight;
-
+    DcMotor lfMotor;
+    DcMotor rfMotor;
+    DcMotor lbMotor;
+    DcMotor rbMotor;
 
     double rotations;
     double distanceTraveled;
+
+    double startingDistance;
 
     int startingDeg;
     int targetDeg;
 
     public Drivetrain (HardwareMap driveMap) {
-        frontLeft = driveMap.dcMotor.get("frontLeft");
-        frontRight = driveMap.dcMotor.get("frontRight");
-        backLeft = driveMap.dcMotor.get("backLeft");
-        backRight = driveMap.dcMotor.get("backRight");
+        lfMotor = driveMap.dcMotor.get("drive_lf");
+        lbMotor = driveMap.dcMotor.get("drive_lb");
+        rfMotor = driveMap.dcMotor.get("drive_rf");
+        rbMotor = driveMap.dcMotor.get("drive_rb");
+        lfMotor.setDirection(DcMotor.Direction.REVERSE);
+        lbMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public void move (double leftStickY, double rightStickY){
+    public void setLRDrivePower(double leftPower, double rightPower)
+    {
+        lfMotor.setPower(leftPower);
+        lbMotor.setPower(leftPower);
+        rfMotor.setPower(rightPower);
+        rbMotor.setPower(rightPower);
+    }
 
-        frontLeft.setPower(leftStickY);
-        backLeft.setPower(leftStickY);
-        frontRight.setPower(rightStickY);
-        backRight.setPower(rightStickY);
-
+    public void setStartingDistance(){
+        rotations = lfMotor.getCurrentPosition()/ EncoderTicks.FRONT_LEFT;
+        startingDistance = rotations*WHEEL_CIRCUMFERENCE;
     }
 
     public void moveAuto (double distance, double speed){                 //Distance should always be positive
 
-        rotations = frontLeft.getCurrentPosition()/ENCODER_TICKS;
+        rotations = lfMotor.getCurrentPosition()/ENCODER_TICKS;
         distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
 
         while (distanceTraveled<distance){
 
-            frontLeft.setPower(speed);
-            frontRight.setPower(speed);
-            backLeft.setPower(speed);
-            backRight.setPower(speed);
+            lfMotor.setPower(speed);
+            rfMotor.setPower(speed);
+            lbMotor.setPower(speed);
+            rbMotor.setPower(speed);
 
         }
     }
@@ -70,12 +76,12 @@ public class Drivetrain {
 
         targetDeg = startingDeg+degDifference;
 
-        if(direction && gyroZ<targetDeg){
-            frontRight.setPower(speed);
-            backRight.setPower(speed);
-        }else if(!direction && gyroZ>targetDeg){
-            frontLeft.setPower(speed);
-            backLeft.setPower(speed);
+        if(direction && gyroZ < targetDeg){
+            rfMotor.setPower(speed);
+            rbMotor.setPower(speed);
+        }else if(!direction && gyroZ > targetDeg){
+            lfMotor.setPower(speed);
+            lbMotor.setPower(speed);
         }else{
             return true;
         }

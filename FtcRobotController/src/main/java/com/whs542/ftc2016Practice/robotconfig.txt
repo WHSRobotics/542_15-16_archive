@@ -13,3 +13,6 @@ ScoringMechanism:
 LinearSlides:
     DcMotors:
         linearSlides
+Sensors:
+    Bno055:
+        gyro

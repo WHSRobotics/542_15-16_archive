@@ -3,12 +3,12 @@ package com.whs542.ftc2016Practice.susbsys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import com.whs542.lib.sensors.EncoderTicks;
 /**
  * Created by Joyce on 4/29/2016.
  */
 public class ScoringMechanism {
 
-    static final double ENCODER_TICKS = 1120 ;
     public DcMotor scoringMotor;
 
     public ScoringMechanism(HardwareMap scoringMap) {
@@ -16,14 +16,28 @@ public class ScoringMechanism {
     }
 
     public void useScoring(boolean forwards, boolean backwards){
-        if (scoringMotor.getCurrentPosition()< ENCODER_TICKS/3 && forwards) {
-            scoringMotor.setPower(0.5);
-        }else if(scoringMotor.getCurrentPosition()>0 && backwards){
-            scoringMotor.setPower(-0.5);
-        }else{
-            scoringMotor.setPower(0.0);
+        if(forwards){
+            for(boolean i = false; i==false;){
+                if(scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100){
+                    scoringMotor.setPower(0.5);
+                }
+                else{
+                    scoringMotor.setPower(0.0);
+                    i = true;
+                }
+            }
+
+        }
+        if (backwards){
+            for(boolean i = false; i==false;) {
+                if (scoringMotor.getCurrentPosition() >= 100) {
+                    scoringMotor.setPower(-0.5);
+                } else {
+                    scoringMotor.setPower(0.0);
+                    i = true;
+                }
+            }
         }
     }
-
 
 }
