@@ -32,7 +32,8 @@ public class ScoringMechanism {
             for(boolean i = false; i==false;) {
                 if (scoringMotor.getCurrentPosition() >= 100) {
                     scoringMotor.setPower(-0.5);
-                } else {
+                }
+                else {
                     scoringMotor.setPower(0.0);
                     i = true;
                 }
