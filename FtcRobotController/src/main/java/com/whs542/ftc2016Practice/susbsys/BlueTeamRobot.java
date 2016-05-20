@@ -1,7 +1,7 @@
 package com.whs542.ftc2016Practice.susbsys;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.whs542.lib.Wire.*;
+import com.whs542.lib.WireLibrary.*;
 
 /**
  * Created by Amar2 on 4/29/2016.
