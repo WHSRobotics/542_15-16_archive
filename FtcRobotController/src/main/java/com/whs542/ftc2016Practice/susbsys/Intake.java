@@ -35,16 +35,36 @@ public class Intake {
     public void useIntake2(boolean button1State, boolean button2State){
         if(button1State && intake.getPower() == 0.0){
             intake.setPower(1.0);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         else if (button1State && intake.getPower() == 1.0){
             intake.setPower(0.0);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         if(button2State && intake.getPower() == 0.0){
             intake.setPower(-1.0);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         else if (button2State && intake.getPower() == -1.0) {
             intake.setPower(0.0);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }
