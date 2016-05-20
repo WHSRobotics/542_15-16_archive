@@ -36,6 +36,18 @@ public class AutoOp extends OpMode{
     public void loop(){
         switch (i){
             case(1):
+                robot.drivetrain.moveAuto(63.5,1.0);
+                i=2;
+            case(2):
+                robot.drivetrain.turn(90,false,0.5,);
+                i=3;
+            case(3):
+                robot.drivetrain.moveAuto(63.5,1.0);
+                i=4;
+            case(4):
+                while (robot.drivetrain.)
+                robot.drivetrain.moveAuto(10,0.5);
+                robot.scoringMechanism.scoringAuto();
 
         }
     }

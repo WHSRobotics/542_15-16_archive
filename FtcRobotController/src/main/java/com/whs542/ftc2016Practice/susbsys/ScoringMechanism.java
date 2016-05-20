@@ -41,4 +41,9 @@ public class ScoringMechanism {
         }
     }
 
+    public void scoringAuto(int ){
+        while (scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100)
+            scoringMotor.setPower(0.5);
+    }
+
 }
