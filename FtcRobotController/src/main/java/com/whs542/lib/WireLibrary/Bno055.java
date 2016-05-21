@@ -1,4 +1,4 @@
-package org.usfirst.FTC5866.library;
+package com.whs542.lib.WireLibrary;
 
 /**
  * Created by Olavi Kamppari on 11/5/2015.
@@ -9,6 +9,7 @@ package org.usfirst.FTC5866.library;
 import android.util.Log;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import java.util.ArrayList;
+import com.whs542.lib.WireLibrary.*;
 
 public class Bno055 {
     static final String logId   = "BNO:";       // Tag identifier in FtcRobotController.LogCat

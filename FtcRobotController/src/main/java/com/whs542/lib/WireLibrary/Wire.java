@@ -1,4 +1,4 @@
-package org.usfirst.FTC5866.library;
+package com.whs542.lib.WireLibrary;
 
 /**
  * Created by Olavi Kamppari on 10/25/2015.
@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.hardware.I2cController;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 
 import java.util.concurrent.locks.Lock;
+import com.whs542.lib.WireLibrary.*;
 
 public class Wire implements I2cController.I2cPortReadyCallback {
 // --------------------------------- CONSTANTS -------------------------------------------------

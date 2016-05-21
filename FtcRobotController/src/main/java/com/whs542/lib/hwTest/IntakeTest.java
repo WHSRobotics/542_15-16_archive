@@ -10,7 +10,6 @@ public class IntakeTest extends OpMode{
 
     Intake intake;
 
-
     @Override
     public void init() {
         intake = new Intake(hardwareMap);                       //DcMotor "intake"
@@ -20,6 +19,5 @@ public class IntakeTest extends OpMode{
     public void loop() {
         intake.useIntake2(gamepad1.a, gamepad1.b);
         telemetry.addData("Motor Power", intake.intake.getPower());
-        Thread.sleep();
     }
 }

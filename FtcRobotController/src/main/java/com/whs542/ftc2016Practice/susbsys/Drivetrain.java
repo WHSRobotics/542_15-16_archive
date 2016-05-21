@@ -54,7 +54,7 @@ public class Drivetrain {
 
     public void moveAuto (double distance, double speed){                 //Distance should always be positive
 
-        rotations = lfMotor.getCurrentPosition()/ENCODER_TICKS;
+        rotations = lfMotor.getCurrentPosition()/EncoderTicks.FRONT_LEFT;
         distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
 
         while (distanceTraveled<distance){
