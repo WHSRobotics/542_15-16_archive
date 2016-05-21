@@ -13,13 +13,17 @@ public class ScoringMechanism {
     int state = 1;
     boolean flipState = false;
 
-    public ScoringMechanism(HardwareMap scoringMap) {
+    public ScoringMechanism(HardwareMap scoringMap)
+    {
         scoringMotor = scoringMap.dcMotor.get("scoringMechanism");
     }
 
-    public void useScoring(boolean forwards, boolean backwards){
-        if(forwards){
-            for(boolean i = false; i==false;){
+    public void flip(boolean forwards, boolean backwards)
+    {
+        if(forwards)
+        {
+            for(boolean i = false; i==false;)
+            {
                 if(scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100){
                     scoringMotor.setPower(0.5);
                 }
@@ -64,6 +68,7 @@ public class ScoringMechanism {
                             flipState = true;
                         }
                 }
+
             }
         }
     }

@@ -19,6 +19,7 @@ public class ScoringTest extends OpMode{
     public void loop(){
 
         scoringMechanism.flip2(gamepad1.a);
+
         telemetry.addData("Encoder Ticks", scoringMechanism.scoringMotor.getCurrentPosition());
         telemetry.addData("a", gamepad1.a);
         telemetry.addData("b", gamepad1.b);

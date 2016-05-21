@@ -46,7 +46,8 @@ public class Drivetrain {
         rbMotor.setPower(rightPower);
     }
 
-    public void setStartingDistance(){
+    public void setStartingDistance()
+    {
         rotations = lfMotor.getCurrentPosition()/ EncoderTicks.FRONT_LEFT;
         startingDistance = rotations*WHEEL_CIRCUMFERENCE;
     }
@@ -72,8 +73,8 @@ public class Drivetrain {
         startingDeg = startingGryoZ;
     }
 
-    public boolean turn (int degDifference, boolean direction, double speed, int gyroZ){            //True = Right, False = Left
-
+    public boolean turn (int degDifference, boolean direction, double speed, int gyroZ)
+    {            //True = Right, False = Left
         targetDeg = startingDeg+degDifference;
 
         if(direction && gyroZ < targetDeg){
@@ -89,5 +90,9 @@ public class Drivetrain {
 
     }
 
-
+    public double getCurrentPower()
+    {
+        return lfMotor.getPower();
+    }
 }
+

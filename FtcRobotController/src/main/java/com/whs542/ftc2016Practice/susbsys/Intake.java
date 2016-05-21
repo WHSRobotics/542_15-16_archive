@@ -17,7 +17,7 @@ public class Intake {
 
     }
 
-    public void useIntake(boolean on, boolean reverse){
+    public void intake(boolean on, boolean reverse){
 
         if(on){
             intake.setPower(1.0);
