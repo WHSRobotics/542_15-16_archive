@@ -33,8 +33,10 @@ public class AutoOp extends OpMode{
     **/
 
     @Override
-    public void loop(){
-        switch (i){
+    public void loop()
+    {
+        switch (i)
+        {
             case(1):
 
         }
