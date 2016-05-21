@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Intake {
     public DcMotor intake;
-    int i = 0;
     boolean motorStateF = false;
     boolean motorStateR = false;
 
@@ -65,6 +64,9 @@ public class Intake {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        if (button1State && intake.getPower() == 1.0){
+
         }
 
     }

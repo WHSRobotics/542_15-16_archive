@@ -10,6 +10,8 @@ import com.whs542.lib.sensors.EncoderTicks;
 public class ScoringMechanism {
 
     public DcMotor scoringMotor;
+    int state = 1;
+    boolean flipState = false;
 
     public ScoringMechanism(HardwareMap scoringMap) {
         scoringMotor = scoringMap.dcMotor.get("scoringMechanism");
@@ -36,6 +38,31 @@ public class ScoringMechanism {
                 else {
                     scoringMotor.setPower(0.0);
                     i = true;
+                }
+            }
+        }
+    }
+
+    public void flip2 (boolean flip){
+        if(flip){
+            while (!flipState){
+                switch (state){
+                    case (1):
+                        if (scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100) {
+                            scoringMotor.setPower(0.5);
+                        }
+                        else {
+                            scoringMotor.setPower(0.0);
+                            state = 2;
+                        }
+                    case (2):
+                        if (scoringMotor.getCurrentPosition() >= 100 ){
+                            scoringMotor.setPower(-0.5);
+                        }
+                        else {
+                            scoringMotor.setPower(0.0);
+                            flipState = true;
+                        }
                 }
             }
         }
