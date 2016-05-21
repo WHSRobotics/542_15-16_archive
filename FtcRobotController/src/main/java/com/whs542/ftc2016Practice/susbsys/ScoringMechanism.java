@@ -89,4 +89,14 @@ public class ScoringMechanism {
 //>>>>>>> origin/Subsys
     }
 
+    public void flip4 (boolean flip){
+        if(flip){
+            flip(true, false);
+            flip(false,true);
+
+        }
+    }
+
+
 }
+
