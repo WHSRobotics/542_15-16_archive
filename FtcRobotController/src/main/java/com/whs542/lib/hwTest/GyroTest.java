@@ -1,7 +1,7 @@
 package com.whs542.lib.hwTest;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.whs542.lib.Wire.Bno055;
+import com.whs542.lib.WireLibrary.*;
 
 /**
  * Created by Amar on 5/5/2016.
