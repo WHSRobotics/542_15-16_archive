@@ -14,7 +14,6 @@ public class Drivetrain {
 
     public static final double WHEEL_DIAMETER = 4;
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
-    public static final int ENCODER_TICKS = 1120;
 
     DcMotor lfMotor;
     DcMotor rfMotor;
@@ -81,8 +80,8 @@ public class Drivetrain {
             rfMotor.setPower(speed);
             rbMotor.setPower(speed);
         }else if(!direction && gyroZ > targetDeg){
-            lfMotor.setPower(speed);
-            lbMotor.setPower(speed);
+            lfMotor.setPower(-speed);
+            lbMotor.setPower(-speed);
         }else{
             return true;
         }
@@ -93,6 +92,15 @@ public class Drivetrain {
     public double getCurrentPower()
     {
         return lfMotor.getPower();
+    }
+
+    public double[] getAllCurrentPower(){
+        double[] returnPower = new double[4];
+        returnPower[0] = lfMotor.getCurrentPosition();
+        returnPower[1] = lbMotor.getCurrentPosition();
+        returnPower[2] = rfMotor.getCurrentPosition();
+        returnPower[3] = rbMotor.getCurrentPosition();
+        return returnPower;
     }
 }
 
