@@ -12,7 +12,7 @@ public class LinearSlides {
     //All measurements in inches
     static final double PULLEY_CIRCUMFERENCE = 6.25;
     static final double SLIDE_LIMIT = 13;
-    static final double ROTATION_LIMIT = PULLEY_CIRCUMFERENCE/SLIDE_LIMIT;
+    static final double ROTATION_LIMIT = SLIDE_LIMIT/PULLEY_CIRCUMFERENCE;
 
     DcMotor slideMotor;
 
@@ -23,11 +23,11 @@ public class LinearSlides {
 
     public void extendSlides(boolean extend, boolean retract)
     {
-        if(extend && slideMotor.getCurrentPosition()/EncoderTicks.LINEAR_SLIDES < ROTATION_LIMIT)
+        if(extend && slideMotor.getCurrentPosition()< ROTATION_LIMIT*EncoderTicks.LINEAR_SLIDES )
         {
             slideMotor.setPower(0.8);
         }
-        else if(retract && slideMotor.getCurrentPosition()/EncoderTicks.LINEAR_SLIDES > 0)
+        else if(retract && slideMotor.getCurrentPosition() > 0)
         {
             slideMotor.setPower(-0.8);
         }
