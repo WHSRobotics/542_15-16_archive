@@ -67,9 +67,10 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Scoring Test", ScoringTest.class);
     manager.register("GyroTest", GyroTest.class);
     manager.register("IntakeTest", IntakeTest.class);
+    manager.register("LinearSlidesTest",LinearSlidesTest.class);
 
     //FTC:
-    manager.register("NullOp", NullOp.class);
+    //manager.register("NullOp", NullOp.class);
 
     //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
     // manager.register("K9TeleOp", K9TeleOp.class);
