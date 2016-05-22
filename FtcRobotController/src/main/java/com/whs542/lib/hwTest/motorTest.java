@@ -9,9 +9,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class motorTest extends OpMode{
     DcMotor motor;
-     @override
-     
-    @Override
+
+    @override
     public void init(){
         motor = hardwareMap.dcMotor.get("motor");
     }
