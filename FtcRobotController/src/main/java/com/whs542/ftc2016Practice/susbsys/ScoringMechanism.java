@@ -73,4 +73,29 @@ public class ScoringMechanism {
         }
     }
 
+    public void flip3 (boolean flip){
+        if(flip){
+            switch (state){
+                case (1):
+                        if (scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100) {
+                            scoringMotor.setPower(0.5);
+                        }
+                        state = 2;
+                case (2):
+                        if (scoringMotor.getCurrentPosition() >= 100 ){
+                            scoringMotor.setPower(-0.5);
+                        }
+                        state = 3;
+                case(3):
+                    scoringMotor.setPower(0.0);
+                    break;
+                    
+                }
+
+            }
+        }
+    }
+
+
+
 }
