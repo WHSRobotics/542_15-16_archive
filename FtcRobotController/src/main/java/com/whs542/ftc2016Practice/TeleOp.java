@@ -28,7 +28,6 @@ public class TeleOp extends OpMode{
         robot.linearSlides.extendSlides(gamepad1.dpad_up, gamepad1.dpad_down);
 
         //Scoring Mechanism
-        robot.scoringMechanism.flip(gamepad1.a, gamepad1.b);
-        robot.scoringMechanism.flip2(gamepad1.y);
+        robot.scoringMechanism.flip(gamepad1.a);
     }
 }
