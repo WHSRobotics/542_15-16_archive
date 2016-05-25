@@ -68,8 +68,8 @@ public class Drivetrain {
 
     //Turning:
 
-    public void setStartingDeg (int startingGryoZ){
-        startingDeg = startingGryoZ;
+    public void setStartingDeg (int startingGyroZ){
+        startingDeg = startingGyroZ;
     }
 
     public boolean turn (int degDifference, boolean direction, double speed, int gyroZ)
