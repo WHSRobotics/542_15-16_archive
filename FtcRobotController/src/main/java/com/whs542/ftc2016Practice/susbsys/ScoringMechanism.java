@@ -89,7 +89,7 @@ public class ScoringMechanism {
                 case(3):
                     scoringMotor.setPower(0.0);
                     break;
-                    
+
                 }
 
             }

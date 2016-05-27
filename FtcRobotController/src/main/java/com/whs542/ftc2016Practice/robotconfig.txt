@@ -1,9 +1,9 @@
 Drivetrain:
     DcMotors:
-        frontLeft
-        frontRight
-        backLeft
-        backRight
+        drive_lf
+        drive_lb
+        drive_rf
+        drive_rb
 Intake:
     DcMotors:
         intake

@@ -12,7 +12,7 @@ public class EncoderTicks {
 
     public static final int INTAKE = 0;
 
-    public static final int LINEAR_SLIDES = 0;
+    public static final int LINEAR_SLIDES = 1120;
 
     public static final int SCORING_MECHANISM = 1000;
 
