@@ -8,8 +8,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Intake {
     public DcMotor intake;
-    boolean motorStateF = false;
-    boolean motorStateR = false;
 
     public Intake (HardwareMap inMap){
 
@@ -35,13 +33,21 @@ public class Intake {
         if(button1State && intake.getPower() == 0.0){
             intake.setPower(1.0);
             try {
-                Thread.sleep(200);
+                Thread.sleep(200);                                           //Tries to sleep (pause) for 200ms, to give driver time to release button
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         else if (button1State && intake.getPower() == 1.0){
             intake.setPower(0.0);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (button1State && intake.getPower() == -1.0){
+            intake.setPower(1.0);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -65,8 +71,13 @@ public class Intake {
                 e.printStackTrace();
             }
         }
-        if (button1State && intake.getPower() == 1.0){
-
+        else if (button2State && intake.getPower() == 1.0){
+            intake.setPower(-1.0);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

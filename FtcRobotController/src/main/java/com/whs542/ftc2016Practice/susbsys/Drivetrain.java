@@ -28,6 +28,8 @@ public class Drivetrain {
     int startingDeg;
     int targetDeg;
 
+    double power;
+
     public Drivetrain (HardwareMap driveMap) {
         lfMotor = driveMap.dcMotor.get("drive_lf");
         lbMotor = driveMap.dcMotor.get("drive_lb");
@@ -56,20 +58,36 @@ public class Drivetrain {
         rotations = lfMotor.getCurrentPosition()/EncoderTicks.FRONT_LEFT;
         distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
 
+        
         while (distanceTraveled<distance){
+            lfMotor.setPower(power);
+            rfMotor.setPower(power);
+            lbMotor.setPower(power);
+            rbMotor.setPower(power);
 
-            lfMotor.setPower(speed);
-            rfMotor.setPower(speed);
-            lbMotor.setPower(speed);
-            rbMotor.setPower(speed);
+        }
+    }
+
+    public void moveAutoDecrease (double distance, double speed){                 //Distance should always be positive
+
+        rotations = lfMotor.getCurrentPosition()/EncoderTicks.FRONT_LEFT;
+        distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
+
+
+        while (distanceTraveled<distance){
+            power = 1-0.8*(distanceTraveled/(distance));
+            lfMotor.setPower(power);
+            rfMotor.setPower(power);
+            lbMotor.setPower(power);
+            rbMotor.setPower(power);
 
         }
     }
 
     //Turning:
 
-    public void setStartingDeg (int startingGryoZ){
-        startingDeg = startingGryoZ;
+    public void setStartingDeg (int startingGyroZ){
+        startingDeg = startingGyroZ;
     }
 
     public boolean turn (int degDifference, boolean direction, double speed, int gyroZ)

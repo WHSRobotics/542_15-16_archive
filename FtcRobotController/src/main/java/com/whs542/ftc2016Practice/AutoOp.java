@@ -14,6 +14,10 @@ public class AutoOp extends OpMode{
         robot = new BlueTeamRobot(hardwareMap);
     }
 
+    ////////////////////////////
+    //---READ THIS JOYCE!!!---//
+    ////////////////////////////
+
     /*
     Example:
     @Override
@@ -33,24 +37,34 @@ public class AutoOp extends OpMode{
     **/
 
     @Override
-    public void loop()
+    public void loop()  //Robot starts at top left corner of floor mat next to loading zone
     {
         switch (i)
         {
             case(1):
-                robot.drivetrain.moveAuto(63.5,1.0);
+                robot.drivetrain.moveAuto(63.5,1.0); //robot center lines with center of target crate
                 i=2;
             case(2):
-                robot.drivetrain.turn(90,false,0.5,1);
-                i=3;
+                robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
             case(3):
-                robot.drivetrain.moveAuto(63.5,1.0);
-                i=4;
-            //case(4):
-                //while (robot.drivetrain.)
-                //robot.drivetrain.moveAuto(10,0.5);
-                //robot.scoringMechanism.scoringAuto();
-
+                if(!robot.drivetrain.turn(90,false,0.5,robot.gyro.eulerZ())){
+                }
+                else{
+                    i=4;
+                }
+            case(4):
+                robot.drivetrain.moveAuto(30, 1.0);    //robot drives up to crate
+                i=5;
+            case(5):
+                robot.drivetrain.moveAutoDecrease(41,1.0);   //robot pushes crate, slowly decreasing speed, until parking in opponent's zone
+                i=6;
+            case(6):
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                robot.scoringMechanism.flipForwards();   //robot drops the 2 waffles
         }
     }
 

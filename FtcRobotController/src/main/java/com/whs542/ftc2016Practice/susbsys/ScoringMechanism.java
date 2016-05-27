@@ -17,12 +17,44 @@ public class ScoringMechanism {
     {
         scoringMotor = scoringMap.dcMotor.get("scoringMechanism");
     }
+    public void flipForwards(){
+        for(boolean i = false; i==false;)
+        {
+            if(scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM/3-120){
+                scoringMotor.setPower(0.5);
+            }
+            else{
+                scoringMotor.setPower(0.0);
+                i = true;
+            }
+        }
+    }
 
-    public void flip(boolean forwards, boolean backwards)
+    public void flipBackwards(){
+        for(boolean i = false; i==false;) {
+            if (scoringMotor.getCurrentPosition() >= 120) {
+                scoringMotor.setPower(-0.5);
+            }
+            else {
+                scoringMotor.setPower(0.0);
+                i = true;
+            }
+        }
+    }
+    public void flip(boolean flip){
+        if(flip){
+            flipForwards();
+            flipBackwards();
+
+        }
+    }
+
+    /*
+    public boolean flip(boolean forwards, boolean backwards)
     {
         if(forwards)
         {
-            for(boolean i = false; i==false;)
+            for(boolean i = false; i==true;)
             {
                 if(scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100){
                     scoringMotor.setPower(0.5);
@@ -32,10 +64,11 @@ public class ScoringMechanism {
                     i = true;
                 }
             }
+            return true;
 
         }
         if (backwards){
-            for(boolean i = false; i==false;) {
+            for(boolean i = false; i==true;) {
                 if (scoringMotor.getCurrentPosition() >= 100) {
                     scoringMotor.setPower(-0.5);
                 }
@@ -43,6 +76,21 @@ public class ScoringMechanism {
                     scoringMotor.setPower(0.0);
                     i = true;
                 }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void scoringAuto(boolean direction) {
+        if (direction) {
+            while (scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM / 3) {
+                scoringMotor.setPower(0.5);
+            }
+        }
+        else {
+            while (scoringMotor.getCurrentPosition() >= 100){
+                scoringMotor.setPower(-0.5);
             }
         }
     }
@@ -52,7 +100,7 @@ public class ScoringMechanism {
             while (!flipState){
                 switch (state){
                     case (1):
-                        if (scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100) {
+                        if (scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM/3) {
                             scoringMotor.setPower(0.5);
                         }
                         else {
@@ -95,7 +143,4 @@ public class ScoringMechanism {
             }
         }
     }
-
-
-
 }
