@@ -49,77 +49,78 @@ public class ScoringMechanism {
             flipBackwards();
         }
 
-        }
     }
+}
 
-    /*
-    public boolean flip(boolean forwards, boolean backwards)
-    {
-        if(forwards)
-        {
-            for(boolean i = false; i==true;)
-            {
-                if(scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100){
-                    scoringMotor.setPower(0.5);
-                }
-                else{
-                    scoringMotor.setPower(0.0);
-                    i = true;
-                }
-            }
-            return true;
+   /*
+   public boolean flip(boolean forwards, boolean backwards)
+   {
+       if(forwards)
+       {
+           for(boolean i = false; i==true;)
+           {
+               if(scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100){
+                   scoringMotor.setPower(0.5);
+               }
+               else{
+                   scoringMotor.setPower(0.0);
+                   i = true;
+               }
+           }
+           return true;
 
-        }
-        if (backwards){
-            for(boolean i = false; i==true;) {
-                if (scoringMotor.getCurrentPosition() >= 100) {
-                    scoringMotor.setPower(-0.5);
-                }
-                else {
-                    scoringMotor.setPower(0.0);
-                    i = true;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
+       }
+       if (backwards){
+           for(boolean i = false; i==true;) {
+               if (scoringMotor.getCurrentPosition() >= 100) {
+                   scoringMotor.setPower(-0.5);
+               }
+               else {
+                   scoringMotor.setPower(0.0);
+                   i = true;
+               }
+           }
+           return true;
+       }
+       return false;
+   }
 
-    public void scoringAuto(boolean direction) {
-        if (direction) {
-            while (scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM / 3) {
-                scoringMotor.setPower(0.5);
-            }
-        }
-        else {
-            while (scoringMotor.getCurrentPosition() >= 100){
-                scoringMotor.setPower(-0.5);
-            }
-        }
-    }
+   public void scoringAuto(boolean direction) {
+       if (direction) {
+           while (scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM / 3) {
+               scoringMotor.setPower(0.5);
+           }
+       }
+       else {
+           while (scoringMotor.getCurrentPosition() >= 100){
+               scoringMotor.setPower(-0.5);
+           }
+       }
+   }
 
-    public void flip2 (boolean flip){
-        if(flip){
-            while (!flipState){
-                switch (state){
-                    case (1):
-                        if (scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM/3) {
-                            scoringMotor.setPower(0.5);
-                        }
-                        else {
-                            scoringMotor.setPower(0.0);
-                            state = 2;
-                        }
-                    case (2):
-                        if (scoringMotor.getCurrentPosition() >= 100 ){
-                            scoringMotor.setPower(-0.5);
-                        }
-                        else {
-                            scoringMotor.setPower(0.0);
-                            flipState = true;
-                        }
-                }
+   public void flip2 (boolean flip){
+       if(flip){
+           while (!flipState){
+               switch (state){
+                   case (1):
+                       if (scoringMotor.getCurrentPosition() < EncoderTicks.SCORING_MECHANISM/3) {
+                           scoringMotor.setPower(0.5);
+                       }
+                       else {
+                           scoringMotor.setPower(0.0);
+                           state = 2;
+                       }
+                   case (2):
+                       if (scoringMotor.getCurrentPosition() >= 100 ){
+                           scoringMotor.setPower(-0.5);
+                       }
+                       else {
+                           scoringMotor.setPower(0.0);
+                           flipState = true;
+                       }
+               }
 
+<<<<<<< HEAD
             }
         }
     }
@@ -147,3 +148,31 @@ public class ScoringMechanism {
         }
     }
 }
+=======
+           }
+       }
+   }
+
+   public void flip3 (boolean flip){
+       if(flip){
+           switch (state){
+               case (1):
+                       if (scoringMotor.getCurrentPosition() < (EncoderTicks.SCORING_MECHANISM/3)-100) {
+                           scoringMotor.setPower(0.5);
+                       }
+                       state = 2;
+               case (2):
+                       if (scoringMotor.getCurrentPosition() >= 100 ){
+                           scoringMotor.setPower(-0.5);
+                       }
+                       state = 3;
+               case(3):
+                   scoringMotor.setPower(0.0);
+                   break;
+
+               }
+
+           }
+       }
+   }
+} */

@@ -43,14 +43,14 @@ public class AutoOp extends OpMode{
         switch (i)
         {
             case(1):
-<<<<<<< HEAD
-                robot.drivetrain.moveAuto(63.5, 1.0);
-=======
+
                 robot.drivetrain.moveAuto(63.5,1.0); //robot center lines with center of target crate
->>>>>>> origin/Subsys
+
                 i=2;
+
             case(2):
-                robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
+                //robot.drivetrain.setStartingDeg(robot.Gyro.eulerZ()); //turns toward crate
+
             case(3):
                 robot.drivetrain.turnAuto(90,true,0.5);
                 i=4;
@@ -60,19 +60,13 @@ public class AutoOp extends OpMode{
                     i=4;
                 }*/
             case(4):
-<<<<<<< HEAD
-                robot.drivetrain.moveAuto(48, 1.0);
-                i=5;
-            case(5):
-                robot.drivetrain.moveAuto(48, 0.5);
-                robot.scoringMechanism.flipForwards();
-
-=======
                 robot.drivetrain.moveAuto(30, 1.0);    //robot drives up to crate
                 i=5;
+
             case(5):
                 robot.drivetrain.moveAutoDecrease(41,1.0);   //robot pushes crate, slowly decreasing speed, until parking in opponent's zone
                 i=6;
+
             case(6):
                 try {
                     Thread.sleep(500);
@@ -81,7 +75,7 @@ public class AutoOp extends OpMode{
                 }
                 robot.scoringMechanism.flipForwards(); //robot drops the 2 waffles
                 break;
->>>>>>> origin/Subsys
+
         }
     }
 

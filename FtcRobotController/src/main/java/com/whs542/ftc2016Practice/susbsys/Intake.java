@@ -9,24 +9,29 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Intake {
     public DcMotor intake;
 
-    public Intake (HardwareMap inMap){
+    public Intake(HardwareMap inMap) {
 
         intake = inMap.dcMotor.get("intake");
 
     }
 
-    public void intake(boolean on, boolean reverse){
+    public void intake(boolean on, boolean reverse) {
 
-        if(on){
-            intake.setPower(1.0);
-        }
-        else if (reverse){
-            intake.setPower(-1.0);
-        }
-        else{
+        if (on) {
+            intake.setPower(0.5);
+        } else if (reverse) {
+            intake.setPower(-0.5);
+        } else {
             intake.setPower(0.0);
         }
 
+    }
+
+    public void intake2(double forward, boolean reverse)
+    {
+        boolean pressed = (Math.abs(forward) > 0.0);
+
+        intake(pressed,reverse);
     }
 
     public void useIntake2(boolean button1State, boolean button2State){
@@ -79,7 +84,6 @@ public class Intake {
                 e.printStackTrace();
             }
         }
-
     }
 
 }
