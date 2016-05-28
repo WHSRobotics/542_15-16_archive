@@ -43,9 +43,9 @@ public class AutoOp extends OpMode{
         {
             case(1):
                 robot.drivetrain.moveAuto(63.5,1.0); //robot center lines with center of target crate
-                i=2;
-            case(2):
-                robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
+                i=3;
+            //case(2):
+                //robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
             case(3):
                 robot.drivetrain.turnAuto(90,true,0.5);
                 i=4;

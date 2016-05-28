@@ -17,6 +17,7 @@ public class ScoringMechanism {
     {
         scoringMotor = scoringMap.dcMotor.get("scoringMechanism");
     }
+
     public void flipForwards(){
         for(boolean i = false; i==false;)
         {
@@ -43,10 +44,15 @@ public class ScoringMechanism {
     }
     public void flip(boolean flipForward, boolean flipBackward){
         if(flipForward) {
-            flipForwards();
+            scoringMotor.setPower(0.3);
+            //flipForwards();
         }
-        if (flipBackward) {
-            flipBackwards();
+        else if (flipBackward) {
+            scoringMotor.setPower(-0.3);
+            //flipBackwards();
+        }
+        else {
+            scoringMotor.setPower(0.0);
         }
 
         }
@@ -146,4 +152,4 @@ public class ScoringMechanism {
             }
         }
     }
-}
+}*/
