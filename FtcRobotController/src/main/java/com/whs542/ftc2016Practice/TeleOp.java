@@ -22,12 +22,12 @@ public class TeleOp extends OpMode{
         robot.drivetrain.setLRDrivePower(gamepad1.left_stick_y, gamepad1.right_stick_y);
 
         //Intake
-        robot.intake.intake(gamepad1.right_bumper, gamepad1.left_bumper);
+        robot.intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
 
         //Linear Slides
-        robot.linearSlides.extendSlides(gamepad1.dpad_up, gamepad1.dpad_down);
+        robot.linearSlides.extendSlides(gamepad1.left_trigger, gamepad1.left_bumper);
 
         //Scoring Mechanism
-        robot.scoringMechanism.flip(gamepad1.a, gamepad1.b);
+        robot.scoringMechanism.flip(gamepad1.dpad_up, gamepad1.dpad_down);
     }
 }

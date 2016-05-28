@@ -17,7 +17,7 @@ public class LinearSlidesTest extends OpMode{
 
     @Override
     public void loop(){
-        linearSlides.extendSlides(gamepad1.a,gamepad1.b);
+        linearSlides.extendSlides(gamepad1.left_trigger,gamepad1.left_bumper);
     }
 
 }

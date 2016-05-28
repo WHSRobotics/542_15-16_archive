@@ -44,11 +44,11 @@ public class ScoringMechanism {
     }
     public void flip(boolean flipForward, boolean flipBackward){
         if(flipForward) {
-            scoringMotor.setPower(0.3);
+            scoringMotor.setPower(0.4);
             //flipForwards();
         }
         else if (flipBackward) {
-            scoringMotor.setPower(-0.3);
+            scoringMotor.setPower(-0.4);
             //flipBackwards();
         }
         else {

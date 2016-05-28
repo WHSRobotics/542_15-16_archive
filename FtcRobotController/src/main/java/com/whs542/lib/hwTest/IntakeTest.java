@@ -17,7 +17,7 @@ public class IntakeTest extends OpMode{
 
     @Override
     public void loop() {
-        intake.useIntake2(gamepad1.a, gamepad1.b);
+        intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
         telemetry.addData("Motor Power", intake.intake.getPower());
     }
 }

@@ -15,26 +15,41 @@ public class Intake {
 
     }
 
-    public void intake(boolean on, boolean reverse) {
-
-        if (on) {
-            intake.setPower(0.5);
-        } else if (reverse) {
-            intake.setPower(-0.5);
+    public void intake(float trigger, boolean reverse) {
+        boolean on;
+        if (trigger == 0.0) {
+            on = false;
         } else {
-            intake.setPower(0.0);
+            on = true;
         }
+
+            if (on) {
+                intake.setPower(0.5);
+            }
+            else if (reverse) {
+                intake.setPower(-0.5);
+            }
+            else {
+                intake.setPower(0.0);
+            }
 
     }
 
-    public void intake2(double forward, boolean reverse)
+    /*public void intake2(double forward, boolean reverse)
     {
         boolean pressed = (Math.abs(forward) > 0.0);
 
         intake(pressed,reverse);
-    }
+    }*/
 
-    public void useIntake2(boolean button1State, boolean button2State){
+    public void useIntake2(float button1, boolean button2State){
+        boolean button1State;
+        if (button1 == 0.0){
+            button1State = false;
+        }
+        else {
+            button1State = true;
+        }
         if(button1State && intake.getPower() == 0.0){
             intake.setPower(1.0);
             try {
