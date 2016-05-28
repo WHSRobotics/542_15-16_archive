@@ -60,7 +60,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     //Whs542 BlueTeam:
-    manager.register("Blue AutoOp", AutoOp.class);
+    // manager.register("Blue AutoOp", AutoOp.class);
     manager.register("Blue TeleOp", TeleOp.class);
 
     manager.register("MotorTest", motorTest.class);

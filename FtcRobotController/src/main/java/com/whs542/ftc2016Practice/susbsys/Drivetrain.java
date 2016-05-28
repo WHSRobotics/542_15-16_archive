@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.whs542.lib.sensors.EncoderTicks;
 
+import com.whs542.lib.Toggler;
 
 /**
  * Created by Amar on 4/28/2016.
@@ -19,6 +20,8 @@ public class Drivetrain {
     DcMotor rfMotor;
     DcMotor lbMotor;
     DcMotor rbMotor;
+
+    Toggler orientation = new Toggler(2);
 
     double rotations;
     double distanceTraveled;
@@ -45,10 +48,41 @@ public class Drivetrain {
 
     public void setLRDrivePower(double leftPower, double rightPower)
     {
-        lfMotor.setPower(leftPower);
-        lbMotor.setPower(leftPower);
-        rfMotor.setPower(rightPower);
-        rbMotor.setPower(rightPower);
+        switch(orientation.currentState()) {
+            case 0:
+                lfMotor.setPower(leftPower);
+                lbMotor.setPower(leftPower);
+                rfMotor.setPower(rightPower);
+                rbMotor.setPower(rightPower);
+                break;
+            case 1:
+                lfMotor.setPower(-leftPower);
+                lbMotor.setPower(-leftPower);
+                rfMotor.setPower(-rightPower);
+                rbMotor.setPower(-rightPower);
+                break;
+        }
+    }
+
+    public void changeOrientation(boolean switchOrientation)
+    {
+        orientation.changeState(switchOrientation);
+    }
+
+    public String getOrientation()
+    {
+        String o = "";
+        int state = orientation.currentState();
+        if(state == 0)
+        {
+            o = "Forward";
+        }
+        else if(state == 1)
+        {
+            o = "Reverse";
+        }
+
+        return o;
     }
 
     public void setStartingDistance()
@@ -62,7 +96,7 @@ public class Drivetrain {
         rotations = lfMotor.getCurrentPosition()/EncoderTicks.FRONT_LEFT;
         distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
 
-        
+
         while (distanceTraveled<distance){
             lfMotor.setPower(power);
             rfMotor.setPower(power);
@@ -115,18 +149,18 @@ public class Drivetrain {
         double x = degree*ENCODER_TICKS_PER_DEGREE/2;
         if (lfMotor.getCurrentPosition()<x && direction){
             setLRDrivePower(powerTurn,-powerTurn);
-            /*lfMotor.setPower(powerTurn);
-            lbMotor.setPower(powerTurn);
-            rfMotor.setPower(-powerTurn);
-            rbMotor.setPower(-powerTurn);*/
+           /*lfMotor.setPower(powerTurn);
+           lbMotor.setPower(powerTurn);
+           rfMotor.setPower(-powerTurn);
+           rbMotor.setPower(-powerTurn);*/
         }
         else if(rfMotor.getCurrentPosition()<x && !direction){
             setLRDrivePower(-powerTurn,powerTurn);
-            /*
-            lfMotor.setPower(-powerTurn);
-            lbMotor.setPower(-powerTurn);
-            rfMotor.setPower(powerTurn);
-            rbMotor.setPower(powerTurn);*/
+           /*
+           lfMotor.setPower(-powerTurn);
+           lbMotor.setPower(-powerTurn);
+           rfMotor.setPower(powerTurn);
+           rbMotor.setPower(powerTurn);*/
         }
         else{
             setLRDrivePower(0.0,0.0);
@@ -149,4 +183,3 @@ public class Drivetrain {
         return returnPower;
     }
 }
-
