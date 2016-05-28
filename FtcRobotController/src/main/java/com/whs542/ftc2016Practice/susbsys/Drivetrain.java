@@ -114,16 +114,19 @@ public class Drivetrain {
     public void turnAuto(double degree, boolean direction, double powerTurn){ //direction: true=right, false=left
         double x = degree*ENCODER_TICKS_PER_DEGREE/2;
         if (lfMotor.getCurrentPosition()<x && direction){
-            lfMotor.setPower(powerTurn);
+            setLRDrivePower(powerTurn,-powerTurn);
+            /*lfMotor.setPower(powerTurn);
             lbMotor.setPower(powerTurn);
             rfMotor.setPower(-powerTurn);
-            rbMotor.setPower(-powerTurn);
+            rbMotor.setPower(-powerTurn);*/
         }
         else if(rfMotor.getCurrentPosition()<x && !direction){
+            setLRDrivePower(-powerTurn,powerTurn);
+            /*
             lfMotor.setPower(-powerTurn);
             lbMotor.setPower(-powerTurn);
             rfMotor.setPower(powerTurn);
-            rbMotor.setPower(powerTurn);
+            rbMotor.setPower(powerTurn);*/
         }
         else{
             setLRDrivePower(0.0,0.0);
