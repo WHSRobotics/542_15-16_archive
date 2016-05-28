@@ -24,10 +24,10 @@ public class Intake {
         }
 
             if (on) {
-                intake.setPower(0.5);
+                intake.setPower(-0.5);
             }
             else if (reverse) {
-                intake.setPower(-0.5);
+                intake.setPower(0.5);
             }
             else {
                 intake.setPower(0.0);

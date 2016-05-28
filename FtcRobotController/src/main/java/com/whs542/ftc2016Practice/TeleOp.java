@@ -18,8 +18,13 @@ public class TeleOp extends OpMode{
 
     @Override
     public void loop(){
-        //Drive train
+        //Drivetrain
         robot.drivetrain.setLRDrivePower(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        robot.drivetrain.changeOrientation(gamepad1.a);
+
+        telemetry.addData("Orientation", robot.drivetrain.getOrientation());
+        telemetry.addData("Left Power", gamepad1.left_stick_y);
+        telemetry.addData("Right Power", gamepad1.right_stick_y);
 
         //Intake
         robot.intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
@@ -29,5 +34,6 @@ public class TeleOp extends OpMode{
 
         //Scoring Mechanism
         robot.scoringMechanism.flip(gamepad1.dpad_up, gamepad1.dpad_down);
+
     }
 }
