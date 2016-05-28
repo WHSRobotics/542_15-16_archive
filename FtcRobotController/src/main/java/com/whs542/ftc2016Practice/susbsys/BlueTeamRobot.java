@@ -16,10 +16,10 @@ public class BlueTeamRobot {
     //public Bno055 gyro;
 
     public BlueTeamRobot(HardwareMap mainMap){
-        drivetrain = new Drivetrain(mainMap);
-        intake = new Intake(mainMap);
+    //     drivetrain = new Drivetrain(mainMap);
+    //    intake = new Intake(mainMap);
         scoringMechanism = new ScoringMechanism(mainMap);
-        linearSlides = new LinearSlides(mainMap);
+    //    linearSlides = new LinearSlides(mainMap);
         //gyro = new Bno055(mainMap, "gyro");
     }
 
