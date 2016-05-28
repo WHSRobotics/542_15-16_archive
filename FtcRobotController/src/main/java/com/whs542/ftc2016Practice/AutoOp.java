@@ -37,7 +37,6 @@ public class AutoOp extends OpMode{
         }
     }
     **/
-
     @Override
     public void loop()  //Robot starts at top left corner of floor mat next to loading zone
     {
