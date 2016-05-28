@@ -41,10 +41,13 @@ public class ScoringMechanism {
             }
         }
     }
-    public void flip(boolean flip){
-        if(flip){
+    public void flip(boolean flipForward, boolean flipBackward){
+        if(flipForward) {
             flipForwards();
+        }
+        if (flipBackward) {
             flipBackwards();
+        }
 
         }
     }

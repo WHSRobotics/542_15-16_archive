@@ -29,6 +29,5 @@ public class TeleOp extends OpMode{
 
         //Scoring Mechanism
         robot.scoringMechanism.flip(gamepad1.a, gamepad1.b);
-        robot.scoringMechanism.flip(gamepad1.a);
     }
 }
