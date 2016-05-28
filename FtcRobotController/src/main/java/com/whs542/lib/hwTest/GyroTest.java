@@ -2,6 +2,7 @@ package com.whs542.lib.hwTest;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.lib.WireLibrary.*;
+import com.whs542.lib.sensors.IMUBNO055;
 
 /**
  * Created by Amar on 5/5/2016.
@@ -11,16 +12,14 @@ import com.whs542.lib.WireLibrary.*;
 
 public class GyroTest extends OpMode {
 
-    Bno055 testGyro;
+    IMUBNO055 testGyro;
 
     @Override
     public void init(){
-        testGyro = new Bno055(hardwareMap, "gyro");
+        testGyro = new IMUBNO055(0, IMUBNO055.BNO055_ADDRESS_A);
     }
 
     public void loop(){
-        telemetry.addData("X", testGyro.eulerX());
-        telemetry.addData("Y", testGyro.eulerY());
-        telemetry.addData("Z", testGyro.eulerZ());
+        telemetry.addData("", IMUBNO055.getVector());
     }
 }
