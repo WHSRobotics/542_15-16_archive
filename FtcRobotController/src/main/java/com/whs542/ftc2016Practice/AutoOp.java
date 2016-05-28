@@ -8,6 +8,7 @@ public class AutoOp extends OpMode{
 
     BlueTeamRobot robot;
     int i = 1;
+    boolean run = true;
 
     @Override
     public void init(){
@@ -40,39 +41,41 @@ public class AutoOp extends OpMode{
     @Override
     public void loop()  //Robot starts at top left corner of floor mat next to loading zone
     {
-        switch (i)
-        {
-            case(1):
+        if (run) {
+            switch (i) {
+                case (1):
 
-                robot.drivetrain.moveAuto(63.5,1.0); //robot center lines with center of target crate
-                i=3;
-            //case(2):
-                //robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
-            case(3):
-                robot.drivetrain.turnAuto(90,true,0.5);
-                i=4;
+                    robot.drivetrain.moveAuto(63.5, 1.0); //robot center lines with center of target crate
+                    i = 3;
+                    //case(2):
+                    //robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
+                case (3):
+                    robot.drivetrain.turnAuto(90, true, 0.5);
+                    i = 4;
                 /*if(!robot.drivetrain.turn(90,false,0.5,robot.gyro.eulerZ())){
                 }
                 else{
                     i=4;
                 }*/
-            case(4):
-                robot.drivetrain.moveAuto(30, 1.0);    //robot drives up to crate
-                i=5;
+                case (4):
+                    robot.drivetrain.moveAuto(30, 1.0);    //robot drives up to crate
+                    i = 5;
 
-            case(5):
-                robot.drivetrain.moveAutoDecrease(41,1.0);   //robot pushes crate, slowly decreasing speed, until parking in opponent's zone
-                i=6;
+                case (5):
+                    robot.drivetrain.moveAutoDecrease(41, 1.0);   //robot pushes crate, slowly decreasing speed, until parking in opponent's zone
+                    i = 6;
 
-            case(6):
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                robot.scoringMechanism.flipForwards(); //robot drops the 2 waffles
-                break;
+                case (6):
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    robot.scoringMechanism.flipForwards(); //robot drops the 2 waffles
+                    break;
 
+            }
+            run = false;
         }
     }
 

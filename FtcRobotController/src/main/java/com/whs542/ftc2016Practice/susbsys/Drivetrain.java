@@ -56,10 +56,10 @@ public class Drivetrain {
                 rbMotor.setPower(rightPower);
                 break;
             case 1:
-                lfMotor.setPower(-leftPower);
-                lbMotor.setPower(-leftPower);
-                rfMotor.setPower(-rightPower);
-                rbMotor.setPower(-rightPower);
+                lfMotor.setPower(-rightPower);
+                lbMotor.setPower(-rightPower);
+                rfMotor.setPower(-leftPower);
+                rbMotor.setPower(-leftPower);
                 break;
         }
     }
