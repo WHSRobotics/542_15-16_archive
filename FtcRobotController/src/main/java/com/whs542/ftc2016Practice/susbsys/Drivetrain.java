@@ -16,7 +16,7 @@ public class Drivetrain {
     public static final double WHEEL_DIAMETER = 4;
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
 
-    DcMotor lfMotor;
+    public DcMotor lfMotor;
     DcMotor rfMotor;
     DcMotor lbMotor;
     DcMotor rbMotor;
@@ -24,7 +24,7 @@ public class Drivetrain {
     Toggler orientation = new Toggler(2);
 
     double rotations;
-    double distanceTraveled;
+    public double distanceTraveled;
 
     double startingDistance;
 
@@ -98,12 +98,30 @@ public class Drivetrain {
 
 
         while (distanceTraveled<distance){
-            lfMotor.setPower(power);
-            rfMotor.setPower(power);
-            lbMotor.setPower(power);
-            rbMotor.setPower(power);
+            lfMotor.setPower(speed);
+            rfMotor.setPower(speed);
+            lbMotor.setPower(speed);
+            rbMotor.setPower(speed);
 
         }
+    }
+
+    public boolean moveAuto2 (double distance, double speed){                 //Distance should always be positive
+
+        rotations = lfMotor.getCurrentPosition()/EncoderTicks.FRONT_LEFT;
+        distanceTraveled = rotations*WHEEL_CIRCUMFERENCE;
+
+
+        if (distanceTraveled<distance){
+            lfMotor.setPower(speed);
+            rfMotor.setPower(speed);
+            lbMotor.setPower(speed);
+            rbMotor.setPower(speed);
+
+        }else{
+            return true;
+        }
+        return false;
     }
 
     public void moveAutoDecrease (double distance, double speed){                 //Distance should always be positive
@@ -145,7 +163,7 @@ public class Drivetrain {
 
     }
     //this is a two wheel turn
-    public void turnAuto(double degree, boolean direction, double powerTurn){ //direction: true=right, false=left
+    public boolean turnAuto(double degree, boolean direction, double powerTurn){ //direction: true=right, false=left
         double x = degree*ENCODER_TICKS_PER_DEGREE/2;
         if (lfMotor.getCurrentPosition()<x && direction){
             setLRDrivePower(powerTurn,-powerTurn);
@@ -166,8 +184,9 @@ public class Drivetrain {
         }
         else{
             setLRDrivePower(0.0,0.0);
+            return true;
         }
-
+        return false;
 
     }
 
@@ -184,4 +203,6 @@ public class Drivetrain {
         returnPower[3] = rbMotor.getCurrentPosition();
         return returnPower;
     }
+
+
 }
