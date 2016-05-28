@@ -47,11 +47,13 @@ public class AutoOp extends OpMode{
             case(2):
                 robot.drivetrain.setStartingDeg(robot.gyro.eulerZ()); //turns toward crate
             case(3):
-                if(!robot.drivetrain.turn(90,false,0.5,robot.gyro.eulerZ())){
+                robot.drivetrain.turnAuto(90,true,0.5);
+                i=4;
+                /*if(!robot.drivetrain.turn(90,false,0.5,robot.gyro.eulerZ())){
                 }
                 else{
                     i=4;
-                }
+                }*/
             case(4):
                 robot.drivetrain.moveAuto(30, 1.0);    //robot drives up to crate
                 i=5;

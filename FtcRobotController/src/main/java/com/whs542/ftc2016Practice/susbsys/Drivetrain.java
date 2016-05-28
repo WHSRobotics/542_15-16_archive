@@ -30,6 +30,10 @@ public class Drivetrain {
 
     double power;
 
+    static final double CIRCUMFERENCE_ROBOT_TURN = 14.5* Math.PI;
+    static final double CIRCUMFERENCE_WHEEL = 4*Math.PI;
+    static final double ENCODER_TICKS_PER_DEGREE = CIRCUMFERENCE_ROBOT_TURN*1120/(CIRCUMFERENCE_WHEEL*360);
+
     public Drivetrain (HardwareMap driveMap) {
         lfMotor = driveMap.dcMotor.get("drive_lf");
         lbMotor = driveMap.dcMotor.get("drive_lb");
@@ -104,6 +108,27 @@ public class Drivetrain {
             return true;
         }
         return false;
+
+    }
+    //this is a two wheel turn
+    public void turnAuto(double degree, boolean direction, double powerTurn){ //direction: true=right, false=left
+        double x = degree*ENCODER_TICKS_PER_DEGREE/2;
+        if (lfMotor.getCurrentPosition()<x && direction){
+            lfMotor.setPower(powerTurn);
+            lbMotor.setPower(powerTurn);
+            rfMotor.setPower(-powerTurn);
+            rbMotor.setPower(-powerTurn);
+        }
+        else if(rfMotor.getCurrentPosition()<x && !direction){
+            lfMotor.setPower(-powerTurn);
+            lbMotor.setPower(-powerTurn);
+            rfMotor.setPower(powerTurn);
+            rbMotor.setPower(powerTurn);
+        }
+        else{
+            setLRDrivePower(0.0,0.0);
+        }
+
 
     }
 
