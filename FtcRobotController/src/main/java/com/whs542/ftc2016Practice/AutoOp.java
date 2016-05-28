@@ -15,6 +15,7 @@ public class AutoOp extends OpMode{
     }
 
     ////////////////////////////
+
     //---READ THIS JOYCE!!!---//
     ////////////////////////////
 
@@ -42,6 +43,7 @@ public class AutoOp extends OpMode{
         switch (i)
         {
             case(1):
+
                 robot.drivetrain.moveAuto(63.5,1.0); //robot center lines with center of target crate
                 i=3;
             //case(2):
@@ -57,9 +59,11 @@ public class AutoOp extends OpMode{
             case(4):
                 robot.drivetrain.moveAuto(30, 1.0);    //robot drives up to crate
                 i=5;
+
             case(5):
                 robot.drivetrain.moveAutoDecrease(41,1.0);   //robot pushes crate, slowly decreasing speed, until parking in opponent's zone
                 i=6;
+
             case(6):
                 try {
                     Thread.sleep(500);
@@ -68,6 +72,7 @@ public class AutoOp extends OpMode{
                 }
                 robot.scoringMechanism.flipForwards(); //robot drops the 2 waffles
                 break;
+
         }
     }
 

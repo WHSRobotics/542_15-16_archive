@@ -149,18 +149,20 @@ public class Drivetrain {
         double x = degree*ENCODER_TICKS_PER_DEGREE/2;
         if (lfMotor.getCurrentPosition()<x && direction){
             setLRDrivePower(powerTurn,-powerTurn);
-           /*lfMotor.setPower(powerTurn);
-           lbMotor.setPower(powerTurn);
-           rfMotor.setPower(-powerTurn);
-           rbMotor.setPower(-powerTurn);*/
+
+            /*lfMotor.setPower(powerTurn);
+            lbMotor.setPower(powerTurn);
+            rfMotor.setPower(-powerTurn);
+            rbMotor.setPower(-powerTurn);*/
         }
         else if(rfMotor.getCurrentPosition()<x && !direction){
             setLRDrivePower(-powerTurn,powerTurn);
-           /*
-           lfMotor.setPower(-powerTurn);
-           lbMotor.setPower(-powerTurn);
-           rfMotor.setPower(powerTurn);
-           rbMotor.setPower(powerTurn);*/
+            /*
+            lfMotor.setPower(-powerTurn);
+            lbMotor.setPower(-powerTurn);
+            rfMotor.setPower(powerTurn);
+            rbMotor.setPower(powerTurn);*/
+
         }
         else{
             setLRDrivePower(0.0,0.0);
