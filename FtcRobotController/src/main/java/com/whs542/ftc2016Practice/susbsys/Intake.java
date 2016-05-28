@@ -21,15 +21,18 @@ public class Intake {
             on = false;
         } else {
             on = true;
+        }
 
-            while (on) {
+            if (on) {
                 intake.setPower(0.5);
             }
-            while (reverse) {
+            else if (reverse) {
                 intake.setPower(-0.5);
             }
-            intake.setPower(0.0);
-        }
+            else {
+                intake.setPower(0.0);
+            }
+
     }
 
     /*public void intake2(double forward, boolean reverse)

@@ -21,8 +21,16 @@ public class LinearSlides {
         slideMotor = slideMap.dcMotor.get("slides");
     }
 
-    public void extendSlides(boolean extend, boolean retract)
+    public void extendSlides(float extendTrigger, boolean retract)
     {
+        boolean extend;
+        if (extendTrigger==0.0) {
+            extend = false;
+        }
+        else {
+            extend = true;
+        }
+
         if(extend && slideMotor.getCurrentPosition()< ROTATION_LIMIT*EncoderTicks.LINEAR_SLIDES )
         {
             slideMotor.setPower(0.8);
