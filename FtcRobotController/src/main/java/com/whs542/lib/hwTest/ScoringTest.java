@@ -25,7 +25,10 @@ public class ScoringTest extends OpMode{
         scoringMechanism.flip(gamepad1.dpad_up, gamepad1.dpad_down);
         telemetry.addData("Encoder Ticks", scoringMechanism.scoringMotor.getCurrentPosition());
         telemetry.addData("a", gamepad1.a);
+
         intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
+        telemetry.addData("right trigger", gamepad1.right_trigger);
+        telemetry.addData("right trigger", gamepad1.right_bumper);
         telemetry.addData("Motor Power", intake.intake.getPower());
 
         if(maxEncoderValue<scoringMechanism.scoringMotor.getCurrentPosition()){
