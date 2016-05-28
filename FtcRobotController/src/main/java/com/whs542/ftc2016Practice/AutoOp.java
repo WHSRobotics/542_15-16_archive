@@ -64,7 +64,8 @@ public class AutoOp extends OpMode{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                robot.scoringMechanism.flipForwards();   //robot drops the 2 waffles
+                robot.scoringMechanism.flipForwards(); //robot drops the 2 waffles
+                break;
         }
     }
 
