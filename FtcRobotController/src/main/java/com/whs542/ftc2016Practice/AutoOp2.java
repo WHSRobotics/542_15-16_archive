@@ -20,7 +20,7 @@ public class AutoOp2 extends OpMode{
     public void loop() {
         switch (i){
             case (1):
-                if (robot.drivetrain.moveAuto2(48,1.0)){
+                if (robot.drivetrain.moveAuto2(20,1.0)){
                     i=2;
                 }else {
                     telemetry.addData("", robot.drivetrain.distanceTraveled);
