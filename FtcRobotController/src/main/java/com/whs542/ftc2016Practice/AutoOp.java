@@ -3,12 +3,13 @@ package com.whs542.ftc2016Practice;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.whs542.ftc2016Practice.susbsys.BlueTeamRobot;
 
-
 public class AutoOp extends OpMode{
 
     BlueTeamRobot robot;
     int i = 1;
     boolean run = true;
+
+    int j = 0;
 
     @Override
     public void init(){
